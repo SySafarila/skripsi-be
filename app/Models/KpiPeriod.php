@@ -14,4 +14,8 @@ class KpiPeriod extends Model
     public function presences() {
         return $this->hasMany(UserPresence::class);
     }
+
+    public function feedbacks() {
+        return $this->hasMany(UserFeedback::class);
+    }
 }

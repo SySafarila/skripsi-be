@@ -10,4 +10,8 @@ class FeedbackQuestion extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function responses() {
+        return $this->hasMany(UserFeedback::class);
+    }
 }
