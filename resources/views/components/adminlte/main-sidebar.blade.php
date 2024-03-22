@@ -29,7 +29,7 @@
                         </p>
                     </a>
                 </li>
-                @canany(['blogs-read'])
+                @canany(['blogs-read', 'kpi-read'])
                     <li class="nav-header text-uppercase">Content Control</li>
 
                     @if (Route::has('admin.blogs.index'))
@@ -46,6 +46,18 @@
                             </li>
                         @endcan
                     @endif
+                    @can('kpi-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.kpi.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.kpi.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Periode KPI
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                 @endcanany
                 <x-adminlte.sidebar-system />
                 <li class="nav-item mt-2 pt-2" style="border-top: 1px solid #4f5962;">

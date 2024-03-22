@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminIndex;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\KpiController;
 use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -40,13 +41,17 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/users', UserController::class)->except(['show']);
 
     // blogs | comment this route below to disable Blog features
-    Route::resource('/blogs', BlogController::class);
+    // Route::resource('/blogs', BlogController::class);
+
+    // KPI
+    Route::resource('/kpi', KpiController::class)->except(['show']);
 
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::delete('/bulk-delete/users', [UserController::class, 'massDestroy'])->name('users.massDestroy');
-    Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
+    Route::delete('/bulk-delete/kpi', [KpiController::class, 'massDestroy'])->name('kpi.massDestroy');
+    // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
 });
 
 // account re-verification

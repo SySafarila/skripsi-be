@@ -115,35 +115,6 @@ class PermissionSeeder extends Seeder
             ],
         );
 
-        // blogs
-        array_push(
-            $arr,
-            [
-                'guard_name' => 'web',
-                'name' => 'blogs-create',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'guard_name' => 'web',
-                'name' => 'blogs-read',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'guard_name' => 'web',
-                'name' => 'blogs-update',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'guard_name' => 'web',
-                'name' => 'blogs-delete',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-        );
-
         DB::table('permissions')->insert($arr);
     }
 }
