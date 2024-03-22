@@ -10,4 +10,9 @@ class Subject extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function presences()
+    {
+        return $this->hasMany(UserPresence::class);
+    }
 }
