@@ -7,6 +7,7 @@ use App\Http\Controllers\KpiController;
 use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,11 +47,15 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // KPI
     Route::resource('/kpi', KpiController::class)->except(['show']);
 
+    // subjects / mata kuliah
+    Route::resource('/subjects', SubjectController::class)->except(['show']);
+
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::delete('/bulk-delete/users', [UserController::class, 'massDestroy'])->name('users.massDestroy');
     Route::delete('/bulk-delete/kpi', [KpiController::class, 'massDestroy'])->name('kpi.massDestroy');
+    Route::delete('/bulk-delete/subjects', [SubjectController::class, 'massDestroy'])->name('subjects.massDestroy');
     // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
 });
 

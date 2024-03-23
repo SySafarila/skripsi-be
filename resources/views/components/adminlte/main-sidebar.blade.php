@@ -58,6 +58,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('subjects-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.subjects.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.subjects.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Mata Kuliah
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                 @endcanany
                 <x-adminlte.sidebar-system />
                 <li class="nav-item mt-2 pt-2" style="border-top: 1px solid #4f5962;">

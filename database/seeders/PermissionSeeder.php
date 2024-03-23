@@ -115,6 +115,64 @@ class PermissionSeeder extends Seeder
             ],
         );
 
+        // kpi
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'kpi-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'kpi-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'kpi-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'kpi-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
+        // subjects / mata kuliah
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
         DB::table('permissions')->insert($arr);
     }
 }
