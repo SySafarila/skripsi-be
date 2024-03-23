@@ -87,4 +87,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function presenceQuota() {
         return $this->hasOne(UserPresenceQuota::class);
     }
+
+    public function subjects() {
+        return $this->hasMany(UsersHasSubject::class);
+    }
 }

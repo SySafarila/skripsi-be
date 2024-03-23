@@ -15,4 +15,9 @@ class Subject extends Model
     {
         return $this->hasMany(UserPresence::class);
     }
+
+    public function users()
+    {
+        return $this->hasMany(UsersHasSubject::class);
+    }
 }
