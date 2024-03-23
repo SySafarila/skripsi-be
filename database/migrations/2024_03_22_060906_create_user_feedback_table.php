@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(User::class, 'sender_id')->constrained('users', 'id');
             $table->foreignIdFor(KpiPeriod::class)->constrained();
-            // $table->foreignIdFor(FeedbackQuestion::class)->constrained();
+            $table->foreignIdFor(FeedbackQuestion::class)->constrained();
             $table->text('question');
             $table->integer('point');
             $table->text('message');
