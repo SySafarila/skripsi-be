@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminIndex;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackQuestionController;
 use App\Http\Controllers\KpiController;
+use App\Http\Controllers\LecturerManagementController;
 use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -54,6 +55,9 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // Feedback questions
     Route::resource('/questions', FeedbackQuestionController::class)->except(['show']);
 
+    // lecturer management
+    Route::resource('/lecturer-managements', LecturerManagementController::class)->except(['show']);
+
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
@@ -61,6 +65,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/kpi', [KpiController::class, 'massDestroy'])->name('kpi.massDestroy');
     Route::delete('/bulk-delete/subjects', [SubjectController::class, 'massDestroy'])->name('subjects.massDestroy');
     Route::delete('/bulk-delete/questions', [FeedbackQuestionController::class, 'massDestroy'])->name('questions.massDestroy');
+    Route::delete('/bulk-delete/lecturer-managements', [LecturerManagementController::class, 'massDestroy'])->name('lecturer-managements.massDestroy');
     // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
 });
 

@@ -202,6 +202,35 @@ class PermissionSeeder extends Seeder
             ],
         );
 
+        // lecturer-managements / pengelolaan dosen
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'lecturer-managements-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'lecturer-managements-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'lecturer-managements-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'lecturer-managements-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
         DB::table('permissions')->insert($arr);
     }
 }
