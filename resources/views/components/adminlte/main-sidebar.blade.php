@@ -70,6 +70,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('feedback-questions-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.questions.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.questions.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Pertanyaan Umpan Balik
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                 @endcanany
                 <x-adminlte.sidebar-system />
                 <li class="nav-item mt-2 pt-2" style="border-top: 1px solid #4f5962;">

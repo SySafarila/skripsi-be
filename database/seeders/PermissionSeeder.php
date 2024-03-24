@@ -173,6 +173,35 @@ class PermissionSeeder extends Seeder
             ],
         );
 
+        // feedback-questions
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'feedback-questions-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'feedback-questions-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'feedback-questions-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'feedback-questions-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
         DB::table('permissions')->insert($arr);
     }
 }
