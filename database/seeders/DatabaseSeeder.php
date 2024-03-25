@@ -23,7 +23,10 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            SubjectSeeder::class
+            SubjectSeeder::class,
+            KpiSeeder::class,
+            FeedbackQuestionSeeder::class,
+            LecturerManagementSeeder::class
         ]);
     }
 }
