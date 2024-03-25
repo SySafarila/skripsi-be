@@ -95,6 +95,9 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
             'control' => ['required', 'string', 'in:+,-']
         ]);
         $kpi = KpiPeriod::findOrFail($request->kpi_period_id);
+        if (now() < $kpi->start_date) {
+            return abort(400, 'Belum mulai');
+        }
         if (now() > $kpi->end_date) {
             return abort(400, 'Kadaluarsa');
         }
