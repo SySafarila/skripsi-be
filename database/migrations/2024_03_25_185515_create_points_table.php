@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(KpiPeriod::class)->constrained()->cascadeOnDelete();
+            $table->double('points');
             $table->timestamps();
         });
     }

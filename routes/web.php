@@ -12,7 +12,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use App\Models\KpiPeriod;
+use App\Models\Point;
 use App\Models\User;
+use App\Models\UserFeedback;
 use App\Models\UserPresence;
 use App\Models\UsersHasSubject;
 use Illuminate\Support\Facades\Route;
@@ -87,7 +89,7 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
         $presences = $user->presences()->where('kpi_period_id', $kpi->id)->get();
         return view('home', compact('kpi', 'user', 'presences'));
     });
-    Route::post('/home/presences-control', function() {
+    Route::post('/home/presences-control', function () {
         $request = request();
         $request->validate([
             'kpi_period_id' => ['required', 'exists:kpi_periods,id'],
@@ -102,9 +104,12 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
             return abort(400, 'Kadaluarsa');
         }
         if ($request->control == '+') {
+            // check quota
             $checkQuota = UsersHasSubject::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->first();
-            $checkPresences = UserPresence::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->get()->count();
-            if ($checkPresences < $checkQuota->quota) {
+
+            // count presences
+            $checkPresences = UserPresence::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->get();
+            if ($checkPresences->count() < $checkQuota->quota) {
                 UserPresence::create([
                     'user_id' => request()->user()->id,
                     'kpi_period_id' => $request->kpi_period_id,
@@ -117,6 +122,31 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
             if ($presence) {
                 $presence->delete();
             }
+        }
+
+        // set points
+        $checkPoints = Point::where('user_id', $request->user()->id)->first();
+        $quotas = UsersHasSubject::where('user_id', $request->user()->id)->get()->pluck('quota');
+
+        // presences point
+        $quota = array_sum($quotas->toArray());
+
+        // survey points
+        $surveyPoints = UserFeedback::where('kpi_period_id', $kpi->id)->where('user_id', $request->user()->id)->get()->pluck('point');
+        $surveyPoint = array_sum($surveyPoints->toArray());
+
+        // presence points
+        $presencePoints = UserPresence::where('user_id', $request->user()->id)->where('kpi_period_id', $request->kpi_period_id)->get()->count();
+        if (!$checkPoints) {
+            $point = Point::create([
+                'user_id' => $request->user()->id,
+                'kpi_period_id' => $kpi->id,
+                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
+            ]);
+        } else {
+            $point = Point::where('user_id', $request->user()->id)->update([
+                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
+            ]);
         }
 
         return back();
