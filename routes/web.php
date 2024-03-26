@@ -6,6 +6,7 @@ use App\Http\Controllers\DosenPageController;
 // use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackQuestionController;
 use App\Http\Controllers\KpiController;
+use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LecturerManagementController;
 use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\ProfileController;
@@ -80,6 +81,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:dosen'])->group(function () {
     Route::get('/d/profile', [DosenPageController::class, 'profile'])->name('dosen.profile');
     Route::post('/d/presence', [DosenPageController::class, 'presence'])->name('dosen.presence');
+});
+
+// authenticated employee
+Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
+    Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
 });
 
 require __DIR__ . '/auth.php';
