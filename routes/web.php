@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminIndex;
+use App\Http\Controllers\DosenPageController;
 // use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackQuestionController;
 use App\Http\Controllers\KpiController;
@@ -11,12 +12,6 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
-use App\Models\KpiPeriod;
-use App\Models\Point;
-use App\Models\User;
-use App\Models\UserFeedback;
-use App\Models\UserPresence;
-use App\Models\UsersHasSubject;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -81,76 +76,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('account', AccountController::class)->only(['index', 'edit', 'update']);
 });
 
-// authenticated
-Route::middleware(['auth', 'role:dosen'])->group(function () {
-    Route::get('/home', function () {
-        $kpi = KpiPeriod::where('is_active', true)->first();
-        $user = User::with('subjects.subject', 'presences')->where('id', request()->user()->id)->first();
-        $presences = $user->presences()->where('kpi_period_id', $kpi->id)->get();
-        return view('home', compact('kpi', 'user', 'presences'));
-    });
-    Route::post('/home/presences-control', function () {
-        $request = request();
-        $request->validate([
-            'kpi_period_id' => ['required', 'exists:kpi_periods,id'],
-            'subject_id' => ['required', 'exists:subjects,id'],
-            'control' => ['required', 'string', 'in:+,-']
-        ]);
-        $kpi = KpiPeriod::findOrFail($request->kpi_period_id);
-        if (now() < $kpi->start_date) {
-            return abort(400, 'Belum mulai');
-        }
-        if (now() > $kpi->end_date) {
-            return abort(400, 'Kadaluarsa');
-        }
-        if ($request->control == '+') {
-            // check quota
-            $checkQuota = UsersHasSubject::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->first();
-
-            // count presences
-            $checkPresences = UserPresence::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->get();
-            if ($checkPresences->count() < $checkQuota->quota) {
-                UserPresence::create([
-                    'user_id' => request()->user()->id,
-                    'kpi_period_id' => $request->kpi_period_id,
-                    'subject_id' => $request->subject_id,
-                    'status' => 'hadir',
-                ]);
-            }
-        } else {
-            $presence = UserPresence::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->first();
-            if ($presence) {
-                $presence->delete();
-            }
-        }
-
-        // set points
-        $checkPoints = Point::where('user_id', $request->user()->id)->first();
-        $quotas = UsersHasSubject::where('user_id', $request->user()->id)->get()->pluck('quota');
-
-        // presences point
-        $quota = array_sum($quotas->toArray());
-
-        // survey points
-        $surveyPoints = UserFeedback::where('kpi_period_id', $kpi->id)->where('user_id', $request->user()->id)->get()->pluck('point');
-        $surveyPoint = array_sum($surveyPoints->toArray());
-
-        // presence points
-        $presencePoints = UserPresence::where('user_id', $request->user()->id)->where('kpi_period_id', $request->kpi_period_id)->get()->count();
-        if (!$checkPoints) {
-            $point = Point::create([
-                'user_id' => $request->user()->id,
-                'kpi_period_id' => $kpi->id,
-                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
-            ]);
-        } else {
-            $point = Point::where('user_id', $request->user()->id)->update([
-                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
-            ]);
-        }
-
-        return back();
-    });
+// authenticated dosen
+Route::middleware(['auth', 'verified', 'role:dosen'])->group(function () {
+    Route::get('/d/profile', [DosenPageController::class, 'profile'])->name('dosen.profile');
+    Route::post('/d/presence', [DosenPageController::class, 'presence'])->name('dosen.presence');
 });
 
 require __DIR__ . '/auth.php';
