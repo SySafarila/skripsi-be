@@ -64,7 +64,7 @@
                                 class="nav-link {{ request()->routeIs('admin.subjects.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
-                                    Mata Kuliah
+                                    Lingkup Absensi
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>

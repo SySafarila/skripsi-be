@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Mata Kuliah'
+    'title' => 'Lingkup Absensi'
 ])
 
 @section('head')
@@ -17,7 +17,7 @@
             <x-adminlte.session-notifications />
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Mata Kuliah</h1>
+                    <h1 class="m-0">Lingkup Absensi</h1>
                     @can('subjects-create')
                         <a href="{{ route('admin.subjects.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
@@ -25,7 +25,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Mata Kuliah</li>
+                        <li class="breadcrumb-item active">Lingkup Absensi</li>
                     </ol>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                                     <input type="checkbox" class="w-100" style="cursor: pointer">
                                     <span style="display: none;">Selector</span>
                                 </th>
-                                <th>Mata Kuliah</th>
+                                <th>Lingkup Absensi</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
