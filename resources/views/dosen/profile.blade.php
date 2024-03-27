@@ -23,21 +23,8 @@
             <td>{{ $subject->subject->name }}</td>
             <td>{{ $presences->where('subject_id', $subject->subject_id)->count() }}/{{ $subject->quota }} ({{
                 ($presences->where('subject_id', $subject->subject_id)->count() * 100) / $subject->quota }}%)</td>
-            <td style="display: flex; gap: .5rem;">
-                <form action="{{ route('dosen.presence') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
-                    <input type="hidden" name="subject_id" value="{{ $subject->subject_id }}">
-                    <input type="hidden" name="control" value="+">
-                    <button>+</button>
-                </form>
-                <form action="{{ route('dosen.presence') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
-                    <input type="hidden" name="subject_id" value="{{ $subject->subject_id }}">
-                    <input type="hidden" name="control" value="-">
-                    <button>-</button>
-                </form>
+            <td>
+                <a href="{{ route('dosen.subject', $subject->id) }}">Absen Masuk</a>
             </td>
         </tr>
         @endforeach
