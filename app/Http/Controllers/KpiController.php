@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\KpiPeriod;
+use App\Models\Point;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
@@ -74,12 +77,36 @@ class KpiController extends Controller
             'is_active' => ['required', 'in:1,0'],
         ]);
 
-        KpiPeriod::create([
-            'title' => $request->title,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'is_active' => $request->is_active === '0' ? false : true,
-        ]);
+        DB::beginTransaction();
+        try {
+            $kpi = KpiPeriod::create([
+                'title' => $request->title,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'is_active' => $request->is_active === '0' ? false : true,
+            ]);
+
+            $users = User::role(['dosen', 'tendik', 'staff'])->get();
+            $arr = [];
+            foreach ($users as $user) {
+                $check = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
+                if (!$check) {
+                    $time = now();
+                    array_push($arr, [
+                        'user_id' => $user->id,
+                        'kpi_period_id' => $kpi->id,
+                        'points' => 0,
+                        'created_at' => $time,
+                        'updated_at' => $time
+                    ]);
+                }
+            }
+            DB::table('points')->insert($arr);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
 
         return redirect()->route('admin.kpi.index')->with('success', 'Periode KPI created !');
     }
