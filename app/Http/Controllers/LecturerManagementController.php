@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\UsersHasSubject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
@@ -155,7 +157,21 @@ class LecturerManagementController extends Controller
      */
     public function destroy($id)
     {
-        UsersHasSubject::destroy($id);
+        $check = UsersHasSubject::find($id);
+        if ($check) {
+            DB::beginTransaction();
+            try {
+                $kpi = KpiPeriod::where('is_active', true)->first();
+                // $user = User::findOrFail($check->user_id)
+                $this->setPoint($kpi, $check->user);
+                $check->delete();
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                //throw $th;
+                Log::error('LecturerManagementController: ' . $th->getMessage());
+            }
+        }
 
         if (request()->ajax()) {
             return response()->json(true);

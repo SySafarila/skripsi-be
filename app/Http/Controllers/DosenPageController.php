@@ -41,7 +41,8 @@ class DosenPageController extends Controller
             'kpi_period_id' => ['required', 'exists:kpi_periods,id'],
             'subject_id' => ['required', 'exists:subjects,id'],
             'control' => ['required', 'string', 'in:+,-'],
-            'image' => ['nullable', 'file', 'image']
+            'image' => ['nullable', 'file', 'image'],
+            'users_has_subject_id' => ['required', 'exists:users_has_subjects,id']
         ]);
         $kpi = KpiPeriod::findOrFail($request->kpi_period_id);
 
@@ -72,7 +73,8 @@ class DosenPageController extends Controller
                         'kpi_period_id' => $request->kpi_period_id,
                         'subject_id' => $request->subject_id,
                         'status' => 'hadir',
-                        'image' => $path
+                        'image' => $path,
+                        'users_has_subject_id' => $request->users_has_subject_id
                     ]);
                 }
             } else {

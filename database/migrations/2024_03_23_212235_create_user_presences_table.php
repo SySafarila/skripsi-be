@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(KpiPeriod::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Subject::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(UsersHasSubject::class)->constrained()->cascadeOnDelete();
             $table->string('status');
             $table->string('image')->nullable();
             $table->timestamps();
