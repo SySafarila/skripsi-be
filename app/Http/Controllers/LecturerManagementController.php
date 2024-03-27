@@ -135,16 +135,36 @@ class LecturerManagementController extends Controller
         ]);
 
         $check = UsersHasSubject::where('user_id', $request->user_id)->where('subject_id', $request->subject_id)->first();
+        $kpi = KpiPeriod::where('is_active', true)->firstOrFail();
         if ($check) {
+            DB::beginTransaction();
+            try {
+                $check->update([
+                    'quota' => $request->quota
+                ]);
+                $this->setPoint($kpi, $check->user);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                throw $th;
+            }
             return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi diperbarui !');
         }
 
         $subject = UsersHasSubject::findOrFail($id);
-        $subject->update([
-            'user_id' => $request->user_id,
-            'subject_id' => $request->subject_id,
-            'quota' => $request->quota
-        ]);
+        DB::beginTransaction();
+        try {
+            $subject->update([
+                'user_id' => $request->user_id,
+                'subject_id' => $request->subject_id,
+                'quota' => $request->quota
+            ]);
+            $this->setPoint($kpi, $check->user);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
 
         return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi diperbarui !');
     }
@@ -184,11 +204,25 @@ class LecturerManagementController extends Controller
     {
         $arr = explode(',', $request->ids);
 
-        // foreach ($arr as $data) {
-        // UsersHasSubject::destroy($data);
-        // }
+        foreach ($arr as $id) {
+            $check = UsersHasSubject::find($id);
+            if ($check) {
+                DB::beginTransaction();
+                try {
+                    $kpi = KpiPeriod::where('is_active', true)->first();
+                    // $user = User::findOrFail($check->user_id)
+                    $check->delete();
+                    $this->setPoint($kpi, $check->user);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    DB::rollBack();
+                    //throw $th;
+                    Log::error('LecturerManagementController: ' . $th->getMessage());
+                }
+            }
+        }
 
-        UsersHasSubject::destroy($arr);
+        // UsersHasSubject::destroy($arr);
 
         if (request()->ajax()) {
             return response()->json(true);
