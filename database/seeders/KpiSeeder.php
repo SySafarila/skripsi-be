@@ -7,6 +7,7 @@ use App\Models\Point;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class KpiSeeder extends Seeder
 {
@@ -22,16 +23,21 @@ class KpiSeeder extends Seeder
             'is_active' => true,
         ]);
 
-        $users = User::all();
+        $users = User::role(['dosen', 'tendik', 'staff'])->get();
+        $arr = [];
         foreach ($users as $user) {
             $check = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
             if (!$check) {
-                Point::create([
+                $time = now();
+                array_push($arr, [
                     'user_id' => $user->id,
                     'kpi_period_id' => $kpi->id,
-                    'points' => 0
+                    'points' => 0,
+                    'created_at' => $time,
+                    'updated_at' => $time
                 ]);
             }
         }
+        DB::table('points')->insert($arr);
     }
 }
