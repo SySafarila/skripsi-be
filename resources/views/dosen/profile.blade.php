@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <p>Periode KPI: {{ $kpi->title }} ({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} - {{
+    <p>Periode KPI Aktif: {{ $kpi->title }} ({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} - {{
         \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }})</p>
     <h2>Daftar hadir - {{ $user->name }}</h2>
     <table border="1">
@@ -29,7 +29,11 @@
         @endforeach
         <tr>
             <td>Total Hadir:</td>
-            <td colspan="2">{{ $presences->count() }}/{{ array_sum($user->subjects->pluck('quota')->toArray()) }} ({{ number_format(($presences->count() * 100)/ array_sum($user->subjects->pluck('quota')->toArray()), 2) }}%)</td>
+            @if ($presences->count() > 0)
+                <td colspan="2">{{ $presences->count() }}/{{ array_sum($user->subjects->pluck('quota')->toArray()) }} ({{ number_format(($presences->count() * 100)/ array_sum($user->subjects->pluck('quota')->toArray()), 2) }}%)</td>
+            @else
+                <td colspan="2">0</td>
+            @endif
         </tr>
     </table>
     <p>Point: {{ $point ? number_format($point->points, 2) : '-' }} ({{ $point ? $point->updated_at->format('d/m/Y - H:i') : '-' }})</p>
