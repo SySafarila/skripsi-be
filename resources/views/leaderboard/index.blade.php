@@ -19,7 +19,7 @@
         </tr>
         @foreach ($points as $point)
         <tr>
-            <td>{{ $n++ }}</td>
+            <td>{{ $points[0]->points == 0 ? '-' : $n++ }}</td>
             <td>{{ $point->user->name ?? '-' }} (@foreach ($point->user->roles as $role)
                 <span>{{ $role->name }} </span>
                 @endforeach)

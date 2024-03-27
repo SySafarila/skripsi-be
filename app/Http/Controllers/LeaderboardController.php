@@ -13,6 +13,9 @@ class LeaderboardController extends Controller
     {
         $request = request();
         $kpi = KpiPeriod::where('is_active', true)->first();
+        if (!$kpi) {
+            return abort(400, 'KPI Not found');
+        }
         switch ($request->filter) {
             case 'dosen':
                 $users = User::role('dosen')->get()->pluck('id');

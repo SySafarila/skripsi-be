@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Pengelolaan Dosen'
+    'title' => 'Quota Absensi'
 ])
 
 @section('head')
@@ -17,7 +17,7 @@
             <x-adminlte.session-notifications />
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Pengelolaan Dosen</h1>
+                    <h1 class="m-0">Quota Absensi</h1>
                     @can('lecturer-managements-create')
                         <a href="{{ route('admin.lecturer-managements.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
@@ -25,7 +25,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Pengelolaan Dosen</li>
+                        <li class="breadcrumb-item active">Quota Absensi</li>
                     </ol>
                 </div>
             </div>
@@ -58,9 +58,9 @@
                                     <input type="checkbox" class="w-100" style="cursor: pointer">
                                     <span style="display: none;">Selector</span>
                                 </th>
-                                <th>Nama Dosen</th>
-                                <th>Mata Kuliah</th>
-                                <th>Quota Hadir</th>
+                                <th>Karyawan/Dosen</th>
+                                <th>Subjek Absensi</th>
+                                <th>Quota Kehadiran</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>

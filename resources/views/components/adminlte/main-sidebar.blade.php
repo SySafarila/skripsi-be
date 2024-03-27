@@ -70,6 +70,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('lecturer-managements-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.lecturer-managements.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.lecturer-managements.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Quota Absensi
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('feedback-questions-read')
                         <li class="nav-item">
                             <a href="{{ route('admin.questions.index') }}"
@@ -77,18 +89,6 @@
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
                                     Pertanyaan Umpan Balik
-                                    {{-- <span class="right badge badge-danger">New</span> --}}
-                                </p>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('lecturer-managements-read')
-                        <li class="nav-item">
-                            <a href="{{ route('admin.lecturer-managements.index') }}"
-                                class="nav-link {{ request()->routeIs('admin.lecturer-managements.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
-                                <p>
-                                    Pengelolaan Dosen
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>

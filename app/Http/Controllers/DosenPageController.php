@@ -6,7 +6,7 @@ use App\Models\KpiPeriod;
 use App\Models\Point;
 use App\Models\Subject;
 use App\Models\User;
-use App\Models\UserFeedback;
+// use App\Models\UserFeedback;
 use App\Models\UserPresence;
 use App\Models\UsersHasSubject;
 use Illuminate\Http\File;
@@ -30,8 +30,8 @@ class DosenPageController extends Controller
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
         $user = User::with('presences')->where('id', request()->user()->id)->first();
-        $presences = $user->presences()->where('kpi_period_id', $kpi->id)->orderBy('created_at', 'desc')->get();
         $subject = Subject::findOrFail($subject_id);
+        $presences = $user->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
         return view('dosen.subject', compact('kpi', 'user', 'presences', 'subject'));
     }
 
@@ -96,35 +96,5 @@ class DosenPageController extends Controller
         }
 
         return back();
-    }
-
-    private function setPoint($kpi, $user)
-    {
-        // set points
-        $checkPoints = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
-        $quotas = UsersHasSubject::where('user_id', $user->id)->get()->pluck('quota')->toArray();
-
-        // presences point
-        $quota = array_sum($quotas);
-
-        // survey points
-        $surveyPoints = UserFeedback::where('kpi_period_id', $kpi->id)->where('user_id', $user->id)->get()->pluck('point')->toArray();
-        $surveyPoint = array_sum($surveyPoints);
-
-        // presence points
-        $presencePoints = UserPresence::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->get()->count();
-        if (!$checkPoints) {
-            $point = Point::create([
-                'user_id' => $user->id,
-                'kpi_period_id' => $kpi->id,
-                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
-            ]);
-        } else {
-            $point = Point::where('user_id', $user->id)->update([
-                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
-            ]);
-        }
-
-        return $point;
     }
 }

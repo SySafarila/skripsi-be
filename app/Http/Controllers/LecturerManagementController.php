@@ -84,7 +84,7 @@ class LecturerManagementController extends Controller
             'quota' => $request->quota
         ]);
 
-        return redirect()->route('admin.lecturer-managements.index')->with('success', 'Pengelolaan Dosen berhasil dibuat !');
+        return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi berhasil dibuat !');
     }
 
     /**
@@ -137,7 +137,7 @@ class LecturerManagementController extends Controller
             'quota' => $request->quota
         ]);
 
-        return redirect()->route('admin.lecturer-managements.index')->with('success', 'Pengelolaan Dosen diperbarui !');
+        return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi diperbarui !');
     }
 
     /**
