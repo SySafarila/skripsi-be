@@ -34,6 +34,11 @@ class SubjectSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+            [
+                'name' => 'Staff',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ];
         DB::table('subjects')->insert($subjects);
     }
