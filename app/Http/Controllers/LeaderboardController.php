@@ -12,9 +12,23 @@ class LeaderboardController extends Controller
     public function index()
     {
         $request = request();
-        $kpi = KpiPeriod::where('is_active', true)->first();
+        $kpis = KpiPeriod::limit(10)->orderBy('start_date', 'desc')->get();
+        if ($request->kpi_period_id) {
+            $kpi = KpiPeriod::where('id', $request->kpi_period_id)->first();
+        } else {
+            $kpi = KpiPeriod::where('is_active', true)->first();
+        }
         if (!$kpi) {
             return abort(400, 'KPI Not found');
+        }
+        if (!Point::where('kpi_period_id', $kpi->id)->where('user_id', $request->user()->id)->first()) {
+            Point::create([
+                'kpi_period_id' => $kpi->id,
+                'user_id' => $request->user()->id,
+                'points' => 0
+            ]);
+
+            return redirect()->route('leaderboard.index', ['kpi_period_id' => $request->kpi_period_id]);
         }
         switch ($request->filter) {
             case 'dosen':
@@ -33,9 +47,9 @@ class LeaderboardController extends Controller
                 $users = User::role(['dosen', 'tendik', 'staff'])->get()->pluck('id');
                 break;
         }
-        $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->get();
+        $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
         $n = 1;
         // return $points;
-        return view('leaderboard.index', compact('points', 'n', 'kpi'));
+        return view('leaderboard.index', compact('points', 'n', 'kpi', 'kpis'));
     }
 }
