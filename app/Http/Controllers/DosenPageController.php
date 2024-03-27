@@ -32,7 +32,8 @@ class DosenPageController extends Controller
         $user = User::with('presences')->where('id', request()->user()->id)->first();
         $subject = Subject::findOrFail($subject_id);
         $presences = $user->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
-        return view('dosen.subject', compact('kpi', 'user', 'presences', 'subject'));
+        $userHasSubjectId = $user->subjects()->where('subject_id', $subject->id)->firstOrFail()->id;
+        return view('dosen.subject', compact('kpi', 'user', 'presences', 'subject', 'userHasSubjectId'));
     }
 
     public function presence(Request $request)

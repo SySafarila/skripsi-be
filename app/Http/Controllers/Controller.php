@@ -29,15 +29,17 @@ class Controller extends BaseController
 
         // presence points
         $presencePoints = UserPresence::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->get()->count();
+        $resultX = $presencePoints * 100;
+        $resultPresencePoints = $resultX == 0 ? 0 : $resultX / $quota;
         if (!$checkPoints) {
             $point = Point::create([
                 'user_id' => $user->id,
                 'kpi_period_id' => $kpi->id,
-                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
+                'points' => $resultPresencePoints + $surveyPoint
             ]);
         } else {
             $point = Point::where('user_id', $user->id)->update([
-                'points' => (($presencePoints * 100) / $quota) + $surveyPoint
+                'points' => $resultPresencePoints + $surveyPoint
             ]);
         }
 

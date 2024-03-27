@@ -163,8 +163,8 @@ class LecturerManagementController extends Controller
             try {
                 $kpi = KpiPeriod::where('is_active', true)->first();
                 // $user = User::findOrFail($check->user_id)
-                $this->setPoint($kpi, $check->user);
                 $check->delete();
+                $this->setPoint($kpi, $check->user);
                 DB::commit();
             } catch (\Throwable $th) {
                 DB::rollBack();

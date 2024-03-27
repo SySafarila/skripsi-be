@@ -58,7 +58,7 @@
         <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
         <input type="hidden" name="subject_id" value="{{ $subject->id }}">
         <input type="hidden" name="control" value="+">
-        <input type="hidden" name="users_has_subject_id" value="{{ $user->subjects()->where('subject_id', $subject->id)->first()->id }}">
+        <input type="hidden" name="users_has_subject_id" value="{{ $userHasSubjectId }}">
         <input type="file" name="image" id="image" accept="image/*">
         <br>
         <button>Absen Masuk</button>
