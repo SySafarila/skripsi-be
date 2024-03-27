@@ -21,8 +21,7 @@
         @foreach ($user->subjects as $user_has_subject)
         <tr>
             <td>{{ $user_has_subject->subject->name }}</td>
-            <td>{{ $presences->where('subject_id', $user_has_subject->subject_id)->count() }}/{{ $user_has_subject->quota }} ({{
-                ($presences->where('subject_id', $user_has_subject->subject_id)->count() * 100) / $user_has_subject->quota }}%)</td>
+            <td>{{ $presences->where('subject_id', $user_has_subject->subject_id)->count() }}/{{ $user_has_subject->quota }} ({{ number_format(($presences->where('subject_id', $user_has_subject->subject_id)->count() * 100) / $user_has_subject->quota, 2) }}%)</td>
             <td>
                 <a href="{{ route('dosen.subject', $user_has_subject->subject_id) }}">Absen Masuk</a>
             </td>
@@ -30,11 +29,10 @@
         @endforeach
         <tr>
             <td>Total Hadir:</td>
-            <td colspan="2">{{ $presences->count() }}/{{ array_sum($user->subjects->pluck('quota')->toArray()) }} ({{
-                ($presences->count() * 100)/ array_sum($user->subjects->pluck('quota')->toArray()) }}%)</td>
+            <td colspan="2">{{ $presences->count() }}/{{ array_sum($user->subjects->pluck('quota')->toArray()) }} ({{ number_format(($presences->count() * 100)/ array_sum($user->subjects->pluck('quota')->toArray()), 2) }}%)</td>
         </tr>
     </table>
-    <p>Point: {{ $point->points ?? '-' }} ({{ $point ? $point->updated_at->format('d/m/Y - H:i') : '-' }})</p>
+    <p>Point: {{ $point ? number_format($point->points, 2) : '-' }} ({{ $point ? $point->updated_at->format('d/m/Y - H:i') : '-' }})</p>
 </body>
 
 </html>

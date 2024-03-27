@@ -39,7 +39,7 @@
             <td>{{ $points[0]->points == 0 ? '-' : $n++ }}</td>
             <td>{{ $point->user->name ?? '-' }} ({{ rolesProcessor($point->user->roles) }})
             </td>
-            <td>{{ $point->points }}</td>
+            <td>{{ number_format($point->points, 2) }}</td>
         </tr>
         @endforeach
     </table>
