@@ -78,11 +78,14 @@ class LecturerManagementController extends Controller
             'subject_id' => ['required', 'exists:subjects,id'],
             'quota' => ['required', 'numeric', 'min:1']
         ]);
-        UsersHasSubject::create([
-            'user_id' => $request->user_id,
-            'subject_id' => $request->subject_id,
-            'quota' => $request->quota
-        ]);
+        $check = UsersHasSubject::where('user_id', $request->user_id)->where('subject_id', $request->subject_id)->first();
+        if (!$check) {
+            UsersHasSubject::create([
+                'user_id' => $request->user_id,
+                'subject_id' => $request->subject_id,
+                'quota' => $request->quota
+            ]);
+        }
 
         return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi berhasil dibuat !');
     }
@@ -129,8 +132,12 @@ class LecturerManagementController extends Controller
             'quota' => ['required', 'numeric', 'min:1']
         ]);
 
-        $subject = UsersHasSubject::findOrFail($id);
+        $check = UsersHasSubject::where('user_id', $request->user_id)->where('subject_id', $request->subject_id)->first();
+        if ($check) {
+            return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi diperbarui !');
+        }
 
+        $subject = UsersHasSubject::findOrFail($id);
         $subject->update([
             'user_id' => $request->user_id,
             'subject_id' => $request->subject_id,
