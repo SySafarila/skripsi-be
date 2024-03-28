@@ -144,30 +144,30 @@ class PermissionSeeder extends Seeder
             ],
         );
 
-        // subjects / mata kuliah
+        // presence scopes
         array_push(
             $arr,
             [
                 'guard_name' => 'web',
-                'name' => 'subjects-create',
+                'name' => 'presence-scopes-create',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'subjects-read',
+                'name' => 'presence-scopes-read',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'subjects-update',
+                'name' => 'presence-scopes-update',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'subjects-delete',
+                'name' => 'presence-scopes-delete',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

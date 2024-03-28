@@ -14,10 +14,10 @@ class SubjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:subjects-create')->only(['create', 'store']);
-        $this->middleware('can:subjects-read')->only('index');
-        $this->middleware('can:subjects-update')->only(['edit', 'update']);
-        $this->middleware('can:subjects-delete')->only(['destroy', 'massDestroy']);
+        $this->middleware('can:presence-scopes-create')->only(['create', 'store']);
+        $this->middleware('can:presence-scopes-read')->only('index');
+        $this->middleware('can:presence-scopes-update')->only(['edit', 'update']);
+        $this->middleware('can:presence-scopes-delete')->only(['destroy', 'massDestroy']);
     }
     /**
      * Display a listing of the resource.

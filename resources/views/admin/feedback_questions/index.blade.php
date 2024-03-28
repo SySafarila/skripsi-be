@@ -18,7 +18,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
                     <h1 class="m-0">Pertanyaan Umpan Balik</h1>
-                    @can('subjects-create')
+                    @can('presence-scopes-create')
                         <a href="{{ route('admin.questions.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
                 </div>

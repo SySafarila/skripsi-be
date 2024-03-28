@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // KPI
     Route::resource('/kpi', KpiController::class)->except(['show']);
 
-    // subjects / mata kuliah
+    // presence scopes
     Route::resource('/presence-scopes', SubjectController::class)->except(['show']);
 
     // Feedback questions
