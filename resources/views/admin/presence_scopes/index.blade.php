@@ -19,7 +19,7 @@
                 <div class="col-sm-6 d-flex align-items-center">
                     <h1 class="m-0">Lingkup Absensi</h1>
                     @can('subjects-create')
-                        <a href="{{ route('admin.subjects.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                        <a href="{{ route('admin.presence-scopes.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
@@ -112,7 +112,7 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.subjects.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.presence-scopes.massDestroy') }}')
                 }
             }, ];
 
@@ -125,7 +125,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.subjects.index') !!}',
+                ajax: '{!! route('admin.presence-scopes.index') !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000, -1],
                     [10, 50, 100, 500, 1000, 'All']

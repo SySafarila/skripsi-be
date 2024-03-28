@@ -58,10 +58,10 @@
                             </a>
                         </li>
                     @endcan
-                    @can('subjects-read')
+                    @can('presence-scopes-read')
                         <li class="nav-item">
-                            <a href="{{ route('admin.subjects.index') }}"
-                                class="nav-link {{ request()->routeIs('admin.subjects.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.presence-scopes.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.presence-scopes.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
                                     Lingkup Absensi

@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/kpi', KpiController::class)->except(['show']);
 
     // subjects / mata kuliah
-    Route::resource('/subjects', SubjectController::class)->except(['show']);
+    Route::resource('/presence-scopes', SubjectController::class)->except(['show']);
 
     // Feedback questions
     Route::resource('/questions', FeedbackQuestionController::class)->except(['show']);
@@ -65,7 +65,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::delete('/bulk-delete/users', [UserController::class, 'massDestroy'])->name('users.massDestroy');
     Route::delete('/bulk-delete/kpi', [KpiController::class, 'massDestroy'])->name('kpi.massDestroy');
-    Route::delete('/bulk-delete/subjects', [SubjectController::class, 'massDestroy'])->name('subjects.massDestroy');
+    Route::delete('/bulk-delete/presence-scopes', [SubjectController::class, 'massDestroy'])->name('presence-scopes.massDestroy');
     Route::delete('/bulk-delete/questions', [FeedbackQuestionController::class, 'massDestroy'])->name('questions.massDestroy');
     Route::delete('/bulk-delete/lecturer-managements', [LecturerManagementController::class, 'massDestroy'])->name('lecturer-managements.massDestroy');
     // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');

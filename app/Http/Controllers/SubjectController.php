@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KpiPeriod;
+// use App\Models\KpiPeriod;
 use App\Models\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Permission;
+// use Illuminate\Validation\Rule;
+// use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubjectController extends Controller
@@ -37,7 +37,7 @@ class SubjectController extends Controller
                 ->editColumn('end_date', function ($model) {
                     return Carbon::parse($model->end_date)->format('d-m-Y');
                 })
-                ->addColumn('options', 'admin.subjects.datatables.options')
+                ->addColumn('options', 'admin.presence_scopes.datatables.options')
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;
@@ -47,7 +47,7 @@ class SubjectController extends Controller
                 ->toJson();
         }
 
-        return view('admin.subjects.index');
+        return view('admin.presence_scopes.index');
     }
 
     /**
@@ -57,7 +57,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('admin.subjects.create');
+        return view('admin.presence_scopes.create');
     }
 
     /**
@@ -76,7 +76,7 @@ class SubjectController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->route('admin.subjects.index')->with('success', 'Mata kuliah berhasil dibuat !');
+        return redirect()->route('admin.presence_scopes.index')->with('success', 'Lingkup absensi berhasil dibuat !');
     }
 
     /**
@@ -100,7 +100,7 @@ class SubjectController extends Controller
     {
         $subject = Subject::findOrFail($id);
 
-        return view('admin.subjects.edit', compact('subject'));
+        return view('admin.presence_scopes.edit', compact('subject'));
     }
 
     /**
@@ -122,7 +122,7 @@ class SubjectController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('admin.subjects.index')->with('success', 'Mata kuliah diperbarui !');
+        return redirect()->route('admin.presence_scopes.index')->with('success', 'Lingkup absensi diperbarui !');
     }
 
     /**
@@ -139,7 +139,7 @@ class SubjectController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.subjects.index')->with('status', 'Permission deleted !');
+        return redirect()->route('admin.presence_scopes.index')->with('status', 'Permission deleted !');
     }
 
     public function massDestroy(Request $request)
@@ -156,6 +156,6 @@ class SubjectController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.subjects.index')->with('status', 'Bulk delete success');
+        return redirect()->route('admin.presence_scopes.index')->with('status', 'Bulk delete success');
     }
 }

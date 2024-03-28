@@ -10,13 +10,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Edit Lingkup Absensi</h1>
+                    <h1 class="m-0">Buat Lingkup Absensi</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.kpi.index') }}">Lingkup Absensi</a></li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.presence-scopes.index') }}">Lingkup Absensi</a></li>
+                        <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
             </div>
@@ -27,12 +27,11 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body">
-                    <form action="{{ route('admin.subjects.update', $subject) }}" method="POST">
+                    <form action="{{ route('admin.presence-scopes.store') }}" method="POST">
                         @csrf
-                        @method('PATCH')
                         <div class="form-group">
                             <label for="name" class="text-capitalize">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ $subject->name }}" required>
+                            <input type="text" class="form-control" id="name" name="name" required>
                             @error('name')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
