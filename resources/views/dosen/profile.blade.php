@@ -14,7 +14,7 @@
     <h2>Daftar hadir - {{ $user->name }}</h2>
     <table border="1">
         <tr>
-            <th>Mata Kuliah</th>
+            <th>Absensi</th>
             <th>Kehadiran</th>
             <th>Aksi</th>
         </tr>

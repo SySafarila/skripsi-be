@@ -18,5 +18,15 @@ class LecturerManagementSeeder extends Seeder
             'subject_id' => 1,
             'quota' => 16
         ]);
+        UsersHasSubject::create([
+            'user_id' => 5,
+            'subject_id' => 5,
+            'quota' => 18
+        ]);
+        UsersHasSubject::create([
+            'user_id' => 4,
+            'subject_id' => 5,
+            'quota' => 18
+        ]);
     }
 }

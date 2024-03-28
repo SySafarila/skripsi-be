@@ -19,8 +19,7 @@
 </head>
 
 <body>
-    <h1>{{ now()->format('d/m/Y - H:i') }}</h1>
-    <h1>Daftar Hadir Mata Kuliah {{ $subject->name }}</h1>
+    <h1>Daftar Hadir - {{ $subject->name }}</h1>
     <table border="1">
         <tr>
             <td>Tanggal</td>
