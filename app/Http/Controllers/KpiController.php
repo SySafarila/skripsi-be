@@ -79,6 +79,15 @@ class KpiController extends Controller
 
         DB::beginTransaction();
         try {
+            if ($request->is_active === '1') {
+                $checkKpi = KpiPeriod::where('is_active', true)->first();
+                if ($checkKpi) {
+                    $checkKpi->update([
+                        'is_active' => false
+                    ]);
+                }
+            }
+
             $kpi = KpiPeriod::create([
                 'title' => $request->title,
                 'start_date' => $request->start_date,
@@ -151,14 +160,30 @@ class KpiController extends Controller
             'is_active' => ['required', 'in:1,0'],
         ]);
 
-        $kpi = KpiPeriod::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            if ($request->is_active === '1') {
+                $checkKpi = KpiPeriod::where('is_active', true)->first();
+                if ($checkKpi) {
+                    $checkKpi->update([
+                        'is_active' => false
+                    ]);
+                }
+            }
 
-        $kpi->update([
-            'title' => $request->title,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'is_active' => $request->is_active === '0' ? false : true,
-        ]);
+            $kpi = KpiPeriod::findOrFail($id);
+
+            $kpi->update([
+                'title' => $request->title,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'is_active' => $request->is_active === '0' ? false : true,
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            //throw $th;
+        }
 
         return redirect()->route('admin.kpi.index')->with('success', 'Periode KPI updated !');
     }
