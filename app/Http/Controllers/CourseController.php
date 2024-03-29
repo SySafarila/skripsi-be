@@ -40,6 +40,12 @@ class CourseController extends Controller
             }
             return DataTables::of($model->with('user', 'major'))
                 ->addColumn('options', 'admin.courses.datatables.options')
+                ->editColumn('user_id', function($model) {
+                    return $model->user ? $model->user->name : '-';
+                })
+                ->editColumn('major_id', function($model) {
+                    return $model->major ? $model->major->major : '-';
+                })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;

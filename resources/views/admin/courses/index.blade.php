@@ -154,14 +154,14 @@
                     data: 'name',
                     name: 'name'
                 }, {
-                    data: 'user.name',
-                    name: 'user.name'
+                    data: 'user_id',
+                    name: 'user_id'
                 }, {
                     data: 'semester',
                     name: 'semester'
                 }, {
-                    data: 'major.major',
-                    name: 'major.major'
+                    data: 'major_id',
+                    name: 'major_id'
                 }, {
                     data: 'options',
                     name: 'options'
