@@ -76,7 +76,7 @@
                                 class="nav-link {{ request()->routeIs('admin.employees-management.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
-                                    Quota Absensi
+                                    Quota Absensi Karyawan
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
