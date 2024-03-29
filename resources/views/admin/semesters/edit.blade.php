@@ -32,7 +32,7 @@
                         @method('PATCH')
                         <div class="form-group">
                             <label for="semester" class="text-capitalize">semester</label>
-                            <input type="text" class="form-control" id="semester" name="semester" value="{{ $semester->semester }}" required>
+                            <input type="number" class="form-control" id="semester" name="semester" value="{{ $semester->semester }}" required>
                             @error('semester')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
