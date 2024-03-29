@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeedbackQuestion;
-use App\Models\KpiPeriod;
-use App\Models\Subject;
-use Carbon\Carbon;
+// use App\Models\KpiPeriod;
+// use App\Models\Subject;
+// use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Permission;
+// use Illuminate\Validation\Rule;
+// use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class FeedbackQuestionController extends Controller
@@ -72,7 +72,7 @@ class FeedbackQuestionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'question' => ['required', 'string', 'max:255', "unique:user_feedback,question"],
+            'question' => ['required', 'string', "unique:user_feedback,question"],
             'type' => ['required', 'string', 'max:255', 'in:mahasiswa-to-dosen']
         ]);
 
@@ -118,7 +118,7 @@ class FeedbackQuestionController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'question' => ['required', 'string', 'max:255', "unique:user_feedback,question,$id"],
+            'question' => ['required', 'string', "unique:user_feedback,question,$id"],
             'type' => ['required', 'string', 'max:255', 'in:mahasiswa-to-dosen']
         ]);
 

@@ -15,7 +15,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.kpi.index') }}">Pertanyaan Umpan Balik</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.questions.index') }}">Pertanyaan Umpan Balik</a></li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
