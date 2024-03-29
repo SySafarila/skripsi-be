@@ -94,6 +94,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('semesters-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.semesters.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.semesters.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Semester
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                 @endcanany
                 <x-adminlte.sidebar-system />
                 <li class="nav-item mt-2 pt-2" style="border-top: 1px solid #4f5962;">

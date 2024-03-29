@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             KpiSeeder::class,
             FeedbackQuestionSeeder::class,
-            LecturerManagementSeeder::class
+            LecturerManagementSeeder::class,
+            SemesterSeeder::class
         ]);
     }
 }
