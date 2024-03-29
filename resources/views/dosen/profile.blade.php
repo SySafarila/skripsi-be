@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <div>
+        <a href="{{ route('profile') }}">Profil</a>
+        <a href="{{ route('leaderboard.index') }}">Leaderboard</a>
+    </div>
     <p>Periode KPI Aktif: {{ $kpi->title }} ({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} - {{
         \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }})</p>
     <h2>Daftar hadir - {{ $user->name }}</h2>
@@ -23,7 +27,7 @@
             <td>{{ $user_has_subject->subject->name }}</td>
             <td>{{ $presences->where('subject_id', $user_has_subject->subject_id)->count() }}/{{ $user_has_subject->quota }} ({{ number_format(($presences->where('subject_id', $user_has_subject->subject_id)->count() * 100) / $user_has_subject->quota, 2) }}%)</td>
             <td>
-                <a href="{{ route('dosen.subject', $user_has_subject->subject_id) }}">Absen Masuk</a>
+                <a href="{{ route('presence.show', $user_has_subject->subject_id) }}">Absen Masuk</a>
             </td>
         </tr>
         @endforeach

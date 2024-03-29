@@ -79,14 +79,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // authenticated dosen
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
-    Route::get('/d/profile', [DosenPageController::class, 'profile'])->name('dosen.profile');
-    Route::get('/d/profile/{subject_id}', [DosenPageController::class, 'subject'])->name('dosen.subject');
-    Route::post('/d/presence', [DosenPageController::class, 'presence'])->name('dosen.presence');
 });
 
 // authenticated employee
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
     Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
+    Route::get('/profile', [DosenPageController::class, 'profile'])->name('profile');
+    Route::get('/profile/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('presence.show');
+    Route::post('/presence', [DosenPageController::class, 'presence'])->name('presence.store');
 });
 
 require __DIR__ . '/auth.php';

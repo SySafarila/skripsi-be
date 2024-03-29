@@ -18,6 +18,11 @@
 </head>
 
 <body>
+    <div>
+        <a href="{{ route('profile') }}">Profil</a>
+        <a href="{{ route('leaderboard.index') }}">Leaderboard</a>
+    </div>
+    <br>
     <form action="">
         <select name="kpi_period_id" id="kpi_period_id">
             @foreach ($kpis as $kpi_loop)

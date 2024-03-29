@@ -19,6 +19,10 @@
 </head>
 
 <body>
+    <div>
+        <a href="{{ route('profile') }}">Profil</a>
+        <a href="{{ route('leaderboard.index') }}">Leaderboard</a>
+    </div>
     <h1>Daftar Hadir - {{ $subject->name }}</h1>
     <table border="1">
         <tr>
@@ -39,7 +43,7 @@
                 @endif
             </td>
             <td>
-                <form action="{{ route('dosen.presence') }}" method="post">
+                <form action="{{ route('presence.store') }}" method="post">
                     @csrf
                     <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
                     <input type="hidden" name="subject_id" value="{{ $subject->id }}">
@@ -52,7 +56,7 @@
         @endforeach
     </table>
     <br>
-    <form action="{{ route('dosen.presence') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('presence.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
         <input type="hidden" name="subject_id" value="{{ $subject->id }}">
