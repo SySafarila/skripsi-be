@@ -39,6 +39,14 @@ class UserSeeder extends Seeder
         ]);
         $dosen->syncRoles(['dosen']);
 
+        $dosen2 = User::create([
+            'name' => 'Dosen2',
+            'email' => 'dosen2@dosen2.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now()
+        ]);
+        $dosen2->syncRoles(['dosen']);
+
         $tendik = User::create([
             'name' => 'Tendik',
             'email' => 'tendik@tendik.com',
