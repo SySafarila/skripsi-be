@@ -91,4 +91,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subjects() {
         return $this->hasMany(UsersHasSubject::class);
     }
+
+    public function major() {
+        return $this->hasOne(UserHasMajor::class);
+    }
 }

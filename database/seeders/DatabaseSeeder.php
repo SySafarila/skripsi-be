@@ -29,7 +29,8 @@ class DatabaseSeeder extends Seeder
             LecturerManagementSeeder::class,
             // SemesterSeeder::class,
             MajorsSeeder::class,
-            CourseSeeder::class
+            CourseSeeder::class,
+            UserHasMajorSeeder::class
         ]);
     }
 }
