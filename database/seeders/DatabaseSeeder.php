@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             FeedbackQuestionSeeder::class,
             LecturerManagementSeeder::class,
             SemesterSeeder::class,
-            MajorsSeeder::class
+            MajorsSeeder::class,
+            CourseSeeder::class
         ]);
     }
 }
