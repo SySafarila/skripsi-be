@@ -106,6 +106,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('courses-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.courses.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.courses.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Mata Kuliah
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('majors-read')
                         <li class="nav-item">
                             <a href="{{ route('admin.majors.index') }}"

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminIndex;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenPageController;
 // use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackQuestionController;
@@ -62,6 +63,9 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // majors / jurusan
     Route::resource('/majors', MajorController::class)->except(['show']);
 
+    // courses / mata kuliah
+    Route::resource('/courses', CourseController::class)->except(['show']);
+
     // Feedback questions
     Route::resource('/questions', FeedbackQuestionController::class)->except(['show']);
 
@@ -78,6 +82,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/employees-management', [LecturerManagementController::class, 'massDestroy'])->name('employees-management.massDestroy');
     Route::delete('/bulk-delete/semesters', [SemesterController::class, 'massDestroy'])->name('semesters.massDestroy');
     Route::delete('/bulk-delete/majors', [MajorController::class, 'massDestroy'])->name('majors.massDestroy');
+    Route::delete('/bulk-delete/courses', [CourseController::class, 'massDestroy'])->name('courses.massDestroy');
     // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
 });
 
