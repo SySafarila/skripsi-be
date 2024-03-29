@@ -260,6 +260,35 @@ class PermissionSeeder extends Seeder
             ],
         );
 
+        // majors
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'majors-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'majors-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'majors-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'majors-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
         DB::table('permissions')->insert($arr);
     }
 }
