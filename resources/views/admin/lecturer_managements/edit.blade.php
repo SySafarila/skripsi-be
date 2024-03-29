@@ -17,7 +17,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.lecturer-managements.index') }}">Quota Absensi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.employees-management.index') }}">Quota Absensi</a></li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
@@ -29,7 +29,7 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body">
-                    <form action="{{ route('admin.lecturer-managements.update', $subject) }}" method="POST">
+                    <form action="{{ route('admin.employees-management.update', $subject) }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="form-group">

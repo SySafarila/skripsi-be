@@ -18,10 +18,10 @@ class LecturerManagementController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:lecturer-managements-create')->only(['create', 'store']);
-        $this->middleware('can:lecturer-managements-read')->only('index');
-        $this->middleware('can:lecturer-managements-update')->only(['edit', 'update']);
-        $this->middleware('can:lecturer-managements-delete')->only(['destroy', 'massDestroy']);
+        $this->middleware('can:employees-management-create')->only(['create', 'store']);
+        $this->middleware('can:employees-management-read')->only('index');
+        $this->middleware('can:employees-management-update')->only(['edit', 'update']);
+        $this->middleware('can:employees-management-delete')->only(['destroy', 'massDestroy']);
     }
     /**
      * Display a listing of the resource.
@@ -89,7 +89,7 @@ class LecturerManagementController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi berhasil dibuat !');
+        return redirect()->route('admin.employees-management.index')->with('success', 'Quota Absensi berhasil dibuat !');
     }
 
     /**
@@ -148,7 +148,7 @@ class LecturerManagementController extends Controller
                 DB::rollBack();
                 throw $th;
             }
-            return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi diperbarui !');
+            return redirect()->route('admin.employees-management.index')->with('success', 'Quota Absensi diperbarui !');
         }
 
         $subject = UsersHasSubject::findOrFail($id);
@@ -166,7 +166,7 @@ class LecturerManagementController extends Controller
             throw $th;
         }
 
-        return redirect()->route('admin.lecturer-managements.index')->with('success', 'Quota Absensi diperbarui !');
+        return redirect()->route('admin.employees-management.index')->with('success', 'Quota Absensi diperbarui !');
     }
 
     /**
@@ -197,7 +197,7 @@ class LecturerManagementController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.lecturer-managements.index')->with('status', 'Permission deleted !');
+        return redirect()->route('admin.employees-management.index')->with('status', 'Permission deleted !');
     }
 
     public function massDestroy(Request $request)
@@ -228,6 +228,6 @@ class LecturerManagementController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.lecturer-managements.index')->with('status', 'Bulk delete success');
+        return redirect()->route('admin.employees-management.index')->with('status', 'Bulk delete success');
     }
 }

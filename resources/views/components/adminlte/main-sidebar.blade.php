@@ -70,10 +70,10 @@
                             </a>
                         </li>
                     @endcan
-                    @can('lecturer-managements-read')
+                    @can('employees-management-read')
                         <li class="nav-item">
-                            <a href="{{ route('admin.lecturer-managements.index') }}"
-                                class="nav-link {{ request()->routeIs('admin.lecturer-managements.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.employees-management.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.employees-management.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
                                     Quota Absensi

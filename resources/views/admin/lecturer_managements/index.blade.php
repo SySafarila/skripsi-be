@@ -18,8 +18,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
                     <h1 class="m-0">Quota Absensi</h1>
-                    @can('lecturer-managements-create')
-                        <a href="{{ route('admin.lecturer-managements.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                    @can('employees-management-create')
+                        <a href="{{ route('admin.employees-management.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
@@ -30,14 +30,14 @@
                 </div>
             </div>
             <form class="d-flex" style="gap: 8px;">
-                <select name="user_id" id="user_id" class="custom-select" style="max-width: 10rem;">
-                    <option value="">Semua Dosen</option>
+                <select name="user_id" id="user_id" class="custom-select" style="max-width: 13rem;">
+                    <option value="">Semua Karyawan/Dosen</option>
                     @foreach ($lecturers as $lecturer)
                         <option value="{{ $lecturer->id }}" {{ request()->user_id == $lecturer->id ? 'selected' : '' }}>{{ $lecturer->name }}</option>
                     @endforeach
                 </select>
                 <select name="subject_id" id="subject_id" class="custom-select" style="max-width: 13rem;">
-                    <option value="">Semua Mata Kuliah</option>
+                    <option value="">Semua Subjek Absensi</option>
                     @foreach ($subjects as $subject)
                         <option value="{{ $subject->id }}" {{ request()->subject_id == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
                     @endforeach
@@ -129,7 +129,7 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.lecturer-managements.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.employees-management.massDestroy') }}')
                 }
             }, ];
 
@@ -142,7 +142,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.lecturer-managements.index', ['user_id' => request()->user_id, 'subject_id' => request()->subject_id]) !!}',
+                ajax: '{!! route('admin.employees-management.index', ['user_id' => request()->user_id, 'subject_id' => request()->subject_id]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000, -1],
                     [10, 50, 100, 500, 1000, 'All']
