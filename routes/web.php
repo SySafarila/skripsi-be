@@ -58,7 +58,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/presence-scopes', SubjectController::class)->except(['show']);
 
     // semesters
-    Route::resource('/semesters', SemesterController::class)->except(['show']);
+    // Route::resource('/semesters', SemesterController::class)->except(['show']);
 
     // majors / jurusan
     Route::resource('/majors', MajorController::class)->except(['show']);

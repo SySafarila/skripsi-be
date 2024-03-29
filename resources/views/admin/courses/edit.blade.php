@@ -41,14 +41,35 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="semester" class="text-capitalize">Semester</label>
+                            <input type="number" class="form-control" id="semester" name="semester" value="{{ $course->semester }}" required>
+                            @error('semester')
+                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="user_id" class="text-capitalize">Dosen</label>
                             <select class="select2 form-control" name="user_id"
                                 data-placeholder="Pilih Dosen" style="width: 100%;" required>
+                                <option value="">Pilih</option>
                                 @foreach ($dosens as $dosen)
                                     <option value="{{ $dosen->id }}" {{ $course->user_id == $dosen->id ? 'selected' : '' }}>{{ $dosen->name }}</option>
                                 @endforeach
                             </select>
                             @error('user_id')
+                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="major_id" class="text-capitalize">Jurusan</label>
+                            <select class="select2 form-control" name="major_id"
+                                data-placeholder="Pilih Jurusan" style="width: 100%;" required>
+                                <option value="">Pilih</option>
+                                @foreach ($majors as $major)
+                                    <option value="{{ $major->id }}" {{ $course->major_id == $major->id ? 'selected' : '' }}>{{ $major->major }}</option>
+                                @endforeach
+                            </select>
+                            @error('major_id')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>

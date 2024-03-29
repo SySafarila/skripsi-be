@@ -36,6 +36,12 @@
                         <option value="{{ $lecturer->id }}" {{ request()->user_id == $lecturer->id ? 'selected' : '' }}>{{ $lecturer->name }}</option>
                     @endforeach
                 </select>
+                <select name="major_id" id="major_id" class="custom-select" style="max-width: 13rem;">
+                    <option value="">Semua Jurusan</option>
+                    @foreach ($majors as $major)
+                        <option value="{{ $major->id }}" {{ request()->major_id == $major->id ? 'selected' : '' }}>{{ $major->major }}</option>
+                    @endforeach
+                </select>
                 <button class="btn btn-primary" type="submit">Filter</button>
             </form>
         </div>
@@ -54,6 +60,8 @@
                                 </th>
                                 <th>Mata Kuliah</th>
                                 <th>Dosen</th>
+                                <th>Semester</th>
+                                <th>Jurusan</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -84,7 +92,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1, 2];
+            const exportOption = [1, 2, 3];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',
@@ -135,7 +143,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.courses.index', ['user_id' => request()->user_id]) !!}',
+                ajax: '{!! route('admin.courses.index', ['user_id' => request()->user_id, 'major_id' => request()->major_id]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000, -1],
                     [10, 50, 100, 500, 1000, 'All']
@@ -148,6 +156,12 @@
                 }, {
                     data: 'user.name',
                     name: 'user.name'
+                }, {
+                    data: 'semester',
+                    name: 'semester'
+                }, {
+                    data: 'major.major',
+                    name: 'major.major'
                 }, {
                     data: 'options',
                     name: 'options'
@@ -167,7 +181,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [2, 3]
+                    targets: [2, 4]
                 }],
                 order: [
                     [1, 'asc']

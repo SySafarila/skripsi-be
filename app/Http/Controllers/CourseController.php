@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Major;
 use App\Models\User;
 // use App\Models\Major;
 // use App\Models\Semester;
@@ -34,7 +35,10 @@ class CourseController extends Controller
             if (request()->user_id) {
                 $model->where('user_id', request()->user_id);
             }
-            return DataTables::of($model->with('user'))
+            if (request()->major_id) {
+                $model->where('major_id', request()->major_id);
+            }
+            return DataTables::of($model->with('user', 'major'))
                 ->addColumn('options', 'admin.courses.datatables.options')
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
@@ -45,7 +49,9 @@ class CourseController extends Controller
                 ->toJson();
         }
         $lecturers = User::role('dosen')->orderBy('name')->get();
-        return view('admin.courses.index', compact('lecturers'));
+        $majors = Major::orderBy('major', 'asc')->get();
+
+        return view('admin.courses.index', compact('lecturers', 'majors'));
     }
 
     /**
@@ -56,7 +62,8 @@ class CourseController extends Controller
     public function create()
     {
         $dosens = User::role('dosen')->orderBy('name', 'asc')->get();
-        return view('admin.courses.create', compact('dosens'));
+        $majors = Major::orderBy('major', 'asc')->get();
+        return view('admin.courses.create', compact('dosens', 'majors'));
     }
 
     /**
@@ -69,12 +76,16 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:courses,name'],
-            'user_id' => ['required', 'exists:users,id']
+            'user_id' => ['required', 'exists:users,id'],
+            'semester' => ['required', 'numeric', 'min:1'],
+            'major_id' => ['required', 'exists:majors,id']
         ]);
 
         Course::create([
             'name' => $request->name,
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
+            'semester' => $request->semester,
+            'major_id' => $request->major_id
         ]);
 
         return redirect()->route('admin.courses.index')->with('success', 'Mata Kuliah berhasil dibuat !');
@@ -101,8 +112,9 @@ class CourseController extends Controller
     {
         $course = Course::findOrFail($id);
         $dosens = User::role('dosen')->orderBy('name', 'asc')->get();
+        $majors = Major::orderBy('major', 'asc')->get();
 
-        return view('admin.courses.edit', compact('course', 'dosens'));
+        return view('admin.courses.edit', compact('course', 'dosens', 'majors'));
     }
 
     /**
@@ -116,14 +128,18 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255', "unique:courses,name,$id"],
-            'user_id' => ['required', 'exists:users,id']
+            'user_id' => ['required', 'exists:users,id'],
+            'semester' => ['required', 'numeric', 'min:1'],
+            'major_id' => ['required', 'exists:majors,id']
         ]);
 
         $subject = Course::findOrFail($id);
 
         $subject->update([
             'name' => $request->name,
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
+            'semester' => $request->semester,
+            'major_id' => $request->major_id
         ]);
 
         return redirect()->route('admin.courses.index')->with('success', 'Mata Kuliah diperbarui !');

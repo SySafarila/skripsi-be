@@ -94,13 +94,23 @@
                             </a>
                         </li>
                     @endcan
-                    @can('semesters-read')
+                    {{-- @can('semesters-read')
                         <li class="nav-item">
                             <a href="{{ route('admin.semesters.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.semesters.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
-                                    Semester
+                                    Semester     </p>
+                            </a>
+                        </li>
+                    @endcan --}}
+                    @can('majors-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.majors.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.majors.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Jurusan
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -113,18 +123,6 @@
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
                                     Mata Kuliah
-                                    {{-- <span class="right badge badge-danger">New</span> --}}
-                                </p>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('majors-read')
-                        <li class="nav-item">
-                            <a href="{{ route('admin.majors.index') }}"
-                                class="nav-link {{ request()->routeIs('admin.majors.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
-                                <p>
-                                    Jurusan
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>

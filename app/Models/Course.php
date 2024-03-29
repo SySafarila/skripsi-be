@@ -14,4 +14,8 @@ class Course extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function major() {
+        return $this->belongsTo(Major::class);
+    }
 }
