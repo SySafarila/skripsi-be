@@ -14,8 +14,7 @@ use Exception;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
-
-class EmployeeController extends Controller
+class StudentController extends Controller
 {
     protected $domain = 'domain.com';
     public function __construct()
@@ -34,34 +33,13 @@ class EmployeeController extends Controller
     {
         // return User::query()->role('dosen')->get();
         if (request()->ajax()) {
-            // $model = User::query();
-            switch (request()->type) {
-                case 'dosen':
-                    $model = User::role('dosen');
-                    break;
-
-                case 'staff':
-                    $model = User::role('staff');
-                    break;
-
-                case 'tendik':
-                    $model = User::role('tendik');
-                    break;
-
-                default:
-                    $model = User::role(['dosen', 'tendik', 'staff']);
-                    break;
-            }
-            // if (request()->type == 'dosen') {
-            //     $model = User::role('dosen');
-            // }
-            // $model = User::role(['dosen', 'tendik', 'staff']);
+            $model = User::role('mahasiswa');
             return DataTables::of($model)
-                ->addColumn('roles', 'admin.employees.datatables.roles')
+                ->addColumn('roles', 'admin.students.datatables.roles')
                 // ->addColumn('created_at', function ($model) {
                 //     return $model->created_at->diffForHumans();
                 // })
-                ->addColumn('options', 'admin.employees.datatables.options')
+                ->addColumn('options', 'admin.students.datatables.options')
                 ->editColumn('identifier_number', function($query) {
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
                 })
@@ -74,7 +52,7 @@ class EmployeeController extends Controller
                 ->toJson();
         }
 
-        return view('admin.employees.index');
+        return view('admin.students.index');
     }
 
     /**
@@ -86,7 +64,7 @@ class EmployeeController extends Controller
     {
         $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
 
-        return view('admin.employees.create', compact('roles'));
+        return view('admin.students.create', compact('roles'));
     }
 
     /**
@@ -101,8 +79,7 @@ class EmployeeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'identifier_number' => ['required', 'numeric', 'unique:users,identifier_number'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'identifier' => ['required', 'string', 'in:nidn,nip'],
-            'role' => ['required', 'string', 'in:dosen,staff,tendik']
+            'identifier' => ['required', 'string', 'in:nim']
         ]);
 
         $user = User::create([
@@ -113,9 +90,9 @@ class EmployeeController extends Controller
             'identifier_number' => $request->identifier_number
         ]);
 
-        $user->syncRoles($request->role);
+        $user->syncRoles('mahasiswa');
 
-        return redirect()->route('admin.employees.index')->with('success', 'User created !');
+        return redirect()->route('admin.students.index')->with('success', 'User created !');
     }
 
     /**
@@ -140,9 +117,9 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        // $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
 
-        return view('admin.employees.edit', compact('user', 'roles'));
+        return view('admin.students.edit', compact('user'));
     }
 
     /**
@@ -158,8 +135,8 @@ class EmployeeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'identifier_number' => ['required', 'numeric', "unique:users,identifier_number,$id"],
             // 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
-            'identifier' => ['required', 'string', 'in:nidn,nip'],
-            'role' => ['required', 'string', 'in:dosen,staff,tendik']
+            'identifier' => ['required', 'string', 'in:nim']
+            // 'role' => ['required', 'string', 'in:dosen,staff,tendik']
         ]);
 
         if ($request->password || $request->password_confirmation) {
@@ -185,9 +162,9 @@ class EmployeeController extends Controller
             ]);
         }
 
-        $user->syncRoles($request->role);
+        $user->syncRoles('mahasiswa');
 
-        return redirect()->route('admin.employees.index')->with('success', 'User updated !');
+        return redirect()->route('admin.students.index')->with('success', 'User updated !');
     }
 
     /**
@@ -210,7 +187,7 @@ class EmployeeController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.employees.index')->with('success', 'User deleted !');
+        return redirect()->route('admin.students.index')->with('success', 'User deleted !');
     }
 
     public function massDestroy(Request $request)
@@ -236,7 +213,7 @@ class EmployeeController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.employees.index')->with('success', 'Bulk delete success');
+        return redirect()->route('admin.students.index')->with('success', 'Bulk delete success');
     }
 
     private function checkUserRole($id)
@@ -244,17 +221,17 @@ class EmployeeController extends Controller
         $user = User::find($id);
         if (Auth::user()->id == $id) {
             throw new Exception('You cannot delete your self !', 403);
-            // return redirect()->route('admin.employees.index')->with('warning', 'You cannot delete your self !');
+            // return redirect()->route('admin.students.index')->with('warning', 'You cannot delete your self !');
         }
 
         if (Auth::user()->hasRole('admin') && $user->hasRole('super admin')) {
             throw new Exception('You cannot delete user who had Super Admin role !', 403);
-            // return redirect()->route('admin.employees.index')->with('warning', 'You cannot delete user who had Super Admin role !');
+            // return redirect()->route('admin.students.index')->with('warning', 'You cannot delete user who had Super Admin role !');
         }
 
         if (Auth::user()->hasRole('admin') && $user->hasRole('admin')) {
             throw new Exception('You cannot delete user with same role level with you !', 403);
-            // return redirect()->route('admin.employees.index')->with('warning', 'You cannot delete user with same role level with you !');
+            // return redirect()->route('admin.students.index')->with('warning', 'You cannot delete user with same role level with you !');
         }
     }
 }

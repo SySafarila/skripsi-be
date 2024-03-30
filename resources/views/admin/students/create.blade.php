@@ -14,12 +14,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Create Karyawan & Dosen</h1>
+                    <h1 class="m-0">Create Mahasiswa</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.employees.index') }}">Karyawan & Dosen</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.students.index') }}">Mahasiswa</a></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
@@ -31,7 +31,7 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body">
-                    <form action="{{ route('admin.employees.store') }}" method="POST">
+                    <form action="{{ route('admin.students.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="name" class="text-capitalize">nama</label>
@@ -49,7 +49,7 @@
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div> --}}
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="role" class="text-capitalize">tipe</label>
                             <select class="select2 form-control" name="role"
                                 data-placeholder="Select role" style="width: 100%;">
@@ -60,14 +60,13 @@
                             @error('role')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div class="row">
                             <div class="form-group col">
                                 <label for="identifier" class="text-capitalize">identitas</label>
                                 <select class="select2 form-control" name="identifier"
                                     data-placeholder="Select identifier" style="width: 100%;">
-                                    <option value="nidn">NIDN</option>
-                                    <option value="nip">NIP</option>
+                                    <option value="nim">NIM</option>
                                 </select>
                                 @error('identifier')
                                     <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
