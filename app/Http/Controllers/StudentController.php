@@ -57,7 +57,7 @@ class StudentController extends Controller
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
                 })
                 ->addColumn('feedback', function ($query) use ($questions, $active_kpi) {
-                    return $questions->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', $active_kpi->id)->groupBy('course_id')->count() . ' (' . Carbon::parse($active_kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($active_kpi->end_date)->format('d/m/Y') . ')';
+                    return $questions->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', $active_kpi->id)->groupBy('feedback_question_id')->count() . ' (' . Carbon::parse($active_kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($active_kpi->end_date)->format('d/m/Y') . ')';
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
