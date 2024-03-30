@@ -5,26 +5,17 @@ use App\Http\Controllers\AdminIndex;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenPageController;
 use App\Http\Controllers\EmployeeController;
-// use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackQuestionController;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LecturerManagementController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\PermissionController;
-// use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentController;
-// use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\StudentFeedbackController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
-use App\Models\Course;
-use App\Models\KpiPeriod;
-use App\Models\User;
-use App\Models\UserFeedback;
-// use App\Models\Course;
-// use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -123,19 +114,8 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 
 // authenticated students
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
-    Route::get('/student/feedback', function () {
-        $active_kpi = KpiPeriod::where('is_active', true)->first();
-        $user = Auth::user();
-        $semester = $user->hasMajor->semester;
-        $major_id = $user->hasMajor->major_id;
-        // $courses = $user->hasMajor->major->courses()->where('semester', $semester)->orderBy('name', 'asc')->get();
-        $courses = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->get();
-        $course_ids = $courses->pluck('id');
-        $sent_feedbacks = $user->sent_feedbacks()->where('kpi_period_id', $active_kpi->id)->whereIn('course_id', $course_ids)->get();
-        $n = 1;
-        // return $sent_feedbacks;
-        return view('students.index', compact('active_kpi', 'user', 'semester', 'sent_feedbacks', 'courses', 'n'));
-    })->name('leaderboard.index');
+    Route::get('/student', [StudentFeedbackController::class, 'index'])->name('student.index');
+    Route::get('/student/courses', [StudentFeedbackController::class, 'courses'])->name('student.courses');
 });
 
 require __DIR__ . '/auth.php';
