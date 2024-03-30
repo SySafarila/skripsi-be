@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeedbackQuestion;
+use App\Models\KpiPeriod;
 use App\Models\Major;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
@@ -35,7 +38,9 @@ class StudentController extends Controller
     {
         // return User::query()->role('dosen')->get();
         if (request()->ajax()) {
-            $model = User::role('mahasiswa')->with('hasMajor.major');
+            $questions = FeedbackQuestion::where('type', 'mahasiswa-to-dosen')->get();
+            $active_kpi = KpiPeriod::where('is_active', true)->first();
+            $model = User::role('mahasiswa')->with('hasMajor.major', 'sent_feedbacks');
             if (request()->semester) {
                 $model->whereRelation('hasMajor', 'semester', request()->semester);
             }
@@ -50,6 +55,9 @@ class StudentController extends Controller
                 ->addColumn('options', 'admin.students.datatables.options')
                 ->editColumn('identifier_number', function ($query) {
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
+                })
+                ->addColumn('feedback', function ($query) use ($questions, $active_kpi) {
+                    return $questions->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', $active_kpi->id)->groupBy('course_id')->count() . ' (' . Carbon::parse($active_kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($active_kpi->end_date)->format('d/m/Y') . ')';
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {

@@ -57,6 +57,7 @@
                                 <th>Nomor Registrasi</th>
                                 <th>Semester</th>
                                 <th>Jurusan</th>
+                                <th>Feedback</th>
                                 {{-- <th>Verified</th> --}}
                                 {{-- <th>Created At</th> --}}
                                 <th class="d-print-none">Options</th>
@@ -89,7 +90,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1, 2, 3, 4];
+            const exportOption = [1, 2, 3, 4, 5];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',
@@ -160,6 +161,10 @@
                 }, {
                     data: 'has_major.major.major',
                     name: 'has_major.major.major',
+                    searchable: false
+                }, {
+                    data: 'feedback',
+                    name: 'feedback',
                     searchable: false
                 }, {
                     data: 'options',
