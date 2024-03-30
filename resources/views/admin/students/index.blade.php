@@ -29,6 +29,16 @@
                     </ol>
                 </div>
             </div>
+            <form class="d-flex" style="gap: 8px;">
+                <input type="number" name="semester" id="semester" class="form-control" placeholder="Semester" style="max-width: 13rem;" value="{{ request()->semester }}">
+                <select name="major_id" id="major_id" class="custom-select" style="max-width: 13rem;">
+                    <option value="">Semua Jurusan</option>
+                    @foreach ($majors as $major)
+                        <option value="{{ $major->id }}" {{ request()->major_id == $major->id ? 'selected' : '' }}>{{ $major->major }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-primary" type="submit">Filter</button>
+            </form>
         </div>
     </div>
 
@@ -45,7 +55,8 @@
                                 </th>
                                 <th>Nama</th>
                                 <th>Nomor Registrasi</th>
-                                <th>Tipe</th>
+                                <th>Semester</th>
+                                <th>Jurusan</th>
                                 {{-- <th>Verified</th> --}}
                                 {{-- <th>Created At</th> --}}
                                 <th class="d-print-none">Options</th>
@@ -78,7 +89,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1, 2, 3];
+            const exportOption = [1, 2, 3, 4];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',
@@ -129,7 +140,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.students.index') !!}',
+                ajax: '{!! route('admin.students.index', ['semester' => request()->semester, 'major_id' => request()->major_id]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000, -1],
                     [10, 50, 100, 500, 1000, 'All']
@@ -143,8 +154,11 @@
                     data: 'identifier_number',
                     name: 'identifier_number'
                 }, {
-                    data: 'roles',
-                    name: 'roles'
+                    data: 'has_major.semester',
+                    name: 'has_major.semester'
+                }, {
+                    data: 'has_major.major.major',
+                    name: 'has_major.major.major'
                 }, {
                     data: 'options',
                     name: 'options'
@@ -164,7 +178,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [3, 4]
+                    targets: [3, 4, 5]
                 }],
                 order: [
                     // [1, 'asc']

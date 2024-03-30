@@ -15,6 +15,7 @@ use Exception;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+
 class StudentController extends Controller
 {
     protected $domain = 'domain.com';
@@ -34,14 +35,20 @@ class StudentController extends Controller
     {
         // return User::query()->role('dosen')->get();
         if (request()->ajax()) {
-            $model = User::role('mahasiswa');
+            $model = User::role('mahasiswa')->with('hasMajor.major');
+            if (request()->semester) {
+                $model->whereRelation('hasMajor', 'semester', request()->semester);
+            }
+            if (request()->major_id) {
+                $model->whereRelation('hasMajor', 'major_id', request()->major_id);
+            }
             return DataTables::of($model)
                 ->addColumn('roles', 'admin.students.datatables.roles')
                 // ->addColumn('created_at', function ($model) {
                 //     return $model->created_at->diffForHumans();
                 // })
                 ->addColumn('options', 'admin.students.datatables.options')
-                ->editColumn('identifier_number', function($query) {
+                ->editColumn('identifier_number', function ($query) {
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
                 })
                 ->setRowAttr([
@@ -53,7 +60,9 @@ class StudentController extends Controller
                 ->toJson();
         }
 
-        return view('admin.students.index');
+        $majors = Major::orderBy('major', 'asc')->get();
+
+        return view('admin.students.index', compact('majors'));
     }
 
     /**
