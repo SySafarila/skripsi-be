@@ -92,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UsersHasSubject::class);
     }
 
-    public function major() {
+    public function hasMajor() {
         return $this->hasOne(UserHasMajor::class);
     }
 }

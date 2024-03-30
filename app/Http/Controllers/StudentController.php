@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Major;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,9 +63,10 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        // $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $majors = Major::orderBy('major', 'asc')->get();
 
-        return view('admin.students.create', compact('roles'));
+        return view('admin.students.create', compact('majors'));
     }
 
     /**
@@ -79,7 +81,9 @@ class StudentController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'identifier_number' => ['required', 'numeric', 'unique:users,identifier_number'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'identifier' => ['required', 'string', 'in:nim']
+            'identifier' => ['required', 'string', 'in:nim'],
+            'major_id' => ['required', 'exists:majors,id'],
+            'semester' => ['required', 'numeric', 'min:1']
         ]);
 
         $user = User::create([
@@ -91,6 +95,18 @@ class StudentController extends Controller
         ]);
 
         $user->syncRoles('mahasiswa');
+
+        if (!$user->hasMajor) {
+            $user->hasMajor()->create([
+                'major_id' => $request->major_id,
+                'semester' => $request->semester
+            ]);
+        } else {
+            $user->hasMajor()->update([
+                'major_id' => $request->major_id,
+                'semester' => $request->semester
+            ]);
+        }
 
         return redirect()->route('admin.students.index')->with('success', 'User created !');
     }
@@ -118,8 +134,9 @@ class StudentController extends Controller
     {
         $user = User::findOrFail($id);
         // $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $majors = Major::orderBy('major', 'asc')->get();
 
-        return view('admin.students.edit', compact('user'));
+        return view('admin.students.edit', compact('user', 'majors'));
     }
 
     /**
@@ -135,7 +152,9 @@ class StudentController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'identifier_number' => ['required', 'numeric', "unique:users,identifier_number,$id"],
             // 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
-            'identifier' => ['required', 'string', 'in:nim']
+            'identifier' => ['required', 'string', 'in:nim'],
+            'major_id' => ['required', 'exists:majors,id'],
+            'semester' => ['required', 'numeric', 'min:1']
             // 'role' => ['required', 'string', 'in:dosen,staff,tendik']
         ]);
 
@@ -163,6 +182,18 @@ class StudentController extends Controller
         }
 
         $user->syncRoles('mahasiswa');
+
+        if (!$user->hasMajor) {
+            $user->hasMajor()->create([
+                'major_id' => $request->major_id,
+                'semester' => $request->semester
+            ]);
+        } else {
+            $user->hasMajor()->update([
+                'major_id' => $request->major_id,
+                'semester' => $request->semester
+            ]);
+        }
 
         return redirect()->route('admin.students.index')->with('success', 'User updated !');
     }

@@ -81,6 +81,27 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="major_id" class="text-capitalize">Jurusan</label>
+                                <select class="select2 form-control" name="major_id"
+                                    data-placeholder="Select major_id" style="width: 100%;">
+                                    @foreach ($majors as $major)
+                                        <option value="{{ $major->id }}" {{ $user->hasMajor ? $user->hasMajor->major_id == $major->id ? 'selected' : '' : '' }}>{{ $major->major }}</option>
+                                    @endforeach
+                                </select>
+                                @error('major_id')
+                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col">
+                                <label for="semester" class="text-capitalize">Semester</label>
+                                <input type="number" class="form-control" id="semester" name="semester" value="{{ $user->hasMajor ? $user->hasMajor->semester : '' }}" required>
+                                @error('semester')
+                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="password" class="text-capitalize">password</label>
                             <input type="password" class="form-control" id="password" name="password">
