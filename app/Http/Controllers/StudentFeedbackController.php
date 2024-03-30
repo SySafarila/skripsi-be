@@ -92,6 +92,7 @@ class StudentFeedbackController extends Controller
         try {
             UserFeedback::where('sender_id', $user->id)->where('course_id', $course_id)->where('kpi_period_id', $active_kpi->id)->delete();
             DB::table('user_feedback')->insert($feedbacks);
+            $this->setPoint($active_kpi, $course->user);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
