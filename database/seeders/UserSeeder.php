@@ -35,6 +35,8 @@ class UserSeeder extends Seeder
             'name' => 'Dosen',
             'email' => 'dosen@dosen.com',
             'password' => Hash::make('password'),
+            'identifier' => 'nidn',
+            'identifier_number' => 133,
             'email_verified_at' => now()
         ]);
         $dosen->syncRoles(['dosen']);
@@ -43,6 +45,8 @@ class UserSeeder extends Seeder
             'name' => 'Dosen2',
             'email' => 'dosen2@dosen2.com',
             'password' => Hash::make('password'),
+            'identifier' => 'nidn',
+            'identifier_number' => 123,
             'email_verified_at' => now()
         ]);
         $dosen2->syncRoles(['dosen']);
@@ -51,6 +55,8 @@ class UserSeeder extends Seeder
             'name' => 'Tendik',
             'email' => 'tendik@tendik.com',
             'password' => Hash::make('password'),
+            'identifier' => 'nidn',
+            'identifier_number' => 1234,
             'email_verified_at' => now()
         ]);
         $tendik->syncRoles(['tendik']);
@@ -58,6 +64,8 @@ class UserSeeder extends Seeder
         $staff = User::create([
             'name' => 'staff',
             'email' => 'staff@staff.com',
+            'identifier' => 'nip',
+            'identifier_number' => 1235,
             'password' => Hash::make('password'),
             'email_verified_at' => now()
         ]);
@@ -67,6 +75,8 @@ class UserSeeder extends Seeder
             'name' => 'mahasiswa',
             'email' => 'mahasiswa@mahasiswa.com',
             'password' => Hash::make('password'),
+            'identifier' => 'nim',
+            'identifier_number' => 207,
             'email_verified_at' => now()
         ]);
         $mahasiswa->syncRoles(['mahasiswa']);
