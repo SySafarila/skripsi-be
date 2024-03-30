@@ -26,9 +26,9 @@
                 <td>{{ $course->user->name }}</td>
                 <td>
                     @if ($sent_feedbacks->where('course_id', $course->id)->count() == 0)
-                        <a href="#">Beri Masukan</a>
+                        <a href="{{ route('student.feedback', ['course_id' => $course->id]) }}">Beri Masukan</a> <span>{{ $sent_feedbacks->where('course_id', $course->id)->count() }}/{{ $questions->count() }}</span>
                     @else
-                        <a href="#">Lihat Masukan</a>
+                        <a href="{{ route('student.feedback', ['course_id' => $course->id]) }}">Lihat Masukan</a> <span>{{ $sent_feedbacks->where('course_id', $course->id)->count() }}/{{ $questions->count() }}</span>
                     @endif
                 </td>
             </tr>

@@ -116,6 +116,8 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
     Route::get('/student', [StudentFeedbackController::class, 'index'])->name('student.index');
     Route::get('/student/courses', [StudentFeedbackController::class, 'courses'])->name('student.courses');
+    Route::get('/student/courses/{course_id}/feedback', [StudentFeedbackController::class, 'feedback'])->name('student.feedback');
+    Route::post('/student/courses/{course_id}/feedback', [StudentFeedbackController::class, 'store'])->name('student.store');
 });
 
 require __DIR__ . '/auth.php';
