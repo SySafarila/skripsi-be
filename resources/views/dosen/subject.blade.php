@@ -48,6 +48,7 @@
                     <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
                     <input type="hidden" name="subject_id" value="{{ $subject->id }}">
                     <input type="hidden" name="presence_id" value="{{ $presence->id }}">
+                    <input type="hidden" name="users_has_subject_id" value="{{ $userHasSubjectId }}">
                     <input type="hidden" name="control" value="-">
                     <button>Hapus</button>
                 </form>
