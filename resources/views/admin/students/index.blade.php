@@ -142,8 +142,8 @@
                 },
                 ajax: '{!! route('admin.students.index', ['semester' => request()->semester, 'major_id' => request()->major_id]) !!}',
                 lengthMenu: [
-                    [10, 50, 100, 500, 1000, -1],
-                    [10, 50, 100, 500, 1000, 'All']
+                    [10, 50, 100, 500, 1000],
+                    [10, 50, 100, 500, 1000]
                 ],
                 columns: [{
                     defaultContent: ''

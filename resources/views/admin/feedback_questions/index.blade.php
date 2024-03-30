@@ -128,8 +128,8 @@
                 },
                 ajax: '{!! route('admin.questions.index') !!}',
                 lengthMenu: [
-                    [10, 50, 100, 500, 1000, -1],
-                    [10, 50, 100, 500, 1000, 'All']
+                    [10, 50, 100, 500, 1000],
+                    [10, 50, 100, 500, 1000]
                 ],
                 columns: [{
                     defaultContent: ''

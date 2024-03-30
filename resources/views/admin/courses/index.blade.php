@@ -145,8 +145,8 @@
                 },
                 ajax: '{!! route('admin.courses.index', ['user_id' => request()->user_id, 'major_id' => request()->major_id]) !!}',
                 lengthMenu: [
-                    [10, 50, 100, 500, 1000, -1],
-                    [10, 50, 100, 500, 1000, 'All']
+                    [10, 50, 100, 500, 1000],
+                    [10, 50, 100, 500, 1000]
                 ],
                 columns: [{
                     defaultContent: ''

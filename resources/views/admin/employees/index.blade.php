@@ -140,8 +140,8 @@
                 },
                 ajax: '{!! route('admin.employees.index', ['type' => request()->type]) !!}',
                 lengthMenu: [
-                    [10, 50, 100, 500, 1000, -1],
-                    [10, 50, 100, 500, 1000, 'All']
+                    [10, 50, 100, 500, 1000],
+                    [10, 50, 100, 500, 1000]
                 ],
                 columns: [{
                     defaultContent: ''

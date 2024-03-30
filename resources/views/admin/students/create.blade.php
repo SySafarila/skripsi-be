@@ -73,7 +73,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col">
-                                <label for="identifier_number" class="text-capitalize">Nomor Identitas</label>
+                                <label for="identifier_number" class="text-capitalize">Nomor Registrasi</label>
                                 <input type="number" class="form-control" id="identifier_number" name="identifier_number" required>
                                 @error('identifier_number')
                                     <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
