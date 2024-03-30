@@ -18,4 +18,8 @@ class Course extends Model
     public function major() {
         return $this->belongsTo(Major::class);
     }
+
+    public function feedbacks() {
+        return $this->hasMany(UserFeedback::class);
+    }
 }

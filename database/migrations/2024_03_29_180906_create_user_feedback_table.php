@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Course;
 use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
 use App\Models\User;
@@ -19,7 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(User::class, 'sender_id')->constrained('users', 'id');
             $table->foreignIdFor(KpiPeriod::class)->constrained();
-            $table->foreignIdFor(FeedbackQuestion::class)->constrained();
+            $table->foreignIdFor(FeedbackQuestion::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Course::class)->constrained();
             $table->text('question');
             $table->integer('point');
             $table->text('message');

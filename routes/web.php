@@ -18,6 +18,7 @@ use App\Http\Controllers\StudentController;
 // use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
+use App\Models\Course;
 use App\Models\KpiPeriod;
 use App\Models\User;
 use App\Models\UserFeedback;
@@ -123,20 +124,17 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 // authenticated students
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
     Route::get('/student/feedback', function () {
-        // return User::with('received_feedbacks')->find(3);
         $active_kpi = KpiPeriod::where('is_active', true)->first();
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
-        // $sent_feedbacks = UserFeedback::where('sender_id', $user->id)->get();
-        $sent_feedbacks = $user->sent_feedbacks;
-        return $sent_feedbacks;
-        $courses = $user->hasMajor->major->courses()->where('semester', $semester)->where('kpi_period_id', $active_kpi->id)->orderBy('name', 'asc')->get();
-        // return [
-        //     'user' => $user,
-        //     'courses' => $courses,
-        //     'sent_feedbacks' => $sent_feedbacks
-        // ];
-        return view('welcome');
+        $major_id = $user->hasMajor->major_id;
+        // $courses = $user->hasMajor->major->courses()->where('semester', $semester)->orderBy('name', 'asc')->get();
+        $courses = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->get();
+        $course_ids = $courses->pluck('id');
+        $sent_feedbacks = $user->sent_feedbacks()->where('kpi_period_id', $active_kpi->id)->whereIn('course_id', $course_ids)->get();
+        $n = 1;
+        // return $sent_feedbacks;
+        return view('students.index', compact('active_kpi', 'user', 'semester', 'sent_feedbacks', 'courses', 'n'));
     })->name('leaderboard.index');
 });
 
