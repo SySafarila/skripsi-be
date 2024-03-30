@@ -20,10 +20,10 @@ class EmployeeController extends Controller
     protected $domain = 'domain.com';
     public function __construct()
     {
-        $this->middleware('can:users-create')->only(['create', 'store']);
-        $this->middleware('can:users-read')->only('index');
-        $this->middleware('can:users-update')->only(['edit', 'update']);
-        $this->middleware('can:users-delete')->only(['destroy', 'massDestroy']);
+        $this->middleware('can:employees-create')->only(['create', 'store']);
+        $this->middleware('can:employees-read')->only('index');
+        $this->middleware('can:employees-update')->only(['edit', 'update']);
+        $this->middleware('can:employees-delete')->only(['destroy', 'massDestroy']);
     }
     /**
      * Display a listing of the resource.
@@ -101,7 +101,8 @@ class EmployeeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'identifier_number' => ['required', 'numeric', 'unique:users,identifier_number'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'identifier' => ['required', 'string', 'in:nidn,nip']
+            'identifier' => ['required', 'string', 'in:nidn,nip'],
+            'role' => ['required', 'string', 'in:dosen,staff,tendik']
         ]);
 
         $user = User::create([
@@ -157,7 +158,8 @@ class EmployeeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'identifier_number' => ['required', 'numeric', "unique:users,identifier_number,$id"],
             // 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
-            'identifier' => ['required', 'string', 'in:nidn,nip']
+            'identifier' => ['required', 'string', 'in:nidn,nip'],
+            'role' => ['required', 'string', 'in:dosen,staff,tendik']
         ]);
 
         if ($request->password || $request->password_confirmation) {
