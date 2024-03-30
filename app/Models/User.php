@@ -95,4 +95,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasMajor() {
         return $this->hasOne(UserHasMajor::class);
     }
+
+    public function sent_feedbacks() {
+        return $this->hasMany(UserFeedback::class, 'sender_id', 'id');
+    }
+
+    public function received_feedbacks() {
+        return $this->hasMany(UserFeedback::class, 'user_id', 'id');
+    }
 }

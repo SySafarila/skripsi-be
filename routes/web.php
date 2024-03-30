@@ -18,6 +18,12 @@ use App\Http\Controllers\StudentController;
 // use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
+use App\Models\KpiPeriod;
+use App\Models\User;
+use App\Models\UserFeedback;
+// use App\Models\Course;
+// use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -106,12 +112,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
 });
 
-// authenticated employee
+// authenticated employees
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
     Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
     Route::get('/profile', [DosenPageController::class, 'profile'])->name('profile');
     Route::get('/profile/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('presence.show');
     Route::post('/presence', [DosenPageController::class, 'presence'])->name('presence.store');
+});
+
+// authenticated students
+Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
+    Route::get('/student/feedback', function () {
+        // return User::with('received_feedbacks')->find(3);
+        $active_kpi = KpiPeriod::where('is_active', true)->first();
+        $user = Auth::user();
+        $semester = $user->hasMajor->semester;
+        // $sent_feedbacks = UserFeedback::where('sender_id', $user->id)->get();
+        $sent_feedbacks = $user->sent_feedbacks;
+        return $sent_feedbacks;
+        $courses = $user->hasMajor->major->courses()->where('semester', $semester)->where('kpi_period_id', $active_kpi->id)->orderBy('name', 'asc')->get();
+        // return [
+        //     'user' => $user,
+        //     'courses' => $courses,
+        //     'sent_feedbacks' => $sent_feedbacks
+        // ];
+        return view('welcome');
+    })->name('leaderboard.index');
 });
 
 require __DIR__ . '/auth.php';
