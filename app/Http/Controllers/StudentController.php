@@ -57,7 +57,28 @@ class StudentController extends Controller
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
                 })
                 ->addColumn('feedback', function ($query) use ($questions, $active_kpi) {
-                    return $questions->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', $active_kpi->id)->groupBy('feedback_question_id')->count() . ' (' . Carbon::parse($active_kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($active_kpi->end_date)->format('d/m/Y') . ')';
+                    if ($query->hasMajor) {
+                        return $questions->count() * $query->hasMajor->major->courses->where('semester', $query->hasMajor->semester)->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', $active_kpi->id)->count() . ' (' . Carbon::parse($active_kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($active_kpi->end_date)->format('d/m/Y') . ')';
+                    }
+                    return '-';
+                })
+                ->editColumn('semester', function($model) {
+                    if ($model->hasMajor) {
+                        return $model->hasMajor->semester;
+                    }
+                    return '-';
+                })
+                ->editColumn('semester', function($model) {
+                    if ($model->hasMajor) {
+                        return $model->hasMajor->semester;
+                    }
+                    return '-';
+                })
+                ->editColumn('major', function($model) {
+                    if ($model->hasMajor) {
+                        return $model->hasMajor->major->major;
+                    }
+                    return '-';
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {

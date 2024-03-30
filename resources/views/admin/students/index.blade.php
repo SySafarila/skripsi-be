@@ -155,12 +155,12 @@
                     data: 'identifier_number',
                     name: 'identifier_number'
                 }, {
-                    data: 'has_major.semester',
-                    name: 'has_major.semester',
+                    data: 'semester',
+                    name: 'semester',
                     searchable: false
                 }, {
-                    data: 'has_major.major.major',
-                    name: 'has_major.major.major',
+                    data: 'major',
+                    name: 'major',
                     searchable: false
                 }, {
                     data: 'feedback',

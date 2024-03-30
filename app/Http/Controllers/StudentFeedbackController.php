@@ -98,6 +98,6 @@ class StudentFeedbackController extends Controller
             //throw $th;
         }
 
-        return back();
+        return redirect()->route('student.courses');
     }
 }
