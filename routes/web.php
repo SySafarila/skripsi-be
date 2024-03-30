@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminIndex;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenPageController;
+use App\Http\Controllers\EmployeeController;
 // use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackQuestionController;
 use App\Http\Controllers\KpiController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\MajorController;
 use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SemesterController;
+// use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -72,15 +73,19 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // lecturer management
     Route::resource('/employees-management', LecturerManagementController::class)->except(['show']);
 
+    // employee
+    Route::resource('/employees', EmployeeController::class)->except(['show']);
+
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::delete('/bulk-delete/users', [UserController::class, 'massDestroy'])->name('users.massDestroy');
+    Route::delete('/bulk-delete/employees', [EmployeeController::class, 'massDestroy'])->name('employees.massDestroy');
     Route::delete('/bulk-delete/kpi', [KpiController::class, 'massDestroy'])->name('kpi.massDestroy');
     Route::delete('/bulk-delete/presence-scopes', [SubjectController::class, 'massDestroy'])->name('presence-scopes.massDestroy');
     Route::delete('/bulk-delete/questions', [FeedbackQuestionController::class, 'massDestroy'])->name('questions.massDestroy');
     Route::delete('/bulk-delete/employees-management', [LecturerManagementController::class, 'massDestroy'])->name('employees-management.massDestroy');
-    Route::delete('/bulk-delete/semesters', [SemesterController::class, 'massDestroy'])->name('semesters.massDestroy');
+    // Route::delete('/bulk-delete/semesters', [SemesterController::class, 'massDestroy'])->name('semesters.massDestroy');
     Route::delete('/bulk-delete/majors', [MajorController::class, 'massDestroy'])->name('majors.massDestroy');
     Route::delete('/bulk-delete/courses', [CourseController::class, 'massDestroy'])->name('courses.massDestroy');
     // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
