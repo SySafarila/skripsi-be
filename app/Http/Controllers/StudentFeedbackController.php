@@ -57,7 +57,7 @@ class StudentFeedbackController extends Controller
             'questions.*' => ['required', 'string']
         ]);
         // return $request;
-        $active_kpi = KpiPeriod::where('is_active', true)->firstOrFail();
+        $active_kpi = KpiPeriod::where('is_active', true)->where('receive_feedback', true)->firstOrFail();
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
