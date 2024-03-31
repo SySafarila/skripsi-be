@@ -47,6 +47,7 @@
                                 <th>Status Aktif</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Berakhir</th>
+                                <th>Terima Masukan</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -77,7 +78,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1, 2];
+            const exportOption = [1, 2, 3, 4, 5];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',
@@ -148,6 +149,9 @@
                     data: 'end_date',
                     name: 'end_date'
                 }, {
+                    data: 'receive_feedback',
+                    name: 'receive_feedback'
+                }, {
                     data: 'options',
                     name: 'options'
                 }],
@@ -166,7 +170,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: 5
+                    targets: 6
                 }],
                 order: [
                     [3, 'desc']

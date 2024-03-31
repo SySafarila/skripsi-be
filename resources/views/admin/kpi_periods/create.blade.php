@@ -50,15 +50,27 @@
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="is_active" class="text-capitalize">Status Aktif</label>
-                            <select name="is_active" id="is_active" class="custom-select" required>
-                                <option value="1" selected>Aktif</option>
-                                <option value="0">Tidak</option>
-                            </select>
-                            @error('is_active')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="is_active" class="text-capitalize">Status Aktif</label>
+                                <select name="is_active" id="is_active" class="custom-select" required>
+                                    <option value="1" selected>Aktif</option>
+                                    <option value="0">Tidak</option>
+                                </select>
+                                @error('is_active')
+                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col">
+                                <label for="receive_feedback" class="text-capitalize">Terima Masukan Mahasiswa</label>
+                                <select name="receive_feedback" id="receive_feedback" class="custom-select" required>
+                                    <option value="1">Ya</option>
+                                    <option value="0" selected>Tidak</option>
+                                </select>
+                                @error('receive_feedback')
+                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </form>

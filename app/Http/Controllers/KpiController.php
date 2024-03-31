@@ -39,6 +39,9 @@ class KpiController extends Controller
                 ->editColumn('end_date', function ($model) {
                     return Carbon::parse($model->end_date)->format('d-m-Y');
                 })
+                ->editColumn('receive_feedback', function ($model) {
+                    return $model->receive_feedback ? 'YA' : 'TIDAK';
+                })
                 ->addColumn('options', 'admin.kpi_periods.datatables.options')
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
@@ -75,6 +78,7 @@ class KpiController extends Controller
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
             'is_active' => ['required', 'in:1,0'],
+            'receive_feedback' => ['required', 'in:1,0']
         ]);
 
         DB::beginTransaction();
@@ -93,6 +97,7 @@ class KpiController extends Controller
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
                 'is_active' => $request->is_active === '0' ? false : true,
+                'receive_feedback' => $request->receive_feedback === '0' ? false : true,
             ]);
 
             $users = User::role(['dosen', 'tendik', 'staff'])->get();
@@ -158,6 +163,7 @@ class KpiController extends Controller
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
             'is_active' => ['required', 'in:1,0'],
+            'receive_feedback' => ['required', 'in:1,0']
         ]);
 
         DB::beginTransaction();
@@ -178,6 +184,7 @@ class KpiController extends Controller
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
                 'is_active' => $request->is_active === '0' ? false : true,
+                'receive_feedback' => $request->receive_feedback === '0' ? false : true,
             ]);
             DB::commit();
         } catch (\Throwable $th) {
