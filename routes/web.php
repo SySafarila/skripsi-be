@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\AdminIndex;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenPageController;
@@ -78,6 +79,10 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // mahasiswa
     Route::resource('/students', StudentController::class)->except(['show']);
 
+    // achievement
+    Route::post('/achievements/generate/{kpi_id}', [AchievementController::class, 'generate'])->name('achievements.generate');
+    Route::resource('/achievements', AchievementController::class)->except(['show']);
+
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
@@ -91,6 +96,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // Route::delete('/bulk-delete/semesters', [SemesterController::class, 'massDestroy'])->name('semesters.massDestroy');
     Route::delete('/bulk-delete/majors', [MajorController::class, 'massDestroy'])->name('majors.massDestroy');
     Route::delete('/bulk-delete/courses', [CourseController::class, 'massDestroy'])->name('courses.massDestroy');
+    Route::delete('/bulk-delete/achievements', [AchievementController::class, 'massDestroy'])->name('achievements.massDestroy');
     // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
 });
 

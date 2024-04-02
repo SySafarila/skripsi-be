@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Achievement;
 use App\Models\KpiPeriod;
 use App\Models\Point;
 use App\Models\Subject;
@@ -23,7 +24,9 @@ class DosenPageController extends Controller
         $user = User::with('subjects.subject', 'presences')->where('id', request()->user()->id)->first();
         $presences = $user->presences()->where('kpi_period_id', $kpi->id)->get();
         $point = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
-        return view('dosen.profile', compact('kpi', 'user', 'presences', 'point'));
+        $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
+        // return $achievements;
+        return view('dosen.profile', compact('kpi', 'user', 'presences', 'point', 'achievements'));
     }
 
     public function subject($subject_id)

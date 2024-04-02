@@ -41,6 +41,15 @@
         </tr>
     </table>
     <p>Point: {{ $point ? number_format($point->points, 2) : '-' }} ({{ $point ? $point->updated_at->format('d/m/Y - H:i') : '-' }})</p>
+    <hr>
+    <p>Pencapaian:</p>
+    <ul>
+        @forelse ($achievements as $achievement)
+        <li>{{ $achievement->title }}</li>
+        @empty
+            <li>-</li>
+        @endforelse
+    </ul>
 </body>
 
 </html>
