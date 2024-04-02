@@ -29,7 +29,7 @@ class KpiController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(KpiPeriod::query())
+            return DataTables::of(KpiPeriod::query()->with('achievements'))
                 ->editColumn('is_active', function ($model) {
                     return $model->is_active ? 'Aktif' : 'Tidak';
                 })

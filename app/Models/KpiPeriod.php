@@ -18,4 +18,8 @@ class KpiPeriod extends Model
     public function feedbacks() {
         return $this->hasMany(UserFeedback::class);
     }
+
+    public function achievements() {
+        return $this->hasMany(Achievement::class);
+    }
 }
