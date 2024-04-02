@@ -18,7 +18,7 @@ class AchievementController extends Controller
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi_id)->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
         $achievement = Achievement::where('kpi_period_id', $kpi_id)->get();
         if ($achievement->count() > 0) {
-            return abort(400, 'Already generated');
+            return back()->with('error', 'Already generated!');
         }
         $user_ids = $points->pluck('user_id')->toArray();
 
@@ -93,6 +93,6 @@ class AchievementController extends Controller
             DB::rollBack();
         }
 
-        return Achievement::all();
+        return back()->with('success', 'Pencapaian berhasil digenerate!');
     }
 }
