@@ -13,6 +13,7 @@ use App\Http\Controllers\LecturerManagementController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentFeedbackController;
 use App\Http\Controllers\SubjectController;
@@ -82,6 +83,9 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // achievement
     Route::post('/achievements/generate/{kpi_id}', [AchievementController::class, 'generate'])->name('achievements.generate');
     Route::resource('/achievements', AchievementController::class)->except(['show']);
+
+    // general settings
+    Route::resource('/settings', SettingController::class)->only(['index', 'update']);
 
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');

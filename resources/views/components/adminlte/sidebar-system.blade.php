@@ -36,4 +36,16 @@
             </a>
         </li>
     @endcan
+    @can('settings-read')
+        <li class="nav-item">
+            <a href="{{ route('admin.settings.index') }}"
+                class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                <i class="nav-icon far fa-life-ring"></i>
+                <p>
+                    Pengaturan
+                    {{-- <span class="right badge badge-danger">New</span> --}}
+                </p>
+            </a>
+        </li>
+    @endcan
 @endcanany
