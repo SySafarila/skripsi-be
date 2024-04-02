@@ -24,8 +24,9 @@ class Controller extends BaseController
         $quota = array_sum($quotas);
 
         // survey points
-        $surveyPoints = UserFeedback::where('kpi_period_id', $kpi->id)->where('user_id', $user->id)->get()->pluck('point')->toArray();
-        $surveyPoint = array_sum($surveyPoints);
+        $feedbackPointsArr = UserFeedback::where('kpi_period_id', $kpi->id)->where('user_id', $user->id)->get();
+        $feedbackPoints = array_sum($feedbackPointsArr->pluck('point')->toArray());
+        $resultFeedbackPoints = $feedbackPoints == 0 ? 0 : ($feedbackPoints * 100) / $feedbackPointsArr->count();
 
         // presence points
         $presencePoints = UserPresence::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->get()->count();
@@ -35,11 +36,15 @@ class Controller extends BaseController
             $point = Point::create([
                 'user_id' => $user->id,
                 'kpi_period_id' => $kpi->id,
-                'points' => $resultPresencePoints + $surveyPoint
+                'points' => $resultPresencePoints + $resultFeedbackPoints,
+                'presence_points' => $resultPresencePoints ?? 0,
+                'feedback_points' => $resultFeedbackPoints ?? 0
             ]);
         } else {
             $point = Point::where('user_id', $user->id)->update([
-                'points' => $resultPresencePoints + $surveyPoint
+                'points' => $resultPresencePoints + $resultFeedbackPoints,
+                'presence_points' => $resultPresencePoints ?? 0,
+                'feedback_points' => $resultFeedbackPoints ?? 0
             ]);
         }
 

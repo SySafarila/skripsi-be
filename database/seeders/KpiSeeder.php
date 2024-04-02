@@ -34,6 +34,8 @@ class KpiSeeder extends Seeder
                     'user_id' => $user->id,
                     'kpi_period_id' => $kpi->id,
                     'points' => 0,
+                    'presence_points' => 0,
+                    'feedback_points' => 0,
                     'created_at' => $time,
                     'updated_at' => $time
                 ]);

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('feedback_questions', function (Blueprint $table) {
             $table->id();
-            $table->text('question');
+            $table->text('question'); // options: mahasiswa-to-dosen
             $table->string('type');
             $table->timestamps();
         });
