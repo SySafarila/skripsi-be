@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
             // SemesterSeeder::class,
             MajorsSeeder::class,
             CourseSeeder::class,
-            UserHasMajorSeeder::class
+            UserHasMajorSeeder::class,
+            SettingSeeder::class
         ]);
     }
 }

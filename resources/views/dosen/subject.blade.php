@@ -63,7 +63,7 @@
         <input type="hidden" name="subject_id" value="{{ $subject->id }}">
         <input type="hidden" name="control" value="+">
         <input type="hidden" name="users_has_subject_id" value="{{ $userHasSubjectId }}">
-        <input type="file" name="image" id="image" accept="image/*">
+        <input type="file" name="image" id="image" accept="image/*" {{ $image_presence_setting->value == 'true' ? 'required' : '' }}>
         <br>
         <button>Absen Masuk</button>
     </form>

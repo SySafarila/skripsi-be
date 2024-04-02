@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Achievement;
 use App\Models\KpiPeriod;
 use App\Models\Point;
+use App\Models\Setting;
 use App\Models\Subject;
 use App\Models\User;
 // use App\Models\UserFeedback;
@@ -36,7 +37,9 @@ class DosenPageController extends Controller
         $subject = Subject::findOrFail($subject_id);
         $presences = $user->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
         $userHasSubjectId = $user->subjects()->where('subject_id', $subject->id)->firstOrFail()->id;
-        return view('dosen.subject', compact('kpi', 'user', 'presences', 'subject', 'userHasSubjectId'));
+        $image_presence_setting = Setting::where('key', 'image_presence')->first();
+
+        return view('dosen.subject', compact('kpi', 'user', 'presences', 'subject', 'userHasSubjectId', 'image_presence_setting'));
     }
 
     public function presence(Request $request)
@@ -48,6 +51,15 @@ class DosenPageController extends Controller
             'image' => ['nullable', 'file', 'image'],
             'users_has_subject_id' => ['required', 'exists:users_has_subjects,id']
         ]);
+
+        $image_presence_setting = Setting::where('key', 'image_presence')->first();
+
+        if ($image_presence_setting->value == 'true') {
+            $request->validate([
+                'image' => ['required', 'file', 'image'],
+            ]);
+        }
+
         $kpi = KpiPeriod::findOrFail($request->kpi_period_id);
 
         if (now() < $kpi->start_date) {
