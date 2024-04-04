@@ -29,7 +29,7 @@ class CourseSeeder extends Seeder
 
         Course::create([
             'name' => 'Mobile Programming 1',
-            'user_id' => 3,
+            'user_id' => 4,
             'semester' => 1,
             'major_id' => 1
         ]);
@@ -37,7 +37,7 @@ class CourseSeeder extends Seeder
         Course::create([
             'major_id' => 1,
             'name' => 'Mobile Programming 2',
-            'user_id' => 3,
+            'user_id' => 4,
             'semester' => 2
         ]);
     }

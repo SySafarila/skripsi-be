@@ -19,13 +19,23 @@ class LecturerManagementSeeder extends Seeder
             'quota' => 16
         ]);
         UsersHasSubject::create([
+            'user_id' => 3,
+            'subject_id' => 2,
+            'quota' => 16
+        ]);
+        UsersHasSubject::create([
             'user_id' => 5,
             'subject_id' => 5,
             'quota' => 18
         ]);
         UsersHasSubject::create([
             'user_id' => 4,
-            'subject_id' => 5,
+            'subject_id' => 3,
+            'quota' => 18
+        ]);
+        UsersHasSubject::create([
+            'user_id' => 4,
+            'subject_id' => 4,
             'quota' => 18
         ]);
         UsersHasSubject::create([

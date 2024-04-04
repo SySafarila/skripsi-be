@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
         $dosen->syncRoles(['dosen']);
 
         $dosen2 = User::create([
-            'name' => 'Dosen2',
+            'name' => 'Dosen 2',
             'email' => 'dosen2@dosen2.com',
             'password' => Hash::make('password'),
             'identifier' => 'nidn',
