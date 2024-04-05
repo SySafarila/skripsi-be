@@ -94,6 +94,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('feedbacks-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.feedbacks.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.feedbacks.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Hasil Umpan Balik
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     {{-- @can('semesters-read')
                         <li class="nav-item">
                             <a href="{{ route('admin.semesters.index') }}"

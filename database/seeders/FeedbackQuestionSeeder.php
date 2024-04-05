@@ -17,5 +17,13 @@ class FeedbackQuestionSeeder extends Seeder
             'question' => 'lorem ipsum dolor',
             'type' => 'mahasiswa-to-dosen'
         ]);
+        FeedbackQuestion::create([
+            'question' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+            'type' => 'mahasiswa-to-dosen'
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Lorem  consectetur adipisicing elit.',
+            'type' => 'mahasiswa-to-dosen'
+        ]);
     }
 }

@@ -30,4 +30,8 @@ class UserFeedback extends Model
     {
         return $this->belongsTo(FeedbackQuestion::class);
     }
+
+    public function course() {
+        return $this->belongsTo(Course::class);
+    }
 }
