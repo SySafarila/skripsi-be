@@ -35,10 +35,15 @@ class AuthenticatedSessionController extends Controller
             'password' => ['required', 'string']
         ]);
 
-        $email_login = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-        $identifier_login = Auth::attempt(['identifier_number' => $request->email, 'password' => $request->password]);
+        $email_login = Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember ? true : false);
+        $identifier_login = Auth::attempt(['identifier_number' => $request->email, 'password' => $request->password], $request->remember ? true : false);
+        $remember_check = Auth::viaRemember();
 
-        if ($email_login) {
+        if ($remember_check) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } else if ($email_login) {
             $request->session()->regenerate();
 
             return redirect()->intended(RouteServiceProvider::HOME);
