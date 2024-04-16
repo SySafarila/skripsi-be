@@ -20,6 +20,7 @@
                     <h1 class="m-0">Karyawan & Dosen</h1>
                     @can('employees-create')
                         <a href="{{ route('admin.employees.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                        <a href="{{ route('admin.employees.create', ['type' => 'import']) }}" class="btn btn-sm btn-success ml-2">Import</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">

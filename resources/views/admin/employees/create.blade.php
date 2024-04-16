@@ -31,6 +31,19 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body">
+                    @if (request()->type == 'import')
+                    <form action="{{ route('admin.employees.store', ['type' => 'import']) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group mb-2">
+                            <label for="excel" class="text-capitalize">Excel</label>
+                            <input type="file" class="form-control border-0 p-0" id="excel" name="excel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                            @error('excel')
+                                <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                    </form>
+                    @else
                     <form action="{{ route('admin.employees.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
@@ -98,6 +111,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>
