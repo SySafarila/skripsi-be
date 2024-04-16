@@ -17,7 +17,19 @@ class MajorsSeeder extends Seeder
             'major' => 'Teknik Informatika'
         ]);
         Major::create([
+            'major' => 'Manajemen Informatika'
+        ]);
+        Major::create([
+            'major' => 'Manajemen'
+        ]);
+        Major::create([
+            'major' => 'Akuntansi'
+        ]);
+        Major::create([
             'major' => 'Sastra Inggris'
+        ]);
+        Major::create([
+            'major' => 'Ilmu Komunikasi'
         ]);
     }
 }

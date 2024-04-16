@@ -20,6 +20,7 @@
                     <h1 class="m-0">Mahasiswa</h1>
                     @can('students-create')
                         <a href="{{ route('admin.students.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                        <a href="{{ route('admin.students.create', ['type' => 'import']) }}" class="btn btn-sm btn-success ml-2">Import Excel</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
@@ -54,7 +55,7 @@
                                     <span style="display: none;">Selector</span>
                                 </th>
                                 <th>Nama</th>
-                                <th>Nomor Registrasi</th>
+                                <th>NIM</th>
                                 <th>Semester</th>
                                 <th>Jurusan</th>
                                 <th>Feedback</th>

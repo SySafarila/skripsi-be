@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\StudentsImport;
 use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
 use App\Models\Major;
@@ -18,13 +19,14 @@ use Exception;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
     protected $domain = 'domain.com';
     public function __construct()
     {
-        $this->middleware('can:employees-create')->only(['create', 'store']);
+        $this->middleware('can:employees-create')->only(['create', 'store', 'import']);
         $this->middleware('can:employees-read')->only('index');
         $this->middleware('can:employees-update')->only(['edit', 'update']);
         $this->middleware('can:employees-delete')->only(['destroy', 'massDestroy']);
@@ -54,7 +56,7 @@ class StudentController extends Controller
                 // })
                 ->addColumn('options', 'admin.students.datatables.options')
                 ->editColumn('identifier_number', function ($query) {
-                    return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
+                    return $query->identifier_number ? $query->identifier_number : '-';
                 })
                 ->addColumn('feedback', function ($query) use ($questions, $active_kpi) {
                     if ($query->hasMajor) {
@@ -62,19 +64,19 @@ class StudentController extends Controller
                     }
                     return '-';
                 })
-                ->editColumn('semester', function($model) {
+                ->editColumn('semester', function ($model) {
                     if ($model->hasMajor) {
                         return $model->hasMajor->semester;
                     }
                     return '-';
                 })
-                ->editColumn('semester', function($model) {
+                ->editColumn('semester', function ($model) {
                     if ($model->hasMajor) {
                         return $model->hasMajor->semester;
                     }
                     return '-';
                 })
-                ->editColumn('major', function($model) {
+                ->editColumn('major', function ($model) {
                     if ($model->hasMajor) {
                         return $model->hasMajor->major->major;
                     }
@@ -101,6 +103,9 @@ class StudentController extends Controller
      */
     public function create()
     {
+        if (request()->type == 'import') {
+            return view('admin.students.create');
+        }
         // $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
         $majors = Major::orderBy('major', 'asc')->get();
 
@@ -115,6 +120,9 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->type == 'import') {
+            return $this->import($request);
+        }
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'identifier_number' => ['required', 'numeric', 'unique:users,identifier_number'],
@@ -301,6 +309,22 @@ class StudentController extends Controller
         if (Auth::user()->hasRole('admin') && $user->hasRole('admin')) {
             throw new Exception('You cannot delete user with same role level with you !', 403);
             // return redirect()->route('admin.students.index')->with('warning', 'You cannot delete user with same role level with you !');
+        }
+    }
+
+    private function import(Request $request)
+    {
+        $request->validate([
+            'excel' => ['required', 'file']
+        ]);
+        $excel = $request->file('excel');
+
+        try {
+            Excel::import(new StudentsImport, $excel);
+            return redirect()->route('admin.students.index')->with('success', 'Import berhasil');
+        } catch (\Throwable $th) {
+            throw $th;
+            return redirect()->route('admin.students.index')->with('error', 'Import gagal');
         }
     }
 }
