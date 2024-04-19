@@ -34,8 +34,8 @@ class AchievementController extends Controller
                 'kpi_period_id' => $kpi_id,
                 'title' => "Karyawan #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
                 'position' => $index,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $kpi->end_date,
+                'updated_at' => $kpi->end_date
             ]);
         }
 
@@ -48,8 +48,8 @@ class AchievementController extends Controller
                 'kpi_period_id' => $kpi_id,
                 'title' => "Dosen #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
                 'position' => $index,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $kpi->end_date,
+                'updated_at' => $kpi->end_date
             ]);
         }
 
@@ -62,8 +62,8 @@ class AchievementController extends Controller
                 'kpi_period_id' => $kpi_id,
                 'title' => "Tendik #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
                 'position' => $index,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $kpi->end_date,
+                'updated_at' => $kpi->end_date
             ]);
         }
 
@@ -76,17 +76,17 @@ class AchievementController extends Controller
                 'kpi_period_id' => $kpi_id,
                 'title' => "Staff #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
                 'position' => $index,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $kpi->end_date,
+                'updated_at' => $kpi->end_date
             ]);
         }
 
         DB::beginTransaction();
         try {
-            DB::table('achievements')->insert($employees);
-            DB::table('achievements')->insert($dosenArr);
-            DB::table('achievements')->insert($tendikArr);
-            DB::table('achievements')->insert($staffArr);
+            DB::table('achievements')->insert($employees); // pegawai
+            DB::table('achievements')->insert($dosenArr); // dosen
+            DB::table('achievements')->insert($tendikArr); // tendik
+            DB::table('achievements')->insert($staffArr); // staff
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
