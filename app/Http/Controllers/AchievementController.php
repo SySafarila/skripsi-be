@@ -16,10 +16,6 @@ class AchievementController extends Controller
     {
         $kpi = KpiPeriod::where('id', $kpi_id)->where('is_active', true)->firstOrFail();
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi_id)->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
-        $achievement = Achievement::where('kpi_period_id', $kpi_id)->get();
-        if ($achievement->count() > 0) {
-            return back()->with('error', 'Already generated!');
-        }
         $user_ids = $points->pluck('user_id')->toArray();
 
         $dosens = User::role('dosen')->whereIn('id', $user_ids)->get();
@@ -83,6 +79,7 @@ class AchievementController extends Controller
 
         DB::beginTransaction();
         try {
+            Achievement::where('kpi_period_id', $kpi_id)->delete();
             DB::table('achievements')->insert($employees); // pegawai
             DB::table('achievements')->insert($dosenArr); // dosen
             DB::table('achievements')->insert($tendikArr); // tendik
