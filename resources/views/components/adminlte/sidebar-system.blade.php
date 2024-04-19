@@ -40,7 +40,7 @@
         <li class="nav-item">
             <a href="{{ route('admin.settings.index') }}"
                 class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
-                <i class="nav-icon far fa-life-ring"></i>
+                <i class="nav-icon fas fa-cog"></i>
                 <p>
                     Pengaturan
                     {{-- <span class="right badge badge-danger">New</span> --}}

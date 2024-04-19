@@ -50,7 +50,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.kpi.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.kpi.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-stream"></i>
                                 <p>
                                     Periode KPI
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -62,7 +62,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.presence-scopes.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.presence-scopes.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-bullseye"></i>
                                 <p>
                                     Lingkup Absensi
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -74,7 +74,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.employees-management.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.employees-management.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-business-time"></i>
                                 <p>
                                     Quota Absensi Karyawan
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -86,7 +86,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.questions.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.questions.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-question"></i>
                                 <p>
                                     Pertanyaan Umpan Balik
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -98,7 +98,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.feedbacks.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.feedbacks.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-comments"></i>
                                 <p>
                                     Hasil Umpan Balik
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -120,7 +120,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.majors.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.majors.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-university"></i>
                                 <p>
                                     Jurusan
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -132,7 +132,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.courses.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.courses.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-book"></i>
                                 <p>
                                     Mata Kuliah
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -144,7 +144,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.employees.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.employees.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-user-tie"></i>
                                 <p>
                                     Daftar Karyawan & Dosen
                                     {{-- <span class="right badge badge-danger">New</span> --}}
@@ -156,7 +156,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.students.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-newspaper"></i>
+                                <i class="nav-icon fas fa-user-graduate"></i>
                                 <p>
                                     Daftar Mahasiswa
                                     {{-- <span class="right badge badge-danger">New</span> --}}
