@@ -42,6 +42,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <a href="{{ asset('imports/Students.xlsx') }}" class="btn btn-sm btn-success">Download Sample Excel</a>
                         </form>
                     @else
                         <form action="{{ route('admin.students.store') }}" method="POST">
