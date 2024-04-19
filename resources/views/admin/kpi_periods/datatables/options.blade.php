@@ -2,7 +2,7 @@
     @can('achievements-create')
     <form action="{{ route('admin.achievements.generate', $model->id) }}" method="post">
         @csrf
-        <button type="submit" class="btn btn-sm btn-secondary">Generate Achievements</button>
+        <button type="submit" class="btn btn-sm btn-secondary" onclick="this.parentElement.submit(); this.disabled = true;">Bagikan Pencapaian</button>
     </form>
     @endcan
     @can('kpi-update')
