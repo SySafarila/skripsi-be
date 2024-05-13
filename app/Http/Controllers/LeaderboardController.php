@@ -48,7 +48,7 @@ class LeaderboardController extends Controller
                 break;
         }
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
-        $n = 1;
+        $n = 4;
         // return $points;
         return view('leaderboard.index', compact('points', 'n', 'kpi', 'kpis'));
     }
