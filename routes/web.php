@@ -123,8 +123,9 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
     Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
     Route::get('/profile', [DosenPageController::class, 'profile'])->name('profile');
-    Route::get('/profile/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('presence.show');
     Route::post('/presence', [DosenPageController::class, 'presence'])->name('presence.store');
+    Route::get('/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('presence.show');
+    Route::get('/presence', [DosenPageController::class, 'presence_index'])->name('presence.index');
 });
 
 // authenticated students

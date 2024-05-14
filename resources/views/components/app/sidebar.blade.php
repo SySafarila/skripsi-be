@@ -19,17 +19,18 @@
         </div>
     </a>
     <hr>
-    <a href="#" class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+    <a href="{{ route('profile') }}" class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
         <img src="{{ asset('icons/account.svg') }}" alt="home">
         <span>Profil</span>
     </a>
-    <a href="#" class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+    <a href="{{ route('presence.index') }}"
+        class="{{ request()->routeIs('presence.*') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
         <img src="{{ asset('icons/presence.svg') }}" alt="home">
         <span>Kehadiran</span>
     </a>
     <a href="#" class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
         <img src="{{ asset('icons/feedback.svg') }}" alt="home">
-        <span>Feedback</span>
+        <span>Lihat Feedback</span>
     </a>
     <a href="{{ route('leaderboard.index') }}"
         class="{{ request()->routeIs('leaderboard.index') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">

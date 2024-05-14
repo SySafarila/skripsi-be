@@ -28,7 +28,7 @@ class LeaderboardController extends Controller
                 'points' => 0
             ]);
 
-            return redirect()->route('leaderboard.index', ['kpi_period_id' => $request->kpi_period_id]);
+            return redirect()->route('employees.leaderboard', ['kpi_period_id' => $request->kpi_period_id]);
         }
         switch ($request->filter) {
             case 'dosen':
@@ -50,6 +50,6 @@ class LeaderboardController extends Controller
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
         $n = 4;
         // return $points;
-        return view('leaderboard.index', compact('points', 'n', 'kpi', 'kpis'));
+        return view('employees.leaderboard', compact('points', 'n', 'kpi', 'kpis'));
     }
 }

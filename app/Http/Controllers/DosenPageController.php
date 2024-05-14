@@ -39,7 +39,17 @@ class DosenPageController extends Controller
         $userHasSubjectId = $user->subjects()->where('subject_id', $subject->id)->firstOrFail()->id;
         $image_presence_setting = Setting::where('key', 'image_presence')->first();
 
-        return view('dosen.subject', compact('kpi', 'user', 'presences', 'subject', 'userHasSubjectId', 'image_presence_setting'));
+        return view('employees.presences-show', compact('kpi', 'user', 'presences', 'subject', 'userHasSubjectId', 'image_presence_setting'));
+    }
+
+    public function presence_index() {
+        $kpi = KpiPeriod::where('is_active', true)->first();
+        $user = User::with('subjects.subject', 'presences')->where('id', request()->user()->id)->first();
+        $presences = $user->presences()->where('kpi_period_id', $kpi->id)->get();
+        $point = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
+        $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
+
+        return view('employees.presences', compact('kpi', 'user', 'presences', 'point', 'achievements'));
     }
 
     public function presence(Request $request)
