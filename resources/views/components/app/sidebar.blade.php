@@ -37,6 +37,11 @@
         <img src="{{ asset('icons/leaderboard.svg') }}" alt="leaderboard">
         <span>Leaderboard</span>
     </a>
+    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.querySelector('#logoutForm').submit()"
+        class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+        <img src="{{ asset('icons/logout.svg') }}" alt="logout">
+        <span>Logout</span>
+    </a>
     <hr>
     <p class="px-4 py-3 text-center text-xs">Program ini dibuat sebagai syarat untuk menyelesaikan pendidikan
         sarjana.</p>

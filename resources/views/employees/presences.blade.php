@@ -16,7 +16,7 @@
                     </td>
                     <td class="border p-2">
                         <a href="{{ route('presence.show', $user_has_subject->subject_id) }}"
-                            class="block rounded bg-blue-500 py-1 text-center text-white hover:bg-blue-600">Absen
+                            class="block rounded px-2 bg-blue-500 py-1 text-center text-white hover:bg-blue-600">Absen
                             Masuk</a>
                     </td>
                 </tr>

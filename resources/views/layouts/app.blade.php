@@ -39,6 +39,9 @@
 
     <div id="nav-backdrop" class="hidden">
     </div>
+    <form action="{{ route('logout') }}" method="post" id="logoutForm">
+        @csrf
+    </form>
     <script>
         const navbarActions = () => {
             const navHamburger = document.querySelector("nav #hamburger");

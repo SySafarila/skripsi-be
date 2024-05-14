@@ -21,8 +21,13 @@
             </tr>
             @foreach ($presences as $presence)
                 <tr>
-                    <td class="border p-2">{{ $presence->created_at->format('d/m/Y - H:i') }}
-                        {{ isToday($presence->created_at) ? '(Hari Ini)' : '' }}</td>
+                    <td class="border p-2">
+                        @if (isToday($presence->created_at))
+                            Hari ini - {{ $presence->created_at->format('H:i') }}
+                        @else
+                            {{ $presence->created_at->format('d/m/Y - H:i') }}
+                        @endif
+                    </td>
                     <td class="border p-2 capitalize">{{ $presence->status }}</td>
                     <td class="border p-2">
                         @if ($presence->image)
@@ -41,7 +46,7 @@
                             <input type="hidden" name="users_has_subject_id" value="{{ $userHasSubjectId }}">
                             <input type="hidden" name="control" value="-">
                             <button
-                                class="block w-full rounded bg-red-500 py-1 text-center text-white hover:bg-red-600">Hapus</button>
+                                class="block w-full rounded bg-red-500 px-2 py-1 text-center text-white hover:bg-red-600">Hapus</button>
                         </form>
                     </td>
                 </tr>
