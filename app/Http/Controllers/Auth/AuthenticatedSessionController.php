@@ -49,12 +49,18 @@ class AuthenticatedSessionController extends Controller
             if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
                 return redirect()->route('leaderboard.index');
             }
+            if ($user->hasRole(['admin', 'super admin'])) {
+                return redirect()->route('dashboard');
+            }
             return redirect()->route('student.index');
         } else if ($identifier_login) {
             $request->session()->regenerate();
             $user = Auth::user();
             if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
                 return redirect()->route('leaderboard.index');
+            }
+            if ($user->hasRole(['admin', 'super admin'])) {
+                return redirect()->route('dashboard');
             }
             return redirect()->route('student.index');
 

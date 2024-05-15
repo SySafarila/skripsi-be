@@ -15,7 +15,7 @@
                         ({{ number_format(($presences->where('subject_id', $user_has_subject->subject_id)->count() * 100) / $user_has_subject->quota, 2) }}%)
                     </td>
                     <td class="border p-2">
-                        <a href="{{ route('presence.show', $user_has_subject->subject_id) }}"
+                        <a href="{{ route('employees.presence.show', $user_has_subject->subject_id) }}"
                             class="block rounded px-2 bg-blue-500 py-1 text-center text-white hover:bg-blue-600">Absen
                             Masuk</a>
                     </td>

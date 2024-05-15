@@ -8,6 +8,7 @@ use App\Models\Point;
 use App\Models\Setting;
 use App\Models\Subject;
 use App\Models\User;
+use App\Models\UserFeedback;
 // use App\Models\UserFeedback;
 use App\Models\UserPresence;
 use App\Models\UsersHasSubject;
@@ -28,6 +29,12 @@ class DosenPageController extends Controller
         }])->orderBy('start_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', request()->user()->id)->where('position', '<=', 5)->latest()->get();
         return view('employees.profile', compact('kpi', 'user', 'achievements', 'points'));
+    }
+
+    public function my_feedback()
+    {
+        $feedbacks = UserFeedback::where('user_id', request()->user()->id)->latest()->get()->groupBy('question');
+        return view('employees.feedback', compact('feedbacks'));
     }
 
     public function profile_show(Request $request, $id)

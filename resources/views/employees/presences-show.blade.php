@@ -38,7 +38,7 @@
                         @endif
                     </td>
                     <td class="border p-2">
-                        <form action="{{ route('presence.store') }}" method="post">
+                        <form action="{{ route('employees.presence.store') }}" method="post">
                             @csrf
                             <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
                             <input type="hidden" name="subject_id" value="{{ $subject->id }}">
@@ -52,7 +52,7 @@
                 </tr>
             @endforeach
         </table>
-        <form action="{{ route('presence.store') }}" method="post" enctype="multipart/form-data"
+        <form action="{{ route('employees.presence.store') }}" method="post" enctype="multipart/form-data"
             class="flex flex-col gap-2">
             @csrf
             <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">

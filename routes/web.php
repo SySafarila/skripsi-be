@@ -130,12 +130,13 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 
 // authenticated employees
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
-    Route::get('/employees/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
-    Route::get('/employees/profile', [DosenPageController::class, 'profile'])->name('profile');
-    Route::get('/employees/profile/{id}', [DosenPageController::class, 'profile_show'])->name('profile.show');
-    Route::post('/employees/presence', [DosenPageController::class, 'presence'])->name('presence.store');
-    Route::get('/employees/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('presence.show');
-    Route::get('/employees/presence', [DosenPageController::class, 'presence_index'])->name('presence.index');
+    Route::get('/employees/leaderboard', [LeaderboardController::class, 'index'])->name('employees.leaderboard.index');
+    Route::get('/employees/profile', [DosenPageController::class, 'profile'])->name('employees.profile');
+    Route::get('/employees/profile/{id}', [DosenPageController::class, 'profile_show'])->name('employees.profile.show');
+    Route::post('/employees/presence', [DosenPageController::class, 'presence'])->name('employees.presence.store');
+    Route::get('/employees/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('employees.presence.show');
+    Route::get('/employees/presence', [DosenPageController::class, 'presence_index'])->name('employees.presence.index');
+    Route::get('/employees/feedback', [DosenPageController::class, 'my_feedback'])->name('employees.feedback.index');
 });
 
 // authenticated students
