@@ -22,4 +22,8 @@ class KpiPeriod extends Model
     public function achievements() {
         return $this->hasMany(Achievement::class);
     }
+
+    public function points() {
+        return $this->hasMany(Point::class);
+    }
 }

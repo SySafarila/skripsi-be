@@ -45,10 +45,18 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(RouteServiceProvider::HOME);
         } else if ($email_login) {
             $request->session()->regenerate();
-
-            return redirect()->intended(RouteServiceProvider::HOME);
+            $user = Auth::user();
+            if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+                return redirect()->route('leaderboard.index');
+            }
+            return redirect()->route('student.index');
         } else if ($identifier_login) {
             $request->session()->regenerate();
+            $user = Auth::user();
+            if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+                return redirect()->route('leaderboard.index');
+            }
+            return redirect()->route('student.index');
 
             return redirect()->intended(RouteServiceProvider::HOME);
         }

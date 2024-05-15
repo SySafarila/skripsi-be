@@ -19,6 +19,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentFeedbackController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +34,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    $user = Auth::user();
+    if (!$user) {
+        return redirect()->route('login');
+    }
+    if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+        return redirect()->route('leaderboard.index');
+    }
+    return redirect()->route('student.index');
 })->name('landingpage');
 
 Route::get('/dashboard', function () {
@@ -121,19 +130,19 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 
 // authenticated employees
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
-    Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
-    Route::get('/profile', [DosenPageController::class, 'profile'])->name('profile');
-    Route::post('/presence', [DosenPageController::class, 'presence'])->name('presence.store');
-    Route::get('/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('presence.show');
-    Route::get('/presence', [DosenPageController::class, 'presence_index'])->name('presence.index');
+    Route::get('/employees/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
+    Route::get('/employees/profile', [DosenPageController::class, 'profile'])->name('profile');
+    Route::post('/employees/presence', [DosenPageController::class, 'presence'])->name('presence.store');
+    Route::get('/employees/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('presence.show');
+    Route::get('/employees/presence', [DosenPageController::class, 'presence_index'])->name('presence.index');
 });
 
 // authenticated students
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
-    Route::get('/student', [StudentFeedbackController::class, 'index'])->name('student.index');
-    Route::get('/student/courses', [StudentFeedbackController::class, 'courses'])->name('student.courses');
-    Route::get('/student/courses/{course_id}/feedback', [StudentFeedbackController::class, 'feedback'])->name('student.feedback');
-    Route::post('/student/courses/{course_id}/feedback', [StudentFeedbackController::class, 'store'])->name('student.store');
+    Route::get('/students', [StudentFeedbackController::class, 'index'])->name('student.index');
+    Route::get('/students/courses', [StudentFeedbackController::class, 'courses'])->name('student.courses');
+    Route::get('/students/courses/{course_id}/feedback', [StudentFeedbackController::class, 'feedback'])->name('student.feedback');
+    Route::post('/students/courses/{course_id}/feedback', [StudentFeedbackController::class, 'store'])->name('student.store');
 });
 
 require __DIR__ . '/auth.php';

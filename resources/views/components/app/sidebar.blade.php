@@ -19,7 +19,7 @@
         </div>
     </a>
     <hr>
-    <a href="{{ route('profile') }}" class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+    <a href="{{ route('profile') }}" class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md {{ request()->routeIs('profile') ? 'bg-gray-100' : '' }}">
         <img src="{{ asset('icons/account.svg') }}" alt="home">
         <span>Profil</span>
     </a>

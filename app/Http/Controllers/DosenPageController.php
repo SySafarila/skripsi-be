@@ -22,12 +22,12 @@ class DosenPageController extends Controller
     public function profile()
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
-        $user = User::with('subjects.subject', 'presences')->where('id', request()->user()->id)->first();
-        $presences = $user->presences()->where('kpi_period_id', $kpi->id)->get();
-        $point = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
-        $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
-        // return $achievements;
-        return view('dosen.profile', compact('kpi', 'user', 'presences', 'point', 'achievements'));
+        $user = User::with('subjects.subject')->where('id', request()->user()->id)->first();
+        $points = KpiPeriod::with(['points' => function($q) {
+            return $q->where('user_id', request()->user()->id);
+        }])->orderBy('start_date', 'desc')->limit(5)->get();
+        $achievements = Achievement::where('user_id', request()->user()->id)->where('position', '<=', 5)->latest()->get();
+        return view('employees.profile', compact('kpi', 'user', 'achievements', 'points'));
     }
 
     public function subject($subject_id)
