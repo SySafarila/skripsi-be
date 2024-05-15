@@ -68,7 +68,7 @@
                                 alt="profile" class="h-10 w-10 rounded-full">
                             <div class="flex flex-col">
                                 <div class="flex flex-col">
-                                    <a href="#"
+                                    <a href="{{ route('profile.show', $point->user->id) }}"
                                         class="line-clamp-1 font-semibold">{{ $point->user->name ?? '-' }}</a>
                                     @if (request()->filter == 'all' || request()->filter == null)
                                         <span

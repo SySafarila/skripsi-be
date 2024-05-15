@@ -2,15 +2,16 @@
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">Profil</h1>
         <div class="flex flex-col items-center gap-2">
-            <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('images/profile.png') }}"
-                alt="profil" class="w-20">
+            <img src="{{ $user->image ? asset('storage/' . $user->image) : asset('images/profile.png') }}" alt="profil"
+                class="w-20">
             <div class="flex w-full flex-col items-center">
-                <p class="font-semibold">{{ Auth::user()->name }}</p>
+                <p class="font-semibold">{{ $user->name }}</p>
                 <small class="line-clamp-1 uppercase">{{ $user->identifier }}: {{ $user->identifier_number }}</small>
             </div>
         </div>
         <canvas id="myChart"></canvas>
         <h1 class="text-2xl font-bold">Pencapaian</h1>
+
         @if (count($achievements) == 0)
             <p>Belum ada pencapaian</p>
         @else
