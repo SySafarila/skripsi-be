@@ -130,6 +130,7 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 
 // authenticated employees
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
+    Route::get('/employees', [DosenPageController::class, 'welcome'])->name('employees.welcome');
     Route::get('/employees/leaderboard', [LeaderboardController::class, 'index'])->name('employees.leaderboard.index');
     Route::get('/employees/profile', [DosenPageController::class, 'profile'])->name('employees.profile');
     Route::get('/employees/profile/{id}', [DosenPageController::class, 'profile_show'])->name('employees.profile.show');

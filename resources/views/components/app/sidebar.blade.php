@@ -1,5 +1,6 @@
 <div id="sidebar">
-    <a href="{{ route('employees.profile') }}" class="account">
+    <a href="{{ route('employees.profile') }}"
+        class="account {{ request()->routeIs('employees.profile') ? 'bg-gray-100' : '' }}">
         <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('images/profile.png') }}"
             alt="profile" class="h-10 w-10 flex-shrink-0 rounded-full">
         <div class="flex w-full flex-col">
@@ -19,25 +20,35 @@
         </div>
     </a>
     <hr>
-    <a href="{{ route('employees.profile') }}"
-        class="{{ request()->routeIs('profile') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+    <a href="{{ route('employees.welcome') }}"
+        class="{{ request()->routeIs('employees.welcome') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+        <img src="{{ asset('icons/home.svg') }}" alt="home">
+        <span>Beranda</span>
+    </a>
+    {{-- <a href="{{ route('employees.profile') }}"
+        class="{{ request()->routeIs('employees.profile') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
         <img src="{{ asset('icons/account.svg') }}" alt="home">
         <span>Profil</span>
-    </a>
+    </a> --}}
     <a href="{{ route('employees.presence.index') }}"
-        class="{{ request()->routeIs('presence.*') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
-        <img src="{{ asset('icons/presence.svg') }}" alt="home">
+        class="{{ request()->routeIs('employees.presence.*') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+        <img src="{{ asset('icons/presence.svg') }}" alt="presence">
         <span>Kehadiran</span>
     </a>
     <a href="{{ route('employees.feedback.index') }}"
-        class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
-        <img src="{{ asset('icons/feedback.svg') }}" alt="home">
+        class="{{ request()->routeIs('employees.feedback.index') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+        <img src="{{ asset('icons/feedback.svg') }}" alt="feedback">
         <span>Lihat Feedback</span>
     </a>
     <a href="{{ route('employees.leaderboard.index') }}"
-        class="{{ request()->routeIs('leaderboard.index') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+        class="{{ request()->routeIs('employees.leaderboard.index') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
         <img src="{{ asset('icons/leaderboard.svg') }}" alt="leaderboard">
         <span>Leaderboard</span>
+    </a>
+    <a href="#"
+        class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+        <img src="{{ asset('icons/settings.svg') }}" alt="settings">
+        <span>Pengaturan</span>
     </a>
     <a href="{{ route('logout') }}" onclick="event.preventDefault();document.querySelector('#logoutForm').submit()"
         class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">

@@ -1,3 +1,13 @@
+@php
+    function rolesProcessor($roles)
+    {
+        $string = '';
+        foreach ($roles as $role) {
+            $string = $role->name;
+        }
+        return $string;
+    }
+@endphp
 <x-app-layout>
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">Profil</h1>
@@ -7,6 +17,10 @@
             <div class="flex w-full flex-col items-center">
                 <p class="font-semibold">{{ $user->name }}</p>
                 <small class="line-clamp-1 uppercase">{{ $user->identifier }}: {{ $user->identifier_number }}</small>
+                <div class="mt-1.5 flex">
+                    <small
+                        class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ rolesProcessor($user->roles) }}</small>
+                </div>
             </div>
         </div>
         <canvas id="myChart"></canvas>
@@ -54,17 +68,25 @@
                 datasets: [{
                     label: 'Poin Kehadiran',
                     data: presencePoints,
-                    borderWidth: 1
+                    borderWidth: 1,
+                    pointRadius: 5,
                 }, {
                     label: 'Poin Feedback',
                     data: feedbackPoints,
-                    borderWidth: 1
+                    borderWidth: 1,
+                    pointRadius: 5,
                 }]
             },
             options: {
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Performa dalam 5 periode KPI'
                     }
                 }
             }

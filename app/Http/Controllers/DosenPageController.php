@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\Storage;
 
 class DosenPageController extends Controller
 {
+    public function welcome()
+    {
+        return view('employees.welcome');
+    }
+
     public function profile()
     {
         $kpi = KpiPeriod::where('is_active', true)->first();

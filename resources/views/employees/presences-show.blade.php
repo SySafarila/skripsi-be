@@ -46,7 +46,7 @@
                             <input type="hidden" name="users_has_subject_id" value="{{ $userHasSubjectId }}">
                             <input type="hidden" name="control" value="-">
                             <button
-                                class="block w-full rounded bg-red-500 px-2 py-1 text-center text-white hover:bg-red-600">Hapus</button>
+                                class="block w-full rounded bg-red-500 px-2 py-1 text-center text-xs text-white hover:bg-red-600">Hapus</button>
                         </form>
                     </td>
                 </tr>

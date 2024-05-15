@@ -72,17 +72,17 @@
                                         class="line-clamp-1 font-semibold">{{ $point->user->name ?? '-' }}</a>
                                     @if (request()->filter == 'all' || request()->filter == null)
                                         <span
-                                            class="w-fit rounded-lg bg-yellow-400 px-3 pb-0.5 text-xs uppercase">{{ rolesProcessor($point->user->roles) }}</span>
+                                            class="w-fit rounded-lg bg-yellow-400 px-2 pb-0.5 text-xs uppercase lg:pb-0">{{ rolesProcessor($point->user->roles) }}</span>
                                     @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-100"
+                        <button class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-100"
                             onclick="event.preventDefault(); this.closest('#user-points').querySelector('#detail-points').classList.toggle('hidden'); this.querySelector('img').classList.toggle('rotate-180')">
                             <span>{{ number_format($point->points, 0) }} XP</span>
                             <img src="{{ asset('icons/chevron.svg') }}" class="transition-transform ease-in-out"
                                 alt="arrow">
-                        </div>
+                        </button>
                     </div>
                     <div class="flex hidden flex-col pr-10" id="detail-points">
                         <div class="flex items-center justify-end gap-2">
