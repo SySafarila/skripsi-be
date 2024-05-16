@@ -19,7 +19,7 @@
                 <td class="border p-2">Foto</td>
                 <td class="border p-2">Aksi</td>
             </tr>
-            @foreach ($presences as $presence)
+            @foreach (Auth::user()->presences as $presence)
                 <tr>
                     <td class="border p-2">
                         @if (isToday($presence->created_at))
@@ -43,7 +43,7 @@
                             <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
                             <input type="hidden" name="subject_id" value="{{ $subject->id }}">
                             <input type="hidden" name="presence_id" value="{{ $presence->id }}">
-                            <input type="hidden" name="users_has_subject_id" value="{{ $userHasSubjectId }}">
+                            <input type="hidden" name="users_has_subject_id" value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}">
                             <input type="hidden" name="control" value="-">
                             <button
                                 class="block w-full rounded bg-red-500 px-2 py-1 text-center text-xs text-white hover:bg-red-600">Hapus</button>
@@ -58,7 +58,7 @@
             <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
             <input type="hidden" name="subject_id" value="{{ $subject->id }}">
             <input type="hidden" name="control" value="+">
-            <input type="hidden" name="users_has_subject_id" value="{{ $userHasSubjectId }}">
+            <input type="hidden" name="users_has_subject_id" value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}">
             <label for="image">Gambar</label>
             <input type="file" name="image" id="image" accept="image/*"
                 {{ $image_presence_setting->value == 'true' ? 'required' : '' }}>

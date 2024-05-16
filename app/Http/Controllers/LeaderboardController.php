@@ -12,7 +12,7 @@ class LeaderboardController extends Controller
     public function index()
     {
         $request = request();
-        $kpis = KpiPeriod::limit(10)->orderBy('start_date', 'desc')->get();
+        $kpis = KpiPeriod::limit(10)->orderBy('start_date', 'desc')->limit(5)->get();
         if ($request->kpi_period_id) {
             $kpi = KpiPeriod::where('id', $request->kpi_period_id)->first();
         } else {
@@ -28,7 +28,7 @@ class LeaderboardController extends Controller
                 'points' => 0
             ]);
 
-            return redirect()->route('employees.leaderboard', ['kpi_period_id' => $request->kpi_period_id]);
+            return redirect()->route('employees.leaderboard.index', ['kpi_period_id' => $request->kpi_period_id]);
         }
         switch ($request->filter) {
             case 'dosen':

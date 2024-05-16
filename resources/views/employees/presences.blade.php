@@ -7,12 +7,12 @@
                 <th class="border p-2">Kehadiran</th>
                 <th class="border p-2">Aksi</th>
             </tr>
-            @foreach ($user->subjects as $user_has_subject)
+            @foreach (Auth::user()->subjects as $user_has_subject)
                 <tr>
                     <td class="border p-2">{{ $user_has_subject->subject->name }}</td>
                     <td class="border p-2">
-                        {{ $presences->where('subject_id', $user_has_subject->subject_id)->count() }}/{{ $user_has_subject->quota }}
-                        ({{ number_format(($presences->where('subject_id', $user_has_subject->subject_id)->count() * 100) / $user_has_subject->quota, 2) }}%)
+                        {{ Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->count() }}/{{ $user_has_subject->quota }}
+                        ({{ number_format((Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->count() * 100) / $user_has_subject->quota, 2) }}%)
                     </td>
                     <td class="border p-2">
                         <a href="{{ route('employees.presence.show', $user_has_subject->subject_id) }}"
@@ -23,10 +23,10 @@
             @endforeach
             <tr>
                 <td class="border p-2">Total Kehadiran</td>
-                @if ($presences->count() > 0)
+                @if (Auth::user()->presences->count() > 0)
                     <td colspan="2" class="border p-2">
-                        {{ $presences->count() }}/{{ array_sum($user->subjects->pluck('quota')->toArray()) }}
-                        ({{ number_format(($presences->count() * 100) / array_sum($user->subjects->pluck('quota')->toArray()), 2) }}%)
+                        {{ Auth::user()->presences->count() }}/{{ array_sum(Auth::user()->subjects->pluck('quota')->toArray()) }}
+                        ({{ number_format((Auth::user()->presences->count() * 100) / array_sum(Auth::user()->subjects->pluck('quota')->toArray()), 2) }}%)
                     </td>
                 @else
                     <td colspan="2" class="border p-2">0</td>

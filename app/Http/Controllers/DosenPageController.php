@@ -45,36 +45,32 @@ class DosenPageController extends Controller
     public function profile_show(Request $request, $id)
     {
         $user = User::where('id', $id)->firstOrFail();
-        $kpi = KpiPeriod::where('is_active', true)->first();
+        // $kpi = KpiPeriod::where('is_active', true)->first();
         // $user = User::with('subjects.subject')->where('id', $user->id)->first();
         $points = KpiPeriod::with(['points' => function ($q) use ($user) {
             return $q->where('user_id', $user->id);
         }])->orderBy('start_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
-        return view('employees.profile-show', compact('kpi', 'user', 'achievements', 'points'));
+        return view('employees.profile-show', compact('user', 'achievements', 'points'));
     }
 
     public function subject($subject_id)
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
-        $user = User::with('presences')->where('id', request()->user()->id)->first();
+        // $user = User::with('presences')->where('id', request()->user()->id)->first();
         $subject = Subject::findOrFail($subject_id);
-        $presences = $user->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
-        $userHasSubjectId = $user->subjects()->where('subject_id', $subject->id)->firstOrFail()->id;
+        // $presences = $user->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
+        // $userHasSubjectId = $user->subjects()->where('subject_id', $subject->id)->firstOrFail()->id;
         $image_presence_setting = Setting::where('key', 'image_presence')->first();
 
-        return view('employees.presences-show', compact('kpi', 'user', 'presences', 'subject', 'userHasSubjectId', 'image_presence_setting'));
+        return view('employees.presences-show', compact('kpi', 'image_presence_setting', 'subject'));
     }
 
     public function presence_index()
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
-        $user = User::with('subjects.subject', 'presences')->where('id', request()->user()->id)->first();
-        $presences = $user->presences()->where('kpi_period_id', $kpi->id)->get();
-        $point = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
-        $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
 
-        return view('employees.presences', compact('kpi', 'user', 'presences', 'point', 'achievements'));
+        return view('employees.presences', compact('kpi'));
     }
 
     public function presence(Request $request)
