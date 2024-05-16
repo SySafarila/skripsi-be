@@ -36,4 +36,8 @@
     main #content {
         @apply w-full lg:pl-4;
     }
+
+    .btn {
+        @apply px-3 py-2 text-[0.8125rem] rounded-md;
+    }
 }

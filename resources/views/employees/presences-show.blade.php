@@ -19,7 +19,7 @@
                 <td class="border p-2">Foto</td>
                 <td class="border p-2">Aksi</td>
             </tr>
-            @forelse (Auth::user()->presences->where('kpi_period_id', $kpi->id) as $presence)
+            @forelse (Auth::user()->presences->where('kpi_period_id', $kpi->id)->where('subject_id', $subject->id) as $presence)
                 <tr>
                     <td class="border p-2">
                         @if (isToday($presence->created_at))
@@ -37,7 +37,7 @@
                             <span class="block text-center">-</span>
                         @endif
                     </td>
-                    <td class="border p-2">
+                    <td class="border p-2 text-center">
                         <form action="{{ route('employees.presence.store') }}" method="post">
                             @csrf
                             <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
@@ -46,8 +46,7 @@
                             <input type="hidden" name="users_has_subject_id"
                                 value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}">
                             <input type="hidden" name="control" value="-">
-                            <button
-                                class="block w-full rounded bg-red-500 px-2 py-1 text-center text-xs text-white hover:bg-red-600">Hapus</button>
+                            <button class="btn bg-red-500 text-white hover:bg-red-600">Hapus</button>
                         </form>
                     </td>
                 </tr>
@@ -69,7 +68,7 @@
             <input type="file" name="image" id="image" accept="image/*"
                 {{ $image_presence_setting->value == 'true' ? 'required' : '' }}>
             <div>
-                <button class="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-600">Absen Masuk</button>
+                <button class="btn bg-blue-500 text-white hover:bg-blue-600">Absen Masuk</button>
             </div>
         </form>
     </div>

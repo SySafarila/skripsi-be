@@ -20,11 +20,11 @@
             @foreach ($questions as $key => $question)
                 <div>
                     <div class="flex gap-2">
-                        <span class="w-4">{{ $n++ }}.</span>
-                        <p>{{ $question->question }}</p>
+                        <span class="w-4 flex-shrink-0">{{ $n++ }}.</span>
+                        <label for="{{ $key }}-{{ $question->question }}">{{ $question->question }}</label>
                     </div>
                     <div class="pl-6 pt-2">
-                        <textarea name="messages[{{ $key }}]" id="" class="w-full rounded-md"
+                        <textarea name="messages[{{ $key }}]" id="{{ $key }}-{{ $question->question }}" class="w-full rounded-md"
                             placeholder="Tulis masukan kamu disini..." required>{{ $question->responses[0]->message ?? '' }}</textarea>
                         {{-- <input type="number" name="points[{{ $key }}]" id="" placeholder="1-5" min="1" max="5" class="rounded-md" value="{{ $question->responses[0]->point ?? '' }}" required> --}}
                         <span>Point:</span>
@@ -47,8 +47,7 @@
                 </div>
             @endforeach
             <div class="pl-6">
-                <button type="submit"
-                    class="rounded-md bg-blue-500 px-2 py-1 text-white hover:bg-blue-600">Save</button>
+                <button type="submit" class="btn bg-blue-500 text-white hover:bg-blue-600">Save</button>
             </div>
         </form>
     </div>

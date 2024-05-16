@@ -14,9 +14,9 @@
                         {{ Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->where('kpi_period_id', $kpi->id)->count() }}/{{ $user_has_subject->quota }}
                         ({{ number_format((Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->where('kpi_period_id', $kpi->id)->count() *100) /$user_has_subject->quota,2) }}%)
                     </td>
-                    <td class="border p-2">
+                    <td class="border p-2 text-center">
                         <a href="{{ route('employees.presence.show', $user_has_subject->subject_id) }}"
-                            class="block rounded bg-blue-500 px-2 py-1 text-center text-xs text-white hover:bg-blue-600">Absen
+                            class="btn text-white bg-blue-500 hover:bg-blue-600">Absen
                             Masuk</a>
                     </td>
                 </tr>
