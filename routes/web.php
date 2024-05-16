@@ -40,7 +40,10 @@ Route::get('/', function () {
         return redirect()->route('login');
     }
     if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
-        return redirect()->route('employees.leaderboard.index');
+        return redirect()->route('employees.welcome');
+    }
+    if ($user->hasRole(['admin', 'super admin'])) {
+        return redirect()->route('admin.index');
     }
     return redirect()->route('student.index');
 })->name('landingpage');

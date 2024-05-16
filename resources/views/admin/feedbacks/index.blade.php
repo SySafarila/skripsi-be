@@ -29,32 +29,32 @@
                     </ol>
                 </div>
             </div>
-            <form class="row" style="gap: 8px;">
-                <select name="user_id" id="user_id" class="custom-select col-6 col-md" style="max-width: 13rem;">
+            <form>
+                <select name="user_id" id="user_id" class="custom-select" style="max-width: 13rem;">
                     <option value="">Semua Karyawan</option>
                     @foreach ($users as $user)
                         <option value="{{ $user->id }}" {{ request()->user_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                     @endforeach
                 </select>
-                <select name="question_id" id="question_id" class="custom-select col-6 col-md" style="max-width: 13rem;">
+                <select name="question_id" id="question_id" class="custom-select" style="max-width: 13rem;">
                     <option value="">Semua Pertanyaan</option>
                     @foreach ($questions as $question)
                         <option value="{{ $question->id }}" {{ request()->question_id == $question->id ? 'selected' : '' }}>{{ $question->question }}</option>
                     @endforeach
                 </select>
-                <select name="kpi_period_id" id="kpi_period_id" class="custom-select col-6 col-md" style="max-width: 13rem;">
+                <select name="kpi_period_id" id="kpi_period_id" class="custom-select" style="max-width: 13rem;">
                     <option value="">Semua Periode KPI</option>
                     @foreach ($kpis as $kpi)
                         <option value="{{ $kpi->id }}" {{ request()->kpi_period_id == $kpi->id ? 'selected' : '' }}>{{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }} {{ $kpi->is_active ? '(Aktif)' : '' }}</option>
                     @endforeach
                 </select>
-                <select name="course_id" id="course_id" class="custom-select col-6 col-md" style="max-width: 13rem;">
+                <select name="course_id" id="course_id" class="custom-select" style="max-width: 13rem;">
                     <option value="">Semua Mata Kuliah</option>
                     @foreach ($courses as $course)
                         <option value="{{ $course->id }}" {{ request()->course_id == $course->id ? 'selected' : '' }}>{{ $course->name}}</option>
                     @endforeach
                 </select>
-                <button class="btn btn-primary col-12 col-md" type="submit">Filter</button>
+                <button class="btn btn-primary" type="submit">Filter</button>
             </form>
         </div>
     </div>

@@ -19,7 +19,8 @@ class StudentFeedbackController extends Controller
 
     public function profile()
     {
-        return view('students.profile');
+        $courses = Auth::user()->hasMajor->major->courses()->with('user')->where('semester', Auth::user()->hasMajor->semester)->orderBy('name')->get();
+        return view('students.profile', compact('courses'));
     }
 
     public function courses()
@@ -29,7 +30,7 @@ class StudentFeedbackController extends Controller
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
         // $courses = $user->hasMajor->major->courses()->where('semester', $semester)->orderBy('name', 'asc')->get();
-        $courses = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->get();
+        $courses = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->orderBy('name', 'asc')->get();
         $course_ids = $courses->pluck('id');
         $sent_feedbacks = $user->sent_feedbacks()->where('kpi_period_id', $active_kpi->id)->whereIn('course_id', $course_ids)->get();
         $questions = FeedbackQuestion::where('type', 'mahasiswa-to-dosen')->orderBy('question', 'asc')->get();

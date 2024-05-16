@@ -32,18 +32,18 @@
         <table class="w-full border-collapse border">
             <tr>
                 <th class="border p-2 text-left">Mata Kuliah</th>
-                <th class="border p-2">Semester</th>
+                {{-- <th class="border p-2">Semester</th> --}}
                 <th class="border p-2 text-left">Dosen</th>
             </tr>
-            @forelse (Auth::user()->hasMajor->major->courses->where('semester', Auth::user()->hasMajor->semester) as $course)
+            @forelse ($courses as $course)
                 <tr>
                     <td class="border p-2">{{ $course->name }}</td>
-                    <td class="border p-2 text-center">{{ $course->semester }}</td>
+                    {{-- <td class="border p-2 text-center">{{ $course->semester }}</td> --}}
                     <td class="border p-2">{{ $course->user->name }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td class="border p-2" colspan="3">Data tidak ada</td>
+                    <td class="border p-2" colspan="2">Data tidak ada</td>
                 </tr>
             @endforelse
         </table>
