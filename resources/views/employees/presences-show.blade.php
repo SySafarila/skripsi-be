@@ -59,7 +59,7 @@
             <input type="hidden" name="subject_id" value="{{ $subject->id }}">
             <input type="hidden" name="control" value="+">
             <input type="hidden" name="users_has_subject_id" value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}">
-            <label for="image">Gambar</label>
+            <label for="image">Gambar{{ $image_presence_setting->value == 'true' ? '*' : '' }}</label>
             <input type="file" name="image" id="image" accept="image/*"
                 {{ $image_presence_setting->value == 'true' ? 'required' : '' }}>
             <div>
