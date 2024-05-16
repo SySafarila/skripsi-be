@@ -16,7 +16,7 @@
                 alt="profil" class="w-20">
             <div class="flex w-full flex-col items-center">
                 <p class="font-semibold capitalize">{{ Auth::user()->name }}</p>
-                <small class="line-clamp-1 uppercase">{{ $user->identifier }}: {{ $user->identifier_number }}</small>
+                <small class="line-clamp-1 uppercase">{{ Auth::user()->identifier }}: {{ Auth::user()->identifier_number }}</small>
                 <div class="mt-1.5 flex">
                     <small
                         class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ rolesProcessor(Auth::user()->roles) }}</small>

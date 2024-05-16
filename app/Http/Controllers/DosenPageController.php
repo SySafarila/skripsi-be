@@ -28,12 +28,11 @@ class DosenPageController extends Controller
     public function profile()
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
-        $user = User::with('subjects.subject')->where('id', request()->user()->id)->first();
         $points = KpiPeriod::with(['points' => function ($q) {
             return $q->where('user_id', request()->user()->id);
         }])->orderBy('start_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', request()->user()->id)->where('position', '<=', 5)->latest()->get();
-        return view('employees.profile', compact('kpi', 'user', 'achievements', 'points'));
+        return view('employees.profile', compact('kpi', 'achievements', 'points'));
     }
 
     public function my_feedback()
