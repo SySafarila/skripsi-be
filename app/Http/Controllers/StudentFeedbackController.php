@@ -14,7 +14,12 @@ class StudentFeedbackController extends Controller
 {
     public function index()
     {
-        return view('students.index');
+        return view('students.welcome');
+    }
+
+    public function profile()
+    {
+        return view('students.profile');
     }
 
     public function courses()

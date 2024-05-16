@@ -15,7 +15,7 @@
             <img src="{{ $user->image ? asset('storage/' . $user->image) : asset('images/profile.png') }}" alt="profil"
                 class="w-20">
             <div class="flex w-full flex-col items-center">
-                <p class="font-semibold">{{ $user->name }}</p>
+                <p class="font-semibold capitalize">{{ $user->name }}</p>
                 <small class="line-clamp-1 uppercase">{{ $user->identifier }}: {{ $user->identifier_number }}</small>
                 <div class="mt-1.5 flex">
                     <small

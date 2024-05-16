@@ -64,7 +64,7 @@ class AuthenticatedSessionController extends Controller
             }
             return redirect()->route('student.index');
 
-            return redirect()->intended(RouteServiceProvider::HOME);
+            // return redirect()->intended(RouteServiceProvider::HOME);
         }
 
         throw ValidationException::withMessages([

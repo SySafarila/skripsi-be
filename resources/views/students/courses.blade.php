@@ -1,38 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Halaman Mahasiswa</h1>
-    <a href="{{ route('student.index') }}">Halaman Utama</a>
-    <a href="{{ route('student.courses') }}">Survey</a>
-    <hr>
-    <h2>Mata Kuliah</h2>
-    <table border="1">
-        <tr>
-            <th>#</th>
-            <th>Mata Kuliah</th>
-            <th>Dosen</th>
-            <th>Feedback</th>
-        </tr>
-        @foreach ($courses as $course)
+<x-app-layout>
+    <div class="flex flex-col gap-4">
+        <h1 class="text-2xl font-bold">Feedback</h1>
+        <table class="w-full border-collapse border">
             <tr>
-                <td>{{ $n++ }}</td>
-                <td>{{ $course->name }}</td>
-                <td>{{ $course->user->name }}</td>
-                <td>
-                    @if ($sent_feedbacks->where('course_id', $course->id)->count() == 0)
-                        <a href="{{ route('student.feedback', ['course_id' => $course->id]) }}">Beri Masukan</a> <span>{{ $sent_feedbacks->where('course_id', $course->id)->count() }}/{{ $questions->count() }}</span>
-                    @else
-                        <a href="{{ route('student.feedback', ['course_id' => $course->id]) }}">Lihat Masukan</a> <span>{{ $sent_feedbacks->where('course_id', $course->id)->count() }}/{{ $questions->count() }}</span>
-                    @endif
-                </td>
+                <th class="border p-2">#</th>
+                <th class="border p-2 text-left">Mata Kuliah</th>
+                <th class="border p-2 text-left">Dosen</th>
+                <th class="border p-2">Feedback</th>
             </tr>
-        @endforeach
-    </table>
-</body>
-</html>
+            @foreach ($courses as $course)
+                <tr>
+                    <td class="border p-2 text-center">{{ $n++ }}</td>
+                    <td class="border p-2">{{ $course->name }}</td>
+                    <td class="border p-2">{{ $course->user->name }}</td>
+                    <td class="border p-2 text-center">
+                        @if ($sent_feedbacks->where('course_id', $course->id)->count() == 0)
+                            <a href="{{ route('student.courses.feedback', ['course_id' => $course->id]) }}"
+                                class="rounded-md bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600">Beri
+                                Masukan
+                                {{ $sent_feedbacks->where('course_id', $course->id)->count() }}/{{ $questions->count() }}</a>
+                        @else
+                            <a href="{{ route('student.courses.feedback', ['course_id' => $course->id]) }}"
+                                class="rounded-md bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600">Lihat
+                                Masukan
+                                {{ $sent_feedbacks->where('course_id', $course->id)->count() }}/{{ $questions->count() }}</a>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+</x-app-layout>

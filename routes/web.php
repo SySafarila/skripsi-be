@@ -40,7 +40,7 @@ Route::get('/', function () {
         return redirect()->route('login');
     }
     if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
-        return redirect()->route('leaderboard.index');
+        return redirect()->route('employees.leaderboard.index');
     }
     return redirect()->route('student.index');
 })->name('landingpage');
@@ -143,8 +143,9 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 // authenticated students
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
     Route::get('/students', [StudentFeedbackController::class, 'index'])->name('student.index');
+    Route::get('/students/profile', [StudentFeedbackController::class, 'profile'])->name('student.profile');
     Route::get('/students/courses', [StudentFeedbackController::class, 'courses'])->name('student.courses');
-    Route::get('/students/courses/{course_id}/feedback', [StudentFeedbackController::class, 'feedback'])->name('student.feedback');
+    Route::get('/students/courses/{course_id}/feedback', [StudentFeedbackController::class, 'feedback'])->name('student.courses.feedback');
     Route::post('/students/courses/{course_id}/feedback', [StudentFeedbackController::class, 'store'])->name('student.store');
 });
 

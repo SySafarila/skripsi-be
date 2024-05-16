@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
             'name' => 'Tendik',
             'email' => 'tendik@tendik.com',
             'password' => Hash::make('password'),
-            'identifier' => 'nidn',
+            'identifier' => 'nip',
             'identifier_number' => 1234,
             'email_verified_at' => now()
         ]);

@@ -24,7 +24,7 @@
 <body>
     <nav id="navbar">
         <div class="mx-auto flex w-full max-w-screen-lg items-center justify-between px-4">
-            <a href="#" id="brand" class="font-bold">BRAND</a>
+            <a href="/" id="brand" class="font-bold">BRAND</a>
             <button type="button" class="lg:hidden" id="hamburger">
                 <img src="{{ asset('icons/menu.svg') }}" alt="menu">
             </button>
