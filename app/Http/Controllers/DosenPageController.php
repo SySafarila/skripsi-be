@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Achievement;
 use App\Models\KpiPeriod;
-use App\Models\Point;
+// use App\Models\Point;
 use App\Models\Setting;
 use App\Models\Subject;
 use App\Models\User;
@@ -14,6 +14,7 @@ use App\Models\UserPresence;
 use App\Models\UsersHasSubject;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -68,8 +69,9 @@ class DosenPageController extends Controller
     public function presence_index()
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
+        $subjects = Auth::user()->subjects()->with('subject')->get();
 
-        return view('employees.presences', compact('kpi'));
+        return view('employees.presences', compact('kpi', 'subjects'));
     }
 
     public function presence(Request $request)
@@ -79,7 +81,7 @@ class DosenPageController extends Controller
             'subject_id' => ['required', 'exists:subjects,id'],
             'control' => ['required', 'string', 'in:+,-'],
             'image' => ['nullable', 'file', 'image'],
-            'users_has_subject_id' => ['required', 'exists:users_has_subjects,id']
+            // 'users_has_subject_id' => ['required', 'exists:users_has_subjects,id']
         ]);
 
         $image_presence_setting = Setting::where('key', 'image_presence')->first();
@@ -120,7 +122,7 @@ class DosenPageController extends Controller
                         'subject_id' => $request->subject_id,
                         'status' => 'hadir',
                         'image' => $path,
-                        'users_has_subject_id' => $request->users_has_subject_id
+                        // 'users_has_subject_id' => $request->users_has_subject_id
                     ]);
                 }
             } else {

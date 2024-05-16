@@ -19,7 +19,7 @@
                 <td class="border p-2">Foto</td>
                 <td class="border p-2">Aksi</td>
             </tr>
-            @forelse (Auth::user()->presences->where('kpi_period_id', $kpi->id)->where('subject_id', $subject->id) as $presence)
+            @forelse (Auth::user()->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject->id)->latest()->get() as $presence)
                 <tr>
                     <td class="border p-2">
                         @if (isToday($presence->created_at))
@@ -43,8 +43,8 @@
                             <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
                             <input type="hidden" name="subject_id" value="{{ $subject->id }}">
                             <input type="hidden" name="presence_id" value="{{ $presence->id }}">
-                            <input type="hidden" name="users_has_subject_id"
-                                value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}">
+                            {{-- <input type="hidden" name="users_has_subject_id"
+                                value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}"> --}}
                             <input type="hidden" name="control" value="-">
                             <button class="btn bg-red-500 text-white hover:bg-red-600">Hapus</button>
                         </form>
@@ -62,8 +62,8 @@
             <input type="hidden" name="kpi_period_id" value="{{ $kpi->id }}">
             <input type="hidden" name="subject_id" value="{{ $subject->id }}">
             <input type="hidden" name="control" value="+">
-            <input type="hidden" name="users_has_subject_id"
-                value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}">
+            {{-- <input type="hidden" name="users_has_subject_id"
+                value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}"> --}}
             <label for="image">Gambar{{ $image_presence_setting->value == 'true' ? '*' : '' }}</label>
             <input type="file" name="image" id="image" accept="image/*"
                 {{ $image_presence_setting->value == 'true' ? 'required' : '' }}>

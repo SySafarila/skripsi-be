@@ -7,7 +7,7 @@
                 <th class="border p-2">Kehadiran</th>
                 <th class="border p-2">Aksi</th>
             </tr>
-            @foreach (Auth::user()->subjects()->with('subject')->get() as $user_has_subject)
+            @foreach ($subjects as $user_has_subject)
                 <tr>
                     <td class="border p-2">{{ $user_has_subject->subject->name }}</td>
                     <td class="border p-2">
@@ -25,8 +25,8 @@
                 <td class="border p-2">Total Kehadiran</td>
                 @if (Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() > 0)
                     <td colspan="2" class="border p-2">
-                        {{ Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() }}/{{ array_sum(Auth::user()->subjects->pluck('quota')->toArray()) }}
-                        ({{ number_format((Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() *100) /array_sum(Auth::user()->subjects->pluck('quota')->toArray()),2) }}%)
+                        {{ Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() }}/{{ array_sum($subjects->pluck('quota')->toArray()) }}
+                        ({{ number_format((Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() *100) /array_sum($subjects->pluck('quota')->toArray()),2) }}%)
                     </td>
                 @else
                     <td colspan="2" class="border p-2">0</td>
