@@ -41,7 +41,7 @@ class Controller extends BaseController
                 'feedback_points' => $resultFeedbackPoints ?? 0
             ]);
         } else {
-            $point = Point::where('user_id', $user->id)->update([
+            $point = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->update([
                 'points' => $resultPresencePoints + $resultFeedbackPoints,
                 'presence_points' => $resultPresencePoints ?? 0,
                 'feedback_points' => $resultFeedbackPoints ?? 0
