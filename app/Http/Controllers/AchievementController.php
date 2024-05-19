@@ -16,23 +16,42 @@ class AchievementController extends Controller
     {
         $kpi = KpiPeriod::where('id', $kpi_id)->where('is_active', true)->firstOrFail();
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi_id)->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
-        $user_ids = $points->pluck('user_id')->toArray();
+        // return $points;
 
-        $dosens = User::role('dosen')->whereIn('id', $user_ids)->get();
-        $tendiks = User::role('tendik')->whereIn('id', $user_ids)->get();
-        $staffs = User::role('staff')->whereIn('id', $user_ids)->get();
+        $dosens = [];
+        $tendiks = [];
+        $staffs = [];
+
+        foreach ($points as $index => $point) {
+            if ($point->points > 0) {
+                // dosens
+                if ($point->user->roles[0]->name == 'dosen') {
+                    array_push($dosens, $point->user_id);
+                }
+                // tendiks
+                if ($point->user->roles[0]->name == 'tendik') {
+                    array_push($tendiks, $point->user_id);
+                }
+                // staffs
+                if ($point->user->roles[0]->name == 'staff') {
+                    array_push($staffs, $point->user_id);
+                }
+            }
+        }
 
         $employees = [];
         foreach ($points as $index => $point) {
-            $index = $index + 1;
-            array_push($employees, [
-                'user_id' => $point->user_id,
-                'kpi_period_id' => $kpi_id,
-                'title' => "Karyawan #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
-                'position' => $index,
-                'created_at' => $kpi->end_date,
-                'updated_at' => $kpi->end_date
-            ]);
+            if ($point->points > 0) {
+                $index = $index + 1;
+                array_push($employees, [
+                    'user_id' => $point->user_id,
+                    'kpi_period_id' => $kpi_id,
+                    'title' => "Karyawan #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
+                    'position' => $index,
+                    'created_at' => $kpi->end_date,
+                    'updated_at' => $kpi->end_date
+                ]);
+            }
         }
 
         // dosen
@@ -40,7 +59,7 @@ class AchievementController extends Controller
         foreach ($dosens as $index => $dosen) {
             $index = $index + 1;
             array_push($dosenArr, [
-                'user_id' => $dosen->id,
+                'user_id' => $dosen,
                 'kpi_period_id' => $kpi_id,
                 'title' => "Dosen #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
                 'position' => $index,
@@ -54,7 +73,7 @@ class AchievementController extends Controller
         foreach ($tendiks as $index => $tendik) {
             $index = $index + 1;
             array_push($tendikArr, [
-                'user_id' => $tendik->id,
+                'user_id' => $tendik,
                 'kpi_period_id' => $kpi_id,
                 'title' => "Tendik #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
                 'position' => $index,
@@ -68,7 +87,7 @@ class AchievementController extends Controller
         foreach ($staffs as $index => $staff) {
             $index = $index + 1;
             array_push($staffArr, [
-                'user_id' => $staff->id,
+                'user_id' => $staff,
                 'kpi_period_id' => $kpi_id,
                 'title' => "Staff #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
                 'position' => $index,
