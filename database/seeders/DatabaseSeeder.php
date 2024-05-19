@@ -23,15 +23,16 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            SubjectSeeder::class,
-            KpiSeeder::class,
-            FeedbackQuestionSeeder::class,
-            LecturerManagementSeeder::class,
+            // SubjectSeeder::class,
+            // KpiSeeder::class,
+            // FeedbackQuestionSeeder::class,
+            // LecturerManagementSeeder::class,
             // SemesterSeeder::class,
-            MajorsSeeder::class,
-            CourseSeeder::class,
-            UserHasMajorSeeder::class,
-            SettingSeeder::class
+            // MajorsSeeder::class,
+            // CourseSeeder::class,
+            // UserHasMajorSeeder::class,
+            SettingSeeder::class,
+            DevSeeder::class
         ]);
     }
 }
