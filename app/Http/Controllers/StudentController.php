@@ -222,32 +222,39 @@ class StudentController extends Controller
 
         $user = User::findOrFail($id);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'identifier' => $request->identifier,
-            'identifier_number' => $request->identifier_number
-        ]);
-
-        if ($request->password || $request->password_confirmation) {
+        DB::beginTransaction();
+        try {
             $user->update([
-                'password' => Hash::make($request->password)
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'identifier' => $request->identifier,
+                'identifier_number' => $request->identifier_number
             ]);
-        }
 
-        $user->syncRoles('mahasiswa');
+            if ($request->password || $request->password_confirmation) {
+                $user->update([
+                    'password' => Hash::make($request->password)
+                ]);
+            }
 
-        if (!$user->hasMajor) {
-            $user->hasMajor()->create([
-                'major_id' => $request->major_id,
-                'semester' => $request->semester
-            ]);
-        } else {
-            $user->hasMajor()->update([
-                'major_id' => $request->major_id,
-                'semester' => $request->semester
-            ]);
+            $user->syncRoles('mahasiswa');
+
+            if (!$user->hasMajor) {
+                $user->hasMajor()->create([
+                    'major_id' => $request->major_id,
+                    'semester' => $request->semester
+                ]);
+            } else {
+                $user->hasMajor()->update([
+                    'major_id' => $request->major_id,
+                    'semester' => $request->semester
+                ]);
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
         }
 
         return redirect()->route('admin.students.index')->with('success', 'User updated !');

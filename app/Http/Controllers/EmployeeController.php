@@ -10,6 +10,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 // use App\Jobs\SendEmailVerification;
 use Exception;
+use Illuminate\Support\Facades\DB;
 // use Illuminate\Auth\Events\Registered;
 // use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
@@ -115,16 +116,23 @@ class EmployeeController extends Controller
             'role' => ['required', 'string', 'in:dosen,staff,tendik']
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'identifier' => $request->identifier,
-            'identifier_number' => $request->identifier_number
-        ]);
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'identifier' => $request->identifier,
+                'identifier_number' => $request->identifier_number
+            ]);
 
-        $user->syncRoles($request->role);
-        $user->markEmailAsVerified();
+            $user->syncRoles($request->role);
+            $user->markEmailAsVerified();
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
 
         return redirect()->route('admin.employees.index')->with('success', 'User created !');
     }
@@ -182,21 +190,28 @@ class EmployeeController extends Controller
 
         $user = User::findOrFail($id);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'identifier' => $request->identifier,
-            'identifier_number' => $request->identifier_number
-        ]);
-
-        if ($request->password || $request->password_confirmation) {
+        DB::beginTransaction();
+        try {
             $user->update([
-                'password' => Hash::make($request->password)
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'identifier' => $request->identifier,
+                'identifier_number' => $request->identifier_number
             ]);
-        }
 
-        $user->syncRoles($request->role);
+            if ($request->password || $request->password_confirmation) {
+                $user->update([
+                    'password' => Hash::make($request->password)
+                ]);
+            }
+
+            $user->syncRoles($request->role);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
 
         return redirect()->route('admin.employees.index')->with('success', 'User updated !');
     }
