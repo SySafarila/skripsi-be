@@ -26,6 +26,9 @@ class StudentFeedbackController extends Controller
     public function courses()
     {
         $active_kpi = KpiPeriod::where('is_active', true)->first();
+        if (!$active_kpi) {
+            abort(404, 'Tidak ditemukan KPI yang aktif');
+        }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
@@ -42,6 +45,9 @@ class StudentFeedbackController extends Controller
     public function feedback($course_id)
     {
         $active_kpi = KpiPeriod::where('is_active', true)->first();
+        if (!$active_kpi) {
+            abort(404, 'Tidak ditemukan KPI yang aktif');
+        }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
@@ -51,7 +57,7 @@ class StudentFeedbackController extends Controller
         }])->where('type', 'mahasiswa-to-dosen')->orderBy('question', 'asc')->get();
         // return $questions;
         $n = 1;
-        return view('students.feedback', compact('course', 'questions', 'n'));
+        return view('students.feedback', compact('course', 'questions', 'n', 'active_kpi'));
     }
 
     public function store(Request $request, $course_id)
@@ -63,7 +69,10 @@ class StudentFeedbackController extends Controller
             'questions.*' => ['required', 'string']
         ]);
         // return $request;
-        $active_kpi = KpiPeriod::where('is_active', true)->where('receive_feedback', true)->firstOrFail();
+        $active_kpi = KpiPeriod::where('is_active', true)->where('receive_feedback', true)->first();
+        if (!$active_kpi) {
+            abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
+        }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
@@ -105,6 +114,6 @@ class StudentFeedbackController extends Controller
             //throw $th;
         }
 
-        return redirect()->route('student.courses');
+        return redirect()->route('student.courses')->with('success', 'Masukan berhasil terkirim.');
     }
 }

@@ -145,6 +145,9 @@ class DosenPageController extends Controller
             //throw $th;
         }
 
-        return back();
+        if ($request->control == '+') {
+            return back()->with('success', 'Data berhasil disimpan.');
+        }
+        return back()->with('success', 'Data berhasil dihapus.');
     }
 }

@@ -112,9 +112,9 @@ class LecturerManagementController extends Controller
     public function edit($id)
     {
         $subject = UsersHasSubject::findOrFail($id);
-        // return $subject;
         $lecturers = User::role(['dosen', 'tendik', 'staff'])->get();
         $subjects = Subject::orderBy('name', 'asc')->get();
+        // return $subject;
 
         return view('admin.lecturer_managements.edit', compact('subject', 'lecturers', 'subjects'));
     }
@@ -134,7 +134,7 @@ class LecturerManagementController extends Controller
             'quota' => ['required', 'numeric', 'min:1']
         ]);
 
-        $check = UsersHasSubject::where('user_id', $request->user_id)->where('subject_id', $request->subject_id)->first();
+        $check = UsersHasSubject::where('id', $id)->where('user_id', $request->user_id)->where('subject_id', $request->subject_id)->first();
         $kpi = KpiPeriod::where('is_active', true)->firstOrFail();
         if ($check) {
             DB::beginTransaction();

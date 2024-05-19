@@ -51,7 +51,7 @@
                                 data-placeholder="Select MataKuliah" style="width: 100%;">
                                 <option disabled>Pilih</option>
                                 @foreach ($subjects as $subjectEdit)
-                                    <option value="{{ $subjectEdit->id }}" {{ $subjectEdit->subject_id == $subjectEdit->id ? 'selected' : '' }}>{{ $subjectEdit->name }}</option>
+                                    <option value="{{ $subjectEdit->id }}" {{ $subject->subject_id == $subjectEdit->id ? 'selected' : '' }}>{{ $subjectEdit->name }}</option>
                                 @endforeach
                             </select>
                             @error('subject_id')

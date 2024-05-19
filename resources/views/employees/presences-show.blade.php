@@ -12,6 +12,7 @@
 <x-app-layout>
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">Kehadiran - {{ $subject->name }}</h1>
+        <x-app.session-notifications />
         <table class="border-collapse border">
             <tr>
                 <td class="border p-2">Tanggal</td>
