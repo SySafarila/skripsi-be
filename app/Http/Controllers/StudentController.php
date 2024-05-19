@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 // use App\Jobs\SendEmailVerification;
 use Exception;
+use Illuminate\Support\Facades\DB;
 // use Illuminate\Auth\Events\Registered;
 // use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
@@ -132,26 +133,34 @@ class StudentController extends Controller
             'semester' => ['required', 'numeric', 'min:1']
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'identifier' => $request->identifier,
-            'identifier_number' => $request->identifier_number
-        ]);
-
-        $user->syncRoles('mahasiswa');
-
-        if (!$user->hasMajor) {
-            $user->hasMajor()->create([
-                'major_id' => $request->major_id,
-                'semester' => $request->semester
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'identifier' => $request->identifier,
+                'identifier_number' => $request->identifier_number
             ]);
-        } else {
-            $user->hasMajor()->update([
-                'major_id' => $request->major_id,
-                'semester' => $request->semester
-            ]);
+
+            $user->syncRoles('mahasiswa');
+            $user->markEmailAsVerified();
+
+            if (!$user->hasMajor) {
+                $user->hasMajor()->create([
+                    'major_id' => $request->major_id,
+                    'semester' => $request->semester
+                ]);
+            } else {
+                $user->hasMajor()->update([
+                    'major_id' => $request->major_id,
+                    'semester' => $request->semester
+                ]);
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
         }
 
         return redirect()->route('admin.students.index')->with('success', 'User created !');

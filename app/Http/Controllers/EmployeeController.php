@@ -124,6 +124,7 @@ class EmployeeController extends Controller
         ]);
 
         $user->syncRoles($request->role);
+        $user->markEmailAsVerified();
 
         return redirect()->route('admin.employees.index')->with('success', 'User created !');
     }

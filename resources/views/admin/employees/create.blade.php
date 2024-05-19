@@ -129,7 +129,7 @@
     <script>
         $('.select2').select2({
             theme: 'bootstrap4',
-            closeOnSelect: false
+            closeOnSelect: true
         })
     </script>
 @endsection
