@@ -181,7 +181,7 @@ class LecturerManagementController extends Controller
         if ($check) {
             DB::beginTransaction();
             try {
-                $kpi = KpiPeriod::where('is_active', true)->first();
+                $kpi = KpiPeriod::where('is_active', true)->firstOrFail();
                 // $user = User::findOrFail($check->user_id)
                 $check->delete();
                 $this->setPoint($kpi, $check->user);
@@ -209,7 +209,7 @@ class LecturerManagementController extends Controller
             if ($check) {
                 DB::beginTransaction();
                 try {
-                    $kpi = KpiPeriod::where('is_active', true)->first();
+                    $kpi = KpiPeriod::where('is_active', true)->firstOrFail();
                     // $user = User::findOrFail($check->user_id)
                     $check->delete();
                     $this->setPoint($kpi, $check->user);
