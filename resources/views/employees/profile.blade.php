@@ -37,7 +37,7 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('js/chart-4.4.3.js') }}"></script>
 
     <script>
         const ctx = document.getElementById('myChart');
