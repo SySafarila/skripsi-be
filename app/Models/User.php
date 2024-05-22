@@ -107,4 +107,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function achievements() {
         return $this->hasMany(Achievement::class);
     }
+
+    public function position() {
+        return $this->hasOne(TendikPosition::class);
+    }
 }

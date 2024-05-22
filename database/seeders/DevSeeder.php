@@ -53,16 +53,6 @@ class DevSeeder extends Seeder
         ]);
         $tendik->syncRoles(['tendik']);
 
-        $staff = User::create([
-            'name' => 'staff',
-            'email' => 'staff@staff.com',
-            'identifier' => 'nip',
-            'identifier_number' => 1235,
-            'password' => Hash::make('password'),
-            'email_verified_at' => now()
-        ]);
-        $staff->syncRoles(['staff']);
-
         $mahasiswa = User::create([
             'name' => 'mahasiswa',
             'email' => 'mahasiswa@mahasiswa.com',
@@ -112,7 +102,7 @@ class DevSeeder extends Seeder
             'receive_feedback' => false
         ]);
 
-        $users = User::role(['dosen', 'tendik', 'staff'])->get();
+        $users = User::role(['dosen', 'tendik'])->get();
         $arr = [];
         foreach ($users as $user) {
             $check = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
@@ -228,7 +218,7 @@ class DevSeeder extends Seeder
 
         // assign mahasiswa
         UserHasMajor::create([
-            'user_id' => 7,
+            'user_id' => 6,
             'major_id' => 1,
             'semester' => 2
         ]);
