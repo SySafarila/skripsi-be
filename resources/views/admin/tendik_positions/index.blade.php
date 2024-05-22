@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Karyawan & Dosen'
+    'title' => 'Jabatan Tendik'
 ])
 
 @section('head')
@@ -17,33 +17,18 @@
             <x-adminlte.session-notifications />
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Karyawan & Dosen</h1>
-                    @can('employees-create')
-                        <a href="{{ route('admin.employees.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
-                        <a href="{{ route('admin.employees.create', ['type' => 'import']) }}" class="btn btn-sm btn-success ml-2">Import</a>
+                    <h1 class="m-0">Jabatan Tendik</h1>
+                    @can('presence-scopes-create')
+                        <a href="{{ route('admin.tendik-positions.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Karyawan & Dosen</li>
+                        <li class="breadcrumb-item active">Jabatan Tendik</li>
                     </ol>
                 </div>
             </div>
-            <form class="d-flex" style="gap: 8px;">
-                <select name="type" id="type" class="custom-select" style="max-width: 13rem;">
-                    <option value="">Semua Tipe</option>
-                    <option value="dosen" {{ request()->type == 'dosen' ? 'selected' : '' }}>Dosen</option>
-                    <option value="tendik" {{ request()->type == 'tendik' ? 'selected' : '' }}>Tendik</option>
-                </select>
-                <select name="position" id="position" class="custom-select" style="max-width: 13rem;">
-                    <option value="">Semua Jabatan</option>
-                    @foreach ($positions as $position)
-                        <option value="{{ $position->id }}" {{ request()->position == $position->id ? 'selected' : '' }}>{{ $position->name }}</option>
-                    @endforeach
-                </select>
-                <button class="btn btn-primary" type="submit">Filter</button>
-            </form>
         </div>
     </div>
 
@@ -58,12 +43,7 @@
                                     <input type="checkbox" class="w-100" style="cursor: pointer">
                                     <span style="display: none;">Selector</span>
                                 </th>
-                                <th>Nama</th>
-                                <th>Nomor Registrasi</th>
-                                <th>Tipe</th>
                                 <th>Jabatan</th>
-                                {{-- <th>Verified</th> --}}
-                                {{-- <th>Created At</th> --}}
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -94,7 +74,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1, 2, 3, 4];
+            const exportOption = [1];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',
@@ -132,7 +112,7 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.employees.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.tendik-positions.massDestroy') }}')
                 }
             }, ];
 
@@ -145,7 +125,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.employees.index', ['type' => request()->type, 'position' => request()->position]) !!}',
+                ajax: '{!! route('admin.tendik-positions.index') !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000],
                     [10, 50, 100, 500, 1000]
@@ -155,15 +135,6 @@
                 }, {
                     data: 'name',
                     name: 'name'
-                }, {
-                    data: 'identifier_number',
-                    name: 'identifier_number'
-                }, {
-                    data: 'roles',
-                    name: 'roles'
-                }, {
-                    data: 'tendik_position_id',
-                    name: 'tendik_position_id'
                 }, {
                     data: 'options',
                     name: 'options'
@@ -183,10 +154,10 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [3, 5]
+                    targets: 2
                 }],
                 order: [
-                    // [1, 'asc']
+                    [1, 'asc']
                 ]
             });
 

@@ -50,17 +50,32 @@
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div> --}}
-                        <div class="form-group">
-                            <label for="role" class="text-capitalize">tipe</label>
-                            <select class="select2 form-control" name="role"
-                                data-placeholder="Select role" style="width: 100%;">
-                                @foreach ($roles as $role)
-                                    <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ Str::ucfirst($role->name) }}</option>
-                                @endforeach
-                            </select>
-                            @error('role')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="role" class="text-capitalize">tipe</label>
+                                <select class="select2 form-control" name="role"
+                                    data-placeholder="Select role" style="width: 100%;">
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ Str::ucfirst($role->name) }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role')
+                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col">
+                                <label for="role" class="text-capitalize">jabatan (Hanya untuk Tendik)</label>
+                                <select class="select2 form-control" name="position"
+                                    data-placeholder="Select position" style="width: 100%;">
+                                    <option value="-">-</option>
+                                    @foreach ($positions as $position)
+                                        <option value="{{ $position->id }}" {{ $user->tendik_position_id == $position->id ? 'selected' : '' }}>{{ Str::ucfirst($position->name) }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role')
+                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="row">
                             <div class="form-group col">

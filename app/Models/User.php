@@ -109,6 +109,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function position() {
-        return $this->hasOne(TendikPosition::class);
+        return $this->belongsTo(TendikPosition::class, 'tendik_position_id', 'id');
     }
 }

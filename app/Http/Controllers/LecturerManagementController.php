@@ -48,7 +48,7 @@ class LecturerManagementController extends Controller
                 ->rawColumns(['options'])
                 ->toJson();
         }
-        $lecturers = User::role(['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $lecturers = User::role(['dosen', 'tendik'])->orderBy('name')->get();
         $subjects = Subject::orderBy('name', 'asc')->get();
 
         return view('admin.lecturer_managements.index', compact('lecturers', 'subjects'));
@@ -61,7 +61,7 @@ class LecturerManagementController extends Controller
      */
     public function create()
     {
-        $lecturers = User::role(['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $lecturers = User::role(['dosen', 'tendik'])->orderBy('name')->get();
         $subjects = Subject::orderBy('name', 'asc')->get();
 
         return view('admin.lecturer_managements.create', compact('lecturers', 'subjects'));
@@ -112,7 +112,7 @@ class LecturerManagementController extends Controller
     public function edit($id)
     {
         $subject = UsersHasSubject::findOrFail($id);
-        $lecturers = User::role(['dosen', 'tendik', 'staff'])->get();
+        $lecturers = User::role(['dosen', 'tendik'])->get();
         $subjects = Subject::orderBy('name', 'asc')->get();
         // return $subject;
 

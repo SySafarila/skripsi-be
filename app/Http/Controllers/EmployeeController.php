@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EmployeesImport;
+use App\Models\TendikPosition;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,6 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        // return User::query()->role('dosen')->get();
         if (request()->ajax()) {
             // $model = User::query();
             switch (request()->type) {
@@ -43,23 +43,23 @@ class EmployeeController extends Controller
                     $model = User::role('dosen');
                     break;
 
-                case 'staff':
-                    $model = User::role('staff');
-                    break;
-
                 case 'tendik':
                     $model = User::role('tendik');
                     break;
 
                 default:
-                    $model = User::role(['dosen', 'tendik', 'staff']);
+                    $model = User::role(['dosen', 'tendik']);
                     break;
+            }
+
+            if (request()->position) {
+                $model = $model->where('tendik_position_id', request()->position);
             }
             // if (request()->type == 'dosen') {
             //     $model = User::role('dosen');
             // }
             // $model = User::role(['dosen', 'tendik', 'staff']);
-            return DataTables::of($model)
+            return DataTables::of($model->with('position'))
                 ->addColumn('roles', 'admin.employees.datatables.roles')
                 // ->addColumn('created_at', function ($model) {
                 //     return $model->created_at->diffForHumans();
@@ -67,6 +67,9 @@ class EmployeeController extends Controller
                 ->addColumn('options', 'admin.employees.datatables.options')
                 ->editColumn('identifier_number', function ($query) {
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
+                })
+                ->editColumn('tendik_position_id', function ($query) {
+                    return $query->tendik_position_id ? $query->position->name : '-';
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
@@ -77,7 +80,9 @@ class EmployeeController extends Controller
                 ->toJson();
         }
 
-        return view('admin.employees.index');
+        $positions = TendikPosition::orderBy('name')->get();
+
+        return view('admin.employees.index', compact('positions'));
     }
 
     /**
@@ -92,8 +97,9 @@ class EmployeeController extends Controller
         }
 
         $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $positions = TendikPosition::orderBy('name')->get();
 
-        return view('admin.employees.create', compact('roles'));
+        return view('admin.employees.create', compact('roles', 'positions'));
     }
 
     /**
@@ -113,8 +119,14 @@ class EmployeeController extends Controller
             'identifier_number' => ['required', 'numeric', 'unique:users,identifier_number'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'identifier' => ['required', 'string', 'in:nidn,nip'],
-            'role' => ['required', 'string', 'in:dosen,staff,tendik']
+            'role' => ['required', 'string', 'in:dosen,staff,tendik'],
+            'position' => ['required', 'string']
         ]);
+        if ($request->position != '-') {
+            $request->validate([
+                'position' => ['exists:tendik_positions,id']
+            ]);
+        }
 
         DB::beginTransaction();
         try {
@@ -123,7 +135,8 @@ class EmployeeController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
-                'identifier_number' => $request->identifier_number
+                'identifier_number' => $request->identifier_number,
+                'tendik_position_id' => $request->position == '-' ? null : $request->position
             ]);
 
             $user->syncRoles($request->role);
@@ -160,8 +173,9 @@ class EmployeeController extends Controller
     {
         $user = User::findOrFail($id);
         $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $positions = TendikPosition::orderBy('name')->get();
 
-        return view('admin.employees.edit', compact('user', 'roles'));
+        return view('admin.employees.edit', compact('user', 'roles', 'positions'));
     }
 
     /**
@@ -178,8 +192,15 @@ class EmployeeController extends Controller
             'identifier_number' => ['required', 'numeric', "unique:users,identifier_number,$id"],
             // 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'identifier' => ['required', 'string', 'in:nidn,nip'],
-            'role' => ['required', 'string', 'in:dosen,staff,tendik']
+            'role' => ['required', 'string', 'in:dosen,staff,tendik'],
+            'position' => ['required', 'string']
         ]);
+
+        if ($request->position != '-') {
+            $request->validate([
+                'position' => ['exists:tendik_positions,id']
+            ]);
+        }
 
         if ($request->password || $request->password_confirmation) {
             $request->validate([
@@ -197,7 +218,8 @@ class EmployeeController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
-                'identifier_number' => $request->identifier_number
+                'identifier_number' => $request->identifier_number,
+                'tendik_position_id' => $request->position == '-' ? null : $request->position
             ]);
 
             if ($request->password || $request->password_confirmation) {
