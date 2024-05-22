@@ -49,7 +49,18 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::get('/dashboard', function () {
-    return redirect()->route('admin.index');
+    // return redirect()->route('admin.index');
+    $user = Auth::user();
+    if (!$user) {
+        return redirect()->route('login');
+    }
+    if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+        return redirect()->route('employees.welcome');
+    }
+    if ($user->hasRole(['admin', 'super admin'])) {
+        return redirect()->route('admin.index');
+    }
+    return redirect()->route('student.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // admin pages
