@@ -100,7 +100,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/feedbacks', FeedbackController::class)->except(['show', 'edit', 'create']);
 
     // lecturer management
-    Route::resource('/employees-management', LecturerManagementController::class)->except(['show']);
+    Route::resource('/employees-presence-quota', LecturerManagementController::class)->except(['show']);
 
     // employee
     Route::resource('/employees', EmployeeController::class)->except(['show']);
@@ -127,7 +127,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/kpi', [KpiController::class, 'massDestroy'])->name('kpi.massDestroy');
     Route::delete('/bulk-delete/presence-scopes', [SubjectController::class, 'massDestroy'])->name('presence-scopes.massDestroy');
     Route::delete('/bulk-delete/questions', [FeedbackQuestionController::class, 'massDestroy'])->name('questions.massDestroy');
-    Route::delete('/bulk-delete/employees-management', [LecturerManagementController::class, 'massDestroy'])->name('employees-management.massDestroy');
+    Route::delete('/bulk-delete/employees-presence-quota', [LecturerManagementController::class, 'massDestroy'])->name('employees-presence-quota.massDestroy');
     // Route::delete('/bulk-delete/semesters', [SemesterController::class, 'massDestroy'])->name('semesters.massDestroy');
     Route::delete('/bulk-delete/majors', [MajorController::class, 'massDestroy'])->name('majors.massDestroy');
     Route::delete('/bulk-delete/courses', [CourseController::class, 'massDestroy'])->name('courses.massDestroy');

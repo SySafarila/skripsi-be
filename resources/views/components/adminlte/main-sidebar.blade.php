@@ -70,10 +70,10 @@
                             </a>
                         </li>
                     @endcan
-                    @can('employees-management-read')
+                    @can('employees-presence-quota-read')
                         <li class="nav-item">
-                            <a href="{{ route('admin.employees-management.index') }}"
-                                class="nav-link {{ request()->routeIs('admin.employees-management.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.employees-presence-quota.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.employees-presence-quota.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-business-time"></i>
                                 <p>
                                     Quota Absensi Karyawan

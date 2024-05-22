@@ -202,30 +202,30 @@ class PermissionSeeder extends Seeder
             ],
         );
 
-        // employees-management / pengelolaan dosen
+        // employees-presence-quota / pengelolaan dosen
         array_push(
             $arr,
             [
                 'guard_name' => 'web',
-                'name' => 'employees-management-create',
+                'name' => 'employees-presence-quota-create',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'employees-management-read',
+                'name' => 'employees-presence-quota-read',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'employees-management-update',
+                'name' => 'employees-presence-quota-update',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'employees-management-delete',
+                'name' => 'employees-presence-quota-delete',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

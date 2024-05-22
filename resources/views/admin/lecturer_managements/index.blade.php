@@ -18,8 +18,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
                     <h1 class="m-0">Quota Absensi</h1>
-                    @can('employees-management-create')
-                        <a href="{{ route('admin.employees-management.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                    @can('employees-presence-quota-create')
+                        <a href="{{ route('admin.employees-presence-quota.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
@@ -129,7 +129,7 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.employees-management.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.employees-presence-quota.massDestroy') }}')
                 }
             }, ];
 
@@ -142,7 +142,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.employees-management.index', ['user_id' => request()->user_id, 'subject_id' => request()->subject_id]) !!}',
+                ajax: '{!! route('admin.employees-presence-quota.index', ['user_id' => request()->user_id, 'subject_id' => request()->subject_id]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000],
                     [10, 50, 100, 500, 1000]
