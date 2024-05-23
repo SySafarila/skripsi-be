@@ -46,7 +46,7 @@ class AuthenticatedSessionController extends Controller
         } else if ($email_login) {
             $request->session()->regenerate();
             $user = Auth::user();
-            if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+            if ($user->hasRole(['dosen', 'tendik'])) {
                 return redirect()->route('employees.welcome');
             }
             if ($user->hasRole(['admin', 'super admin'])) {
@@ -56,7 +56,7 @@ class AuthenticatedSessionController extends Controller
         } else if ($identifier_login) {
             $request->session()->regenerate();
             $user = Auth::user();
-            if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+            if ($user->hasRole(['dosen', 'tendik'])) {
                 return redirect()->route('employees.welcome');
             }
             if ($user->hasRole(['admin', 'super admin'])) {

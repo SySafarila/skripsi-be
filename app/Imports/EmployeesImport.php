@@ -15,7 +15,7 @@ class EmployeesImport implements ToCollection
 {
     public function collection(Collection $rows)
     {
-        $employees_identifier = User::role(['dosen', 'tendik', 'staff'])->get('identifier_number');
+        $employees_identifier = User::role(['dosen', 'tendik'])->get('identifier_number');
         $exists_identifier = [];
         foreach ($employees_identifier as $student_nim) {
             array_push($exists_identifier, $student_nim->identifier_number);

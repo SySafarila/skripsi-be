@@ -44,7 +44,7 @@ class LeaderboardController extends Controller
                 break;
 
             default:
-                $users = User::role(['dosen', 'tendik', 'staff'])->get()->pluck('id');
+                $users = User::role(['dosen', 'tendik'])->get()->pluck('id');
                 break;
         }
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();

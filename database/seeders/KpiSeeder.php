@@ -24,7 +24,7 @@ class KpiSeeder extends Seeder
             'receive_feedback' => false
         ]);
 
-        $users = User::role(['dosen', 'tendik', 'staff'])->get();
+        $users = User::role(['dosen', 'tendik'])->get();
         $arr = [];
         foreach ($users as $user) {
             $check = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();

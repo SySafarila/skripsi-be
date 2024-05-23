@@ -58,7 +58,7 @@ class EmployeeController extends Controller
             // if (request()->type == 'dosen') {
             //     $model = User::role('dosen');
             // }
-            // $model = User::role(['dosen', 'tendik', 'staff']);
+            // $model = User::role(['dosen', 'tendik']);
             return DataTables::of($model->with('position'))
                 ->addColumn('roles', 'admin.employees.datatables.roles')
                 // ->addColumn('created_at', function ($model) {
@@ -96,7 +96,7 @@ class EmployeeController extends Controller
             return view('admin.employees.create');
         }
 
-        $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $roles = Role::whereIn('name', ['dosen', 'tendik'])->orderBy('name')->get();
         $positions = TendikPosition::orderBy('name')->get();
 
         return view('admin.employees.create', compact('roles', 'positions'));
@@ -172,7 +172,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        $roles = Role::whereIn('name', ['dosen', 'tendik'])->orderBy('name')->get();
         $positions = TendikPosition::orderBy('name')->get();
 
         return view('admin.employees.edit', compact('user', 'roles', 'positions'));

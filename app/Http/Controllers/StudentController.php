@@ -107,7 +107,7 @@ class StudentController extends Controller
         if (request()->type == 'import') {
             return view('admin.students.create');
         }
-        // $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        // $roles = Role::whereIn('name', ['dosen', 'tendik'])->orderBy('name')->get();
         $majors = Major::orderBy('major', 'asc')->get();
 
         return view('admin.students.create', compact('majors'));
@@ -188,7 +188,7 @@ class StudentController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        // $roles = Role::whereIn('name', ['dosen', 'tendik', 'staff'])->orderBy('name')->get();
+        // $roles = Role::whereIn('name', ['dosen', 'tendik'])->orderBy('name')->get();
         $majors = Major::orderBy('major', 'asc')->get();
 
         return view('admin.students.edit', compact('user', 'majors'));

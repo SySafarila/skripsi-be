@@ -40,7 +40,7 @@ Route::get('/', function () {
     if (!$user) {
         return redirect()->route('login');
     }
-    if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+    if ($user->hasRole(['dosen', 'tendik'])) {
         return redirect()->route('employees.welcome');
     }
     if ($user->hasRole(['admin', 'super admin'])) {
@@ -55,7 +55,7 @@ Route::get('/dashboard', function () {
     if (!$user) {
         return redirect()->route('login');
     }
-    if ($user->hasRole(['dosen', 'tendik', 'staff'])) {
+    if ($user->hasRole(['dosen', 'tendik'])) {
         return redirect()->route('employees.welcome');
     }
     if ($user->hasRole(['admin', 'super admin'])) {

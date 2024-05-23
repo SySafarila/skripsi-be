@@ -100,7 +100,7 @@ class KpiController extends Controller
                 'receive_feedback' => $request->receive_feedback === '0' ? false : true,
             ]);
 
-            $users = User::role(['dosen', 'tendik', 'staff'])->get();
+            $users = User::role(['dosen', 'tendik'])->get();
             $arr = [];
             foreach ($users as $user) {
                 $check = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->first();
