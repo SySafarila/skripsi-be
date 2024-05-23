@@ -76,7 +76,7 @@ class SubjectController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->route('admin.presence_scopes.index')->with('success', 'Lingkup absensi berhasil dibuat !');
+        return redirect()->route('admin.presence-scopes.index')->with('success', 'Lingkup absensi berhasil dibuat !');
     }
 
     /**
@@ -122,7 +122,7 @@ class SubjectController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('admin.presence_scopes.index')->with('success', 'Lingkup absensi diperbarui !');
+        return redirect()->route('admin.presence-scopes.index')->with('success', 'Lingkup absensi diperbarui !');
     }
 
     /**
@@ -139,7 +139,7 @@ class SubjectController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.presence_scopes.index')->with('status', 'Permission deleted !');
+        return redirect()->route('admin.presence-scopes.index')->with('status', 'Permission deleted !');
     }
 
     public function massDestroy(Request $request)
@@ -156,6 +156,6 @@ class SubjectController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.presence_scopes.index')->with('status', 'Bulk delete success');
+        return redirect()->route('admin.presence-scopes.index')->with('status', 'Bulk delete success');
     }
 }
