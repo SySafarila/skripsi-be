@@ -10,7 +10,7 @@
         </div>
     </a>
     <hr>
-    @role(['dosen', 'staff', 'tendik'])
+    @role(['dosen', 'tendik'])
         <a href="{{ route('employees.welcome') }}"
             class="{{ request()->routeIs('employees.welcome') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
             <img src="{{ asset('icons/home.svg') }}" alt="home">
@@ -21,11 +21,11 @@
             <img src="{{ asset('icons/presence.svg') }}" alt="presence">
             <span>Kehadiran</span>
         </a>
-        <a href="{{ route('employees.feedback.index') }}"
+        {{-- <a href="{{ route('employees.feedback.index') }}"
             class="{{ request()->routeIs('employees.feedback.index') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
             <img src="{{ asset('icons/feedback.svg') }}" alt="feedback">
             <span>Lihat Feedback</span>
-        </a>
+        </a> --}}
         <a href="{{ route('employees.leaderboard.index') }}"
             class="{{ request()->routeIs('employees.leaderboard.index') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
             <img src="{{ asset('icons/leaderboard.svg') }}" alt="leaderboard">

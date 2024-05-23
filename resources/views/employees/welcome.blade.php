@@ -16,11 +16,11 @@
                 <img src="{{ asset('icons/presence.svg') }}" alt="" class="w-12">
                 <span class="block text-center">Kehadiran</span>
             </a>
-            <a href="{{ route('employees.feedback.index') }}"
+            {{-- <a href="{{ route('employees.feedback.index') }}"
                 class="flex flex-col items-center justify-center gap-2 rounded-lg border p-4 hover:bg-gray-100">
                 <img src="{{ asset('icons/feedback.svg') }}" alt="" class="w-12">
                 <span class="block text-center">Feedback</span>
-            </a>
+            </a> --}}
             <a href="{{ route('employees.leaderboard.index') }}"
                 class="flex flex-col items-center justify-center gap-2 rounded-lg border p-4 hover:bg-gray-100">
                 <img src="{{ asset('icons/leaderboard.svg') }}" alt="" class="w-12">

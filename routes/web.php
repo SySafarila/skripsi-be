@@ -156,7 +156,7 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
     Route::post('/employees/presence', [DosenPageController::class, 'presence'])->name('employees.presence.store');
     Route::get('/employees/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('employees.presence.show');
     Route::get('/employees/presence', [DosenPageController::class, 'presence_index'])->name('employees.presence.index');
-    Route::get('/employees/feedback', [DosenPageController::class, 'my_feedback'])->name('employees.feedback.index');
+    // Route::get('/employees/feedback', [DosenPageController::class, 'my_feedback'])->name('employees.feedback.index');
 });
 
 // authenticated students

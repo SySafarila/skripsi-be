@@ -39,10 +39,6 @@ class LeaderboardController extends Controller
                 $users = User::role('tendik')->get()->pluck('id');
                 break;
 
-            case 'staff':
-                $users = User::role('staff')->get()->pluck('id');
-                break;
-
             default:
                 $users = User::role(['dosen', 'tendik'])->get()->pluck('id');
                 break;

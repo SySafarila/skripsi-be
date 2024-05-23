@@ -20,7 +20,7 @@ class AchievementController extends Controller
 
         $dosens = [];
         $tendiks = [];
-        $staffs = [];
+        // $staffs = [];
 
         foreach ($points as $index => $point) {
             if ($point->points > 0) {
@@ -33,9 +33,9 @@ class AchievementController extends Controller
                     array_push($tendiks, $point->user_id);
                 }
                 // staffs
-                if ($point->user->roles[0]->name == 'staff') {
-                    array_push($staffs, $point->user_id);
-                }
+                // if ($point->user->roles[0]->name == 'staff') {
+                //     array_push($staffs, $point->user_id);
+                // }
             }
         }
 
@@ -83,18 +83,18 @@ class AchievementController extends Controller
         }
 
         // staff
-        $staffArr = [];
-        foreach ($staffs as $index => $staff) {
-            $index = $index + 1;
-            array_push($staffArr, [
-                'user_id' => $staff,
-                'kpi_period_id' => $kpi_id,
-                'title' => "Staff #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
-                'position' => $index,
-                'created_at' => $kpi->end_date,
-                'updated_at' => $kpi->end_date
-            ]);
-        }
+        // $staffArr = [];
+        // foreach ($staffs as $index => $staff) {
+        //     $index = $index + 1;
+        //     array_push($staffArr, [
+        //         'user_id' => $staff,
+        //         'kpi_period_id' => $kpi_id,
+        //         'title' => "Staff #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
+        //         'position' => $index,
+        //         'created_at' => $kpi->end_date,
+        //         'updated_at' => $kpi->end_date
+        //     ]);
+        // }
 
         DB::beginTransaction();
         try {
@@ -102,7 +102,7 @@ class AchievementController extends Controller
             DB::table('achievements')->insert($employees); // pegawai
             DB::table('achievements')->insert($dosenArr); // dosen
             DB::table('achievements')->insert($tendikArr); // tendik
-            DB::table('achievements')->insert($staffArr); // staff
+            // DB::table('achievements')->insert($staffArr); // staff
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;

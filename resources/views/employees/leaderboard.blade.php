@@ -34,7 +34,6 @@
                     </option>
                     <option value="dosen" {{ request()->filter == 'dosen' ? 'selected' : '' }}>Dosen</option>
                     <option value="tendik" {{ request()->filter == 'tendik' ? 'selected' : '' }}>Tendik</option>
-                    <option value="staff" {{ request()->filter == 'staff' ? 'selected' : '' }}>Staff</option>
                 </select>
             </div>
         </form>
