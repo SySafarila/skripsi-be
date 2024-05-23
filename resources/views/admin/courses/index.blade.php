@@ -1,14 +1,29 @@
 @extends('layouts.adminlte', [
-    'title' => 'Mata Kuliah'
+    'title' => 'Mata Kuliah',
 ])
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+    <style>
+        #builtin-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            #builtin-filter {
+                flex-direction: row;
+                width: 50%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -29,17 +44,19 @@
                     </ol>
                 </div>
             </div>
-            <form class="d-flex" style="gap: 8px;">
-                <select name="user_id" id="user_id" class="custom-select" style="max-width: 13rem;">
+            <form id="builtin-filter">
+                <select name="user_id" id="user_id" class="custom-select">
                     <option value="">Semua Dosen</option>
                     @foreach ($lecturers as $lecturer)
-                        <option value="{{ $lecturer->id }}" {{ request()->user_id == $lecturer->id ? 'selected' : '' }}>{{ $lecturer->name }}</option>
+                        <option value="{{ $lecturer->id }}" {{ request()->user_id == $lecturer->id ? 'selected' : '' }}>
+                            {{ $lecturer->name }}</option>
                     @endforeach
                 </select>
-                <select name="major_id" id="major_id" class="custom-select" style="max-width: 13rem;">
+                <select name="major_id" id="major_id" class="custom-select">
                     <option value="">Semua Jurusan</option>
                     @foreach ($majors as $major)
-                        <option value="{{ $major->id }}" {{ request()->major_id == $major->id ? 'selected' : '' }}>{{ $major->major }}</option>
+                        <option value="{{ $major->id }}" {{ request()->major_id == $major->id ? 'selected' : '' }}>
+                            {{ $major->major }}</option>
                     @endforeach
                 </select>
                 <button class="btn btn-primary" type="submit">Filter</button>
@@ -51,7 +68,7 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body table-responsive">
-                    <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                    <table id="datatable" class="table-striped table-bordered table" style="width:100%">
                         <thead>
                             <tr>
                                 <th style="cursor: pointer" id="selector">

@@ -1,14 +1,29 @@
 @extends('layouts.adminlte', [
-    'title' => 'Umpan Balik'
+    'title' => 'Umpan Balik',
 ])
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+    <style>
+        #builtin-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            #builtin-filter {
+                flex-direction: row;
+                width: 50%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -29,29 +44,34 @@
                     </ol>
                 </div>
             </div>
-            <form>
-                <select name="user_id" id="user_id" class="custom-select" style="max-width: 13rem;">
+            <form id="builtin-filter">
+                <select name="user_id" id="user_id" class="custom-select">
                     <option value="">Semua Karyawan</option>
                     @foreach ($users as $user)
-                        <option value="{{ $user->id }}" {{ request()->user_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                        <option value="{{ $user->id }}" {{ request()->user_id == $user->id ? 'selected' : '' }}>
+                            {{ $user->name }}</option>
                     @endforeach
                 </select>
-                <select name="question_id" id="question_id" class="custom-select" style="max-width: 13rem;">
+                <select name="question_id" id="question_id" class="custom-select">
                     <option value="">Semua Pertanyaan</option>
                     @foreach ($questions as $question)
-                        <option value="{{ $question->id }}" {{ request()->question_id == $question->id ? 'selected' : '' }}>{{ $question->question }}</option>
+                        <option value="{{ $question->id }}" {{ request()->question_id == $question->id ? 'selected' : '' }}>
+                            {{ $question->question }}</option>
                     @endforeach
                 </select>
-                <select name="kpi_period_id" id="kpi_period_id" class="custom-select" style="max-width: 13rem;">
+                <select name="kpi_period_id" id="kpi_period_id" class="custom-select">
                     <option value="">Semua Periode KPI</option>
                     @foreach ($kpis as $kpi)
-                        <option value="{{ $kpi->id }}" {{ request()->kpi_period_id == $kpi->id ? 'selected' : '' }}>{{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }} {{ $kpi->is_active ? '(Aktif)' : '' }}</option>
+                        <option value="{{ $kpi->id }}" {{ request()->kpi_period_id == $kpi->id ? 'selected' : '' }}>
+                            {{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }}
+                            {{ $kpi->is_active ? '(Aktif)' : '' }}</option>
                     @endforeach
                 </select>
-                <select name="course_id" id="course_id" class="custom-select" style="max-width: 13rem;">
+                <select name="course_id" id="course_id" class="custom-select">
                     <option value="">Semua Mata Kuliah</option>
                     @foreach ($courses as $course)
-                        <option value="{{ $course->id }}" {{ request()->course_id == $course->id ? 'selected' : '' }}>{{ $course->name}}</option>
+                        <option value="{{ $course->id }}" {{ request()->course_id == $course->id ? 'selected' : '' }}>
+                            {{ $course->name }}</option>
                     @endforeach
                 </select>
                 <button class="btn btn-primary" type="submit">Filter</button>
@@ -63,7 +83,7 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body table-responsive">
-                    <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                    <table id="datatable" class="table-striped table-bordered table" style="width:100%">
                         <thead>
                             <tr>
                                 <th style="cursor: pointer" id="selector">
@@ -144,7 +164,8 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.feedbacks.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}',
+                        '{{ route('admin.feedbacks.massDestroy') }}')
                 }
             }, ];
 
@@ -157,7 +178,12 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.feedbacks.index', ['user_id' => request()->user_id, 'question_id' => request()->question_id, 'kpi_period_id' => request()->kpi_period_id, 'course_id' => request()->course_id]) !!}',
+                ajax: '{!! route('admin.feedbacks.index', [
+                    'user_id' => request()->user_id,
+                    'question_id' => request()->question_id,
+                    'kpi_period_id' => request()->kpi_period_id,
+                    'course_id' => request()->course_id,
+                ]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000],
                     [10, 50, 100, 500, 1000]

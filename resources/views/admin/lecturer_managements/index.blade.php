@@ -1,14 +1,29 @@
 @extends('layouts.adminlte', [
-    'title' => 'Quota Absensi'
+    'title' => 'Quota Absensi',
 ])
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+    <style>
+        #builtin-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            #builtin-filter {
+                flex-direction: row;
+                width: 50%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -19,7 +34,8 @@
                 <div class="col-sm-6 d-flex align-items-center">
                     <h1 class="m-0">Quota Absensi</h1>
                     @can('employees-presence-quota-create')
-                        <a href="{{ route('admin.employees-presence-quota.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                        <a href="{{ route('admin.employees-presence-quota.create') }}" class="btn btn-sm btn-primary ml-2">Add
+                            New</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
@@ -29,17 +45,19 @@
                     </ol>
                 </div>
             </div>
-            <form class="d-flex" style="gap: 8px;">
-                <select name="user_id" id="user_id" class="custom-select" style="max-width: 13rem;">
+            <form id="builtin-filter">
+                <select name="user_id" id="user_id" class="custom-select">
                     <option value="">Semua Karyawan/Dosen</option>
                     @foreach ($lecturers as $lecturer)
-                        <option value="{{ $lecturer->id }}" {{ request()->user_id == $lecturer->id ? 'selected' : '' }}>{{ $lecturer->name }}</option>
+                        <option value="{{ $lecturer->id }}" {{ request()->user_id == $lecturer->id ? 'selected' : '' }}>
+                            {{ $lecturer->name }}</option>
                     @endforeach
                 </select>
-                <select name="subject_id" id="subject_id" class="custom-select" style="max-width: 13rem;">
+                <select name="subject_id" id="subject_id" class="custom-select">
                     <option value="">Semua Subjek Absensi</option>
                     @foreach ($subjects as $subject)
-                        <option value="{{ $subject->id }}" {{ request()->subject_id == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
+                        <option value="{{ $subject->id }}" {{ request()->subject_id == $subject->id ? 'selected' : '' }}>
+                            {{ $subject->name }}</option>
                     @endforeach
                 </select>
                 <button class="btn btn-primary" type="submit">Filter</button>
@@ -51,7 +69,7 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body table-responsive">
-                    <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                    <table id="datatable" class="table-striped table-bordered table" style="width:100%">
                         <thead>
                             <tr>
                                 <th style="cursor: pointer" id="selector">
@@ -129,7 +147,8 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.employees-presence-quota.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}',
+                        '{{ route('admin.employees-presence-quota.massDestroy') }}')
                 }
             }, ];
 
@@ -142,7 +161,10 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.employees-presence-quota.index', ['user_id' => request()->user_id, 'subject_id' => request()->subject_id]) !!}',
+                ajax: '{!! route('admin.employees-presence-quota.index', [
+                    'user_id' => request()->user_id,
+                    'subject_id' => request()->subject_id,
+                ]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000],
                     [10, 50, 100, 500, 1000]

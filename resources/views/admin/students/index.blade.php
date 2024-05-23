@@ -1,14 +1,29 @@
 @extends('layouts.adminlte', [
-    'title' => 'Mahasiswa'
+    'title' => 'Mahasiswa',
 ])
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+    <style>
+        #builtin-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            #builtin-filter {
+                flex-direction: row;
+                width: 50%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -20,7 +35,8 @@
                     <h1 class="m-0">Mahasiswa</h1>
                     @can('students-create')
                         <a href="{{ route('admin.students.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
-                        <a href="{{ route('admin.students.create', ['type' => 'import']) }}" class="btn btn-sm btn-success ml-2">Import Excel</a>
+                        <a href="{{ route('admin.students.create', ['type' => 'import']) }}"
+                            class="btn btn-sm btn-success ml-2">Import Excel</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
@@ -30,12 +46,14 @@
                     </ol>
                 </div>
             </div>
-            <form class="d-flex" style="gap: 8px;">
-                <input type="number" name="semester" id="semester" class="form-control" placeholder="Semester" style="max-width: 13rem;" value="{{ request()->semester }}">
-                <select name="major_id" id="major_id" class="custom-select" style="max-width: 13rem;">
+            <form id="builtin-filter">
+                <input type="number" name="semester" id="semester" class="form-control" placeholder="Semester"
+                    value="{{ request()->semester }}">
+                <select name="major_id" id="major_id" class="custom-select">
                     <option value="">Semua Jurusan</option>
                     @foreach ($majors as $major)
-                        <option value="{{ $major->id }}" {{ request()->major_id == $major->id ? 'selected' : '' }}>{{ $major->major }}</option>
+                        <option value="{{ $major->id }}" {{ request()->major_id == $major->id ? 'selected' : '' }}>
+                            {{ $major->major }}</option>
                     @endforeach
                 </select>
                 <button class="btn btn-primary" type="submit">Filter</button>
@@ -47,7 +65,7 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body table-responsive">
-                    <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                    <table id="datatable" class="table-striped table-bordered table" style="width:100%">
                         <thead>
                             <tr>
                                 <th style="cursor: pointer" id="selector">
@@ -129,7 +147,8 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.students.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}',
+                        '{{ route('admin.students.massDestroy') }}')
                 }
             }, ];
 
