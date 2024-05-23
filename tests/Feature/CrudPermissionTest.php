@@ -11,10 +11,11 @@ use Tests\TestCase;
 class CrudPermissionTest extends TestCase
 {
     use RefreshDatabase;
+    protected $seed = true;
 
     public function test_create()
     {
-        $this->seed();
+        // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
         $response = $this->actingAs($super_admin)->post(route('admin.permissions.store'), [
@@ -26,7 +27,7 @@ class CrudPermissionTest extends TestCase
 
     public function test_read()
     {
-        $this->seed();
+        // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
         $response = $this->actingAs($super_admin)->get(route('admin.permissions.index'));
@@ -36,7 +37,7 @@ class CrudPermissionTest extends TestCase
 
     public function test_update()
     {
-        $this->seed();
+        // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
         $response = $this->actingAs($super_admin)->post(route('admin.permissions.store'), [
@@ -53,7 +54,7 @@ class CrudPermissionTest extends TestCase
 
     public function test_delete()
     {
-        $this->seed();
+        // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
         $response = $this->actingAs($super_admin)->post(route('admin.permissions.store'), [
