@@ -144,7 +144,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.tendik-positions.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.tendik-positions.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-user-tie"></i>
+                                <i class="nav-icon fas fa-id-badge"></i>
                                 <p>
                                     Jabatan Tendik
                                     {{-- <span class="right badge badge-danger">New</span> --}}
