@@ -110,7 +110,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
 
     // achievement
     Route::post('/achievements/generate/{kpi_id}', [AchievementController::class, 'generate'])->name('achievements.generate');
-    Route::resource('/achievements', AchievementController::class)->except(['show']);
+    Route::resource('/achievements', AchievementController::class)->only(['index', 'destroy']);
 
     // general settings
     Route::resource('/settings', SettingController::class)->only(['index', 'update']);

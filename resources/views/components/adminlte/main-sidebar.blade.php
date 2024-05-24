@@ -58,6 +58,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('achievements-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.achievements.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.achievements.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-award"></i>
+                                <p>
+                                    Pencapaian
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('presence-scopes-read')
                         <li class="nav-item">
                             <a href="{{ route('admin.presence-scopes.index') }}"

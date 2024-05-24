@@ -16,6 +16,6 @@ class Achievement extends Model
     }
 
     public function kpi() {
-        return $this->belongsTo(KpiPeriod::class);
+        return $this->belongsTo(KpiPeriod::class, 'kpi_period_id', 'id');
     }
 }

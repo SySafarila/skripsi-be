@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class AchievementController extends Controller
 {
@@ -110,5 +111,56 @@ class AchievementController extends Controller
         }
 
         return back()->with('success', 'Pencapaian berhasil digenerate!');
+    }
+
+    public function index()
+    {
+        if (request()->ajax()) {
+            return DataTables::of(Achievement::query()->with('user', 'kpi'))
+                ->addColumn('options', 'admin.achievements.datatables.options')
+                ->editColumn('user_name', function ($model) {
+                    return $model->user ? $model->user->name : '-';
+                })
+                ->editColumn('kpi_title', function ($model) {
+                    return $model->kpi ? $model->kpi->title : '-';
+                })
+                ->setRowAttr([
+                    'data-model-id' => function ($model) {
+                        return $model->id;
+                    }
+                ])
+                ->rawColumns(['options'])
+                ->toJson();
+        }
+
+        return view('admin.achievements.index');
+    }
+
+    public function destroy($id)
+    {
+        Achievement::destroy($id);
+
+        if (request()->ajax()) {
+            return response()->json(true);
+        }
+
+        return redirect()->route('admin.tendik-positions.index')->with('status', 'Permission deleted !');
+    }
+
+    public function massDestroy(Request $request)
+    {
+        $arr = explode(',', $request->ids);
+
+        // foreach ($arr as $data) {
+        // Achievement::destroy($data);
+        // }
+
+        Achievement::destroy($arr);
+
+        if (request()->ajax()) {
+            return response()->json(true);
+        }
+
+        return redirect()->route('admin.tendik-positions.index')->with('status', 'Bulk delete success');
     }
 }
