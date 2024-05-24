@@ -43,6 +43,7 @@
                                     <input type="checkbox" class="w-100" style="cursor: pointer">
                                     <span style="display: none;">Selector</span>
                                 </th>
+                                <th>Divisi</th>
                                 <th>Jabatan</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
@@ -74,7 +75,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1];
+            const exportOption = [1, 2];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',
@@ -133,6 +134,9 @@
                 columns: [{
                     defaultContent: ''
                 }, {
+                    data: 'division',
+                    name: 'division'
+                }, {
                     data: 'name',
                     name: 'name'
                 }, {
@@ -154,7 +158,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: 2
+                    targets: 3
                 }],
                 order: [
                     [1, 'asc']

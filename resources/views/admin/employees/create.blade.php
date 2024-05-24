@@ -32,30 +32,34 @@
             <div class="card m-0">
                 <div class="card-body">
                     @if (request()->type == 'import')
-                    <form action="{{ route('admin.employees.store', ['type' => 'import']) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group mb-2">
-                            <label for="excel" class="text-capitalize">Excel</label>
-                            <input type="file" class="form-control border-0 p-0" id="excel" name="excel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
-                            @error('excel')
-                                <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                        <a href="{{ asset('imports/Employees.xlsx') }}" class="btn btn-sm btn-success">Download Sample Excel</a>
-                    </form>
+                        <form action="{{ route('admin.employees.store', ['type' => 'import']) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group mb-2">
+                                <label for="excel" class="text-capitalize">Excel</label>
+                                <input type="file" class="form-control border-0 p-0" id="excel" name="excel"
+                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                    required>
+                                @error('excel')
+                                    <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <a href="{{ asset('imports/Employees.xlsx') }}" class="btn btn-sm btn-success">Download Sample
+                                Excel</a>
+                        </form>
                     @else
-                    <form action="{{ route('admin.employees.store') }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="name" class="text-capitalize">nama</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Syahrul Safarila"
-                                value="{{ old('name') }}" required>
-                            @error('name')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
-                            @enderror
-                        </div>
-                        {{-- <div class="form-group">
+                        <form action="{{ route('admin.employees.store') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name" class="text-capitalize">nama</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Syahrul Safarila" value="{{ old('name') }}" required>
+                                @error('name')
+                                    <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
+                            {{-- <div class="form-group">
                             <label for="email" class="text-capitalize">email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="mail@mail.com"
                                 value="{{ old('email') }}" required>
@@ -63,70 +67,72 @@
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div> --}}
-                        <div class="row">
-                            <div class="form-group col">
-                                <label for="role" class="text-capitalize">tipe</label>
-                                <select class="select2 form-control" name="role"
-                                    data-placeholder="Select role" style="width: 100%;">
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->name }}">{{ Str::ucfirst($role->name) }}</option>
-                                    @endforeach
-                                </select>
-                                @error('role')
-                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="role" class="text-capitalize">tipe</label>
+                                    <select class="select2 form-control" name="role" data-placeholder="Select role"
+                                        style="width: 100%;">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->name }}">{{ Str::ucfirst($role->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
+                                        <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col">
+                                    <label for="role" class="text-capitalize">jabatan (Hanya untuk Tendik)</label>
+                                    <select class="select2 form-control" name="position" data-placeholder="Select position"
+                                        style="width: 100%;">
+                                        <option value="-">-</option>
+                                        @foreach ($positions as $position)
+                                            <option value="{{ $position->id }}">
+                                                {{ Str::ucfirst($position->division . ' - ' . $position->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
+                                        <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="identifier" class="text-capitalize">identitas</label>
+                                    <select class="select2 form-control" name="identifier"
+                                        data-placeholder="Select identifier" style="width: 100%;">
+                                        <option value="nidn">NIDN</option>
+                                        <option value="nip">NIP</option>
+                                    </select>
+                                    @error('identifier')
+                                        <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col">
+                                    <label for="identifier_number" class="text-capitalize">Nomor Registrasi</label>
+                                    <input type="number" class="form-control" id="identifier_number"
+                                        name="identifier_number" required>
+                                    @error('identifier_number')
+                                        <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-capitalize">password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                @error('password')
+                                    <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col">
-                                <label for="role" class="text-capitalize">jabatan (Hanya untuk Tendik)</label>
-                                <select class="select2 form-control" name="position"
-                                    data-placeholder="Select position" style="width: 100%;">
-                                    <option value="-">-</option>
-                                    @foreach ($positions as $position)
-                                        <option value="{{ $position->id }}">{{ Str::ucfirst($position->name) }}</option>
-                                    @endforeach
-                                </select>
-                                @error('role')
-                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                            <div class="form-group">
+                                <label for="password_confirmation" class="text-capitalize">password confirmation</label>
+                                <input type="password" class="form-control" id="password_confirmation"
+                                    name="password_confirmation" required>
+                                @error('password_confirmation')
+                                    <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col">
-                                <label for="identifier" class="text-capitalize">identitas</label>
-                                <select class="select2 form-control" name="identifier"
-                                    data-placeholder="Select identifier" style="width: 100%;">
-                                    <option value="nidn">NIDN</option>
-                                    <option value="nip">NIP</option>
-                                </select>
-                                @error('identifier')
-                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group col">
-                                <label for="identifier_number" class="text-capitalize">Nomor Registrasi</label>
-                                <input type="number" class="form-control" id="identifier_number" name="identifier_number" required>
-                                @error('identifier_number')
-                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="text-capitalize">password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                            @error('password')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password_confirmation" class="text-capitalize">password confirmation</label>
-                            <input type="password" class="form-control" id="password_confirmation"
-                                name="password_confirmation" required>
-                            @error('password_confirmation')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                    </form>
+                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                        </form>
                     @endif
                 </div>
             </div>

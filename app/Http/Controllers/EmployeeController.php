@@ -69,7 +69,7 @@ class EmployeeController extends Controller
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
                 })
                 ->editColumn('tendik_position_id', function ($query) {
-                    return $query->tendik_position_id ? $query->position->name : '-';
+                    return $query->tendik_position_id ? $query->position->division . ' - ' . $query->position->name : '-';
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {

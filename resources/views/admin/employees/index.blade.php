@@ -56,7 +56,7 @@
                     <option value="">Semua Jabatan</option>
                     @foreach ($positions as $position)
                         <option value="{{ $position->id }}" {{ request()->position == $position->id ? 'selected' : '' }}>
-                            {{ $position->name }}</option>
+                            {{ $position->division . ' - ' . $position->name }}</option>
                     @endforeach
                 </select>
                 <button class="btn btn-primary" type="submit">Filter</button>

@@ -30,6 +30,13 @@
                     <form action="{{ route('admin.tendik-positions.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
+                            <label for="division" class="text-capitalize">Divisi</label>
+                            <input type="text" class="form-control" id="division" name="division" required>
+                            @error('division')
+                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="name" class="text-capitalize">Nama Jabatan</label>
                             <input type="text" class="form-control" id="name" name="name" required>
                             @error('name')

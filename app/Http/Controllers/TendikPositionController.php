@@ -62,11 +62,13 @@ class TendikPositionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:tendik_positions,name']
+            'name' => ['required', 'string', 'max:255', 'unique:tendik_positions,name'],
+            'division' => ['required', 'string', 'max:255']
         ]);
 
         TendikPosition::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'division' => $request->division
         ]);
 
         return redirect()->route('admin.tendik-positions.index')->with('success', 'Posisi berhasil dibuat !');
@@ -106,13 +108,15 @@ class TendikPositionController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', "unique:tendik_positions,name,$id"]
+            'name' => ['required', 'string', 'max:255', "unique:tendik_positions,name,$id"],
+            'division' => ['required', 'string', 'max:255']
         ]);
 
         $subject = TendikPosition::findOrFail($id);
 
         $subject->update([
             'name' => $request->name,
+            'division' => $request->division
         ]);
 
         return redirect()->route('admin.tendik-positions.index')->with('success', 'Posisi diperbarui !');

@@ -69,7 +69,7 @@
                                     data-placeholder="Select position" style="width: 100%;">
                                     <option value="-">-</option>
                                     @foreach ($positions as $position)
-                                        <option value="{{ $position->id }}" {{ $user->tendik_position_id == $position->id ? 'selected' : '' }}>{{ Str::ucfirst($position->name) }}</option>
+                                        <option value="{{ $position->id }}" {{ $user->tendik_position_id == $position->id ? 'selected' : '' }}>{{ Str::ucfirst($position->division . ' - ' . $position->name) }}</option>
                                     @endforeach
                                 </select>
                                 @error('role')

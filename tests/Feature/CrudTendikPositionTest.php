@@ -28,6 +28,7 @@ class CrudTendikPositionTest extends TestCase
 
         $response = $this->actingAs($super_admin)->post(route('admin.tendik-positions.store'), [
             "name" => "Incididunt enim qui",
+            "division" => "division"
         ]);
 
         $response->assertRedirect(route('admin.tendik-positions.index'));
@@ -49,13 +50,15 @@ class CrudTendikPositionTest extends TestCase
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
         $response = $this->actingAs($super_admin)->post(route('admin.tendik-positions.store'), [
-            "name" => "Incididunt enim qui"
+            "name" => "Incididunt enim qui",
+            "division" => "division"
         ]);
         $response->assertRedirect(route('admin.tendik-positions.index'));
 
         $position = TendikPosition::first();
         $response2 = $this->actingAs($super_admin)->patch(route('admin.tendik-positions.update', $position->id), [
-            "name" => "Testing"
+            "name" => "Testing",
+            "division" => "division"
         ]);
         $response2->assertRedirect(route('admin.tendik-positions.index'));
     }
@@ -67,6 +70,7 @@ class CrudTendikPositionTest extends TestCase
 
         $response = $this->actingAs($super_admin)->post(route('admin.tendik-positions.store'), [
             "name" => "Incididunt enim qui",
+            "division" => "division"
         ]);
         $response->assertRedirect(route('admin.tendik-positions.index'));
 
