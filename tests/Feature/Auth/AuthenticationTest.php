@@ -20,13 +20,55 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
+    public function test_admin_can_authenticate_using_the_login_screen(): void
     {
         // $this->seed();
         // $user = User::factory()->create();
 
         $response = $this->post('/login', [
             'email' => 'super.admin@admin.com',
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        // $response->assertRedirect(route('dashboard'));
+    }
+
+    public function test_dosen_can_authenticate_using_the_login_screen(): void
+    {
+        // $this->seed();
+        // $user = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'email' => '133',
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        // $response->assertRedirect(route('dashboard'));
+    }
+
+    public function test_tendik_can_authenticate_using_the_login_screen(): void
+    {
+        // $this->seed();
+        // $user = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'email' => '1234',
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        // $response->assertRedirect(route('dashboard'));
+    }
+
+    public function test_mahasiswa_can_authenticate_using_the_login_screen(): void
+    {
+        // $this->seed();
+        // $user = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'email' => '207',
             'password' => 'password',
         ]);
 
