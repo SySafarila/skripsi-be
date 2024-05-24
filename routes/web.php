@@ -97,7 +97,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/questions', FeedbackQuestionController::class)->except(['show']);
 
     // Feedbacks
-    Route::resource('/feedbacks', FeedbackController::class)->except(['show', 'edit', 'create']);
+    Route::resource('/feedbacks', FeedbackController::class)->except(['show', 'edit', 'update', 'create']);
 
     // lecturer management
     Route::resource('/employees-presence-quota', LecturerManagementController::class)->except(['show']);
