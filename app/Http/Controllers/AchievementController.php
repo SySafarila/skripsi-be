@@ -144,7 +144,7 @@ class AchievementController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.tendik-positions.index')->with('status', 'Permission deleted !');
+        return redirect()->route('admin.achievements.index')->with('status', 'Permission deleted !');
     }
 
     public function massDestroy(Request $request)
@@ -161,6 +161,6 @@ class AchievementController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.tendik-positions.index')->with('status', 'Bulk delete success');
+        return redirect()->route('admin.achievements.index')->with('status', 'Bulk delete success');
     }
 }
