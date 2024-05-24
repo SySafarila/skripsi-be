@@ -1,14 +1,3 @@
-@php
-    function isToday($date)
-    {
-        $date = \Carbon\Carbon::parse($date)->format('d/m/Y');
-        if ($date == now()->format('d/m/Y')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-@endphp
 <x-app-layout>
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">Kehadiran - {{ $subject->name }}</h1>
@@ -20,10 +9,10 @@
                 <td class="border p-2">Foto</td>
                 <td class="border p-2">Aksi</td>
             </tr>
-            @forelse (Auth::user()->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject->id)->latest()->get() as $presence)
+            @forelse ($presences as $key => $presence)
                 <tr>
                     <td class="border p-2">
-                        @if (isToday($presence->created_at))
+                        @if ($isTodays[$key])
                             Hari ini - {{ $presence->created_at->format('H:i') }}
                         @else
                             {{ $presence->created_at->format('d/m/Y - H:i') }}

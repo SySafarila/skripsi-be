@@ -33,7 +33,9 @@ class DosenPageController extends Controller
             return $q->where('user_id', request()->user()->id);
         }])->orderBy('start_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', request()->user()->id)->where('position', '<=', 5)->latest()->get();
-        return view('employees.profile', compact('kpi', 'achievements', 'points'));
+        $roles = Auth::user()->roles->pluck('name');
+
+        return view('employees.profile', compact('kpi', 'achievements', 'points', 'roles'));
     }
 
     public function my_feedback()
@@ -44,14 +46,15 @@ class DosenPageController extends Controller
 
     public function profile_show(Request $request, $id)
     {
-        $user = User::where('id', $id)->firstOrFail();
+        $user = User::with('roles')->where('id', $id)->firstOrFail();
+        $roles = $user->roles->pluck('name');
         // $kpi = KpiPeriod::where('is_active', true)->first();
         // $user = User::with('subjects.subject')->where('id', $user->id)->first();
         $points = KpiPeriod::with(['points' => function ($q) use ($user) {
             return $q->where('user_id', $user->id);
         }])->orderBy('start_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
-        return view('employees.profile-show', compact('user', 'achievements', 'points'));
+        return view('employees.profile-show', compact('user', 'achievements', 'points', 'roles'));
     }
 
     public function subject($subject_id)
@@ -62,8 +65,23 @@ class DosenPageController extends Controller
         // $presences = $user->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
         // $userHasSubjectId = $user->subjects()->where('subject_id', $subject->id)->firstOrFail()->id;
         $image_presence_setting = Setting::where('key', 'image_presence')->first();
+        $presences = Auth::user()->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject->id)->latest()->get();
+        $isTodays = [];
+        foreach ($presences as $presence) {
+            array_push($isTodays, $this->isToday($presence->created_at));
+        }
 
-        return view('employees.presences-show', compact('kpi', 'image_presence_setting', 'subject'));
+        return view('employees.presences-show', compact('kpi', 'image_presence_setting', 'subject', 'presences', 'isTodays'));
+    }
+
+    private function isToday($date)
+    {
+        $date = \Carbon\Carbon::parse($date)->format('d/m/Y');
+        if ($date == now()->format('d/m/Y')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function presence_index()
@@ -83,7 +101,6 @@ class DosenPageController extends Controller
             'image' => ['nullable', 'file', 'image'],
             // 'users_has_subject_id' => ['required', 'exists:users_has_subjects,id']
         ]);
-
         $image_presence_setting = Setting::where('key', 'image_presence')->first();
 
         if ($image_presence_setting->value == 'true') {
