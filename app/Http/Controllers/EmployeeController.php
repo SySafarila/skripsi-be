@@ -120,7 +120,7 @@ class EmployeeController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'identifier' => ['required', 'string', 'in:nidn,nip'],
             'role' => ['required', 'string', 'in:dosen,staff,tendik'],
-            'position' => ['required', 'string']
+            'position' => ['nullable', 'string']
         ]);
         if ($request->position != '-') {
             $request->validate([
@@ -193,7 +193,7 @@ class EmployeeController extends Controller
             // 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'identifier' => ['required', 'string', 'in:nidn,nip'],
             'role' => ['required', 'string', 'in:dosen,staff,tendik'],
-            'position' => ['required', 'string']
+            'position' => ['nullable', 'string']
         ]);
 
         if ($request->position != '-') {

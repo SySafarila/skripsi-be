@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="form-group col">
                                 <label for="role" class="text-capitalize">tipe</label>
-                                <select class="select2 form-control" name="role"
+                                <select class="select2 form-control role" name="role"
                                     data-placeholder="Select role" style="width: 100%;">
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ Str::ucfirst($role->name) }}</option>
@@ -65,8 +65,8 @@
                             </div>
                             <div class="form-group col">
                                 <label for="role" class="text-capitalize">jabatan (Hanya untuk Tendik)</label>
-                                <select class="select2 form-control" name="position"
-                                    data-placeholder="Select position" style="width: 100%;">
+                                <select class="select2 form-control tendik" name="position"
+                                    data-placeholder="Select position" style="width: 100%;" {{ !$user->hasRole('tendik') ? 'disabled' : '' }}>
                                     <option value="-">-</option>
                                     @foreach ($positions as $position)
                                         <option value="{{ $position->id }}" {{ $user->tendik_position_id == $position->id ? 'selected' : '' }}>{{ Str::ucfirst($position->division . ' - ' . $position->name) }}</option>
@@ -132,5 +132,15 @@
             theme: 'bootstrap4',
             closeOnSelect: true
         })
+        const tendikPosition = document.querySelector('[name="position"]')
+        $('.select2.form-control.role').on('select2:select', function(e) {
+            var data = e.params.data;
+            if (data.id == 'tendik') {
+                tendikPosition.disabled = false
+            } else {
+                tendikPosition.disabled = true
+                $('.select2.form-control.tendik').val("-").trigger("change");
+            }
+        });
     </script>
 @endsection
