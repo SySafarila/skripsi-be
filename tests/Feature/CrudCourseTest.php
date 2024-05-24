@@ -59,7 +59,7 @@ class CrudCourseTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.courses.index'));
 
-        $kpi = Course::where('name', 'testing')->first();
+        $kpi = Course::where('name', 'Testing')->first();
         $response2 = $this->actingAs($super_admin)->patch(route('admin.courses.update', $kpi->id), [
             'name' => "Testing",
             'user_id' => 4, // dosen 2
@@ -82,7 +82,7 @@ class CrudCourseTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.courses.index'));
 
-        $kpi = Course::where('name', 'testing')->first();
+        $kpi = Course::where('name', 'Testing')->first();
         $response2 = $this->actingAs($super_admin)->delete(route('admin.courses.destroy', $kpi->id));
         $response2->assertRedirect(route('admin.courses.index'));
     }
