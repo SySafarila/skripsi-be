@@ -5,20 +5,31 @@
             <x-app.session-notifications type="warning" message="Pengisian feedback/masukan belum dibuka." />
         @endif
         <div class="rounded-md border p-4">
-            <table>
-                <tr>
-                    <td class="font-semibold">Mata Kuliah</td>
-                    <td class="px-2">:</td>
-                    <td>{{ $course->name }}</td>
-                </tr>
-                <tr>
-                    <td class="font-semibold">Dosen</td>
-                    <td class="px-2">:</td>
-                    <td>{{ $course->user->name }}</td>
-                </tr>
-            </table>
+            @if (@$course)
+                <table>
+                    <tr>
+                        <td class="font-semibold">Mata Kuliah</td>
+                        <td class="px-2">:</td>
+                        <td>{{ $course->name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Dosen</td>
+                        <td class="px-2">:</td>
+                        <td>{{ $course->user->name }}</td>
+                    </tr>
+                </table>
+            @else
+                <table>
+                    <tr>
+                        <td class="font-semibold">Bagian</td>
+                        <td class="px-2">:</td>
+                        <td>{{ $tendik_position->division }}</td>
+                    </tr>
+                </table>
+            @endif
         </div>
-        <form action="{{ route('student.store', $course) }}" method="post" class="flex flex-col gap-4">
+        <form action="{{ @$course ? route('student.store', $course) : route('student.store.nonedu', $tendik_position->id) }}"
+            method="post" class="flex flex-col gap-4">
             @csrf
             @foreach ($questions as $key => $question)
                 <div>

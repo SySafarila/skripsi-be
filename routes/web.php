@@ -163,9 +163,11 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
     Route::get('/students', [StudentFeedbackController::class, 'index'])->name('student.index');
     Route::get('/students/profile', [StudentFeedbackController::class, 'profile'])->name('student.profile');
-    Route::get('/students/feedback', [StudentFeedbackController::class, 'courses'])->name('student.courses.index');
-    Route::get('/students/feedback/{course_id}/course', [StudentFeedbackController::class, 'feedback'])->name('student.courses.feedback');
-    Route::post('/students/feedback/{course_id}/course', [StudentFeedbackController::class, 'store'])->name('student.store');
+    Route::get('/students/feedback', [StudentFeedbackController::class, 'feedbacks'])->name('student.courses.index');
+    Route::get('/students/feedback/{course_id}/edu', [StudentFeedbackController::class, 'feedback'])->name('student.courses.feedback');
+    Route::post('/students/feedback/{course_id}/edu', [StudentFeedbackController::class, 'store'])->name('student.store');
+    Route::get('/students/feedback/{tendik_position_id}/nonedu', [StudentFeedbackController::class, 'nonedu_feedback'])->name('student.courses.feedback.nonedu');
+    Route::post('/students/feedback/{tendik_position_id}/nonedu', [StudentFeedbackController::class, 'nonedu_store'])->name('student.store.nonedu');
 });
 
 require __DIR__ . '/auth.php';

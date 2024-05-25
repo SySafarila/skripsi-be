@@ -215,10 +215,13 @@ class DevSeeder extends Seeder
             'name' => 'Dosen',
             'division' => 'Edukatif'
         ]);
-
         TendikPosition::create([
             'name' => 'Kepala Bagian',
             'division' => 'Bagian Keuangan'
+        ]);
+        TendikPosition::create([
+            'name' => 'Kepala Bagian',
+            'division' => 'Bagian Lab'
         ]);
 
         // feedback question
@@ -237,6 +240,14 @@ class DevSeeder extends Seeder
         FeedbackQuestion::create([
             'question' => 'Apakah C dan B sama dengan CB?',
             'tendik_position_id' => 2 // mahasiswa to Bagian Keuangan
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Apakah X dan A sama dengan XA?',
+            'tendik_position_id' => 2 // mahasiswa to Bagian Keuangan
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Apakah A dan Z sama dengan AZ?',
+            'tendik_position_id' => 3 // mahasiswa to Bagian Lab
         ]);
     }
 }

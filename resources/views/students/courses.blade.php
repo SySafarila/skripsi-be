@@ -28,15 +28,20 @@
                 <th class="border p-2 text-left">Bagian</th>
                 <th class="border p-2">Feedback</th>
             </tr>
-            @foreach ($nonEduQuestions as $nonEduQuestion)
-                <tr>
-                    <td class="border p-2 text-center">{{ $nn++ }}</td>
-                    <td class="border p-2">{{ $nonEduQuestion->to->division }}</td>
-                    <td class="border p-2 text-center">
-                        <a href="{{ route('student.courses.feedback', ['course_id' => 'xxx']) }}"
-                            class="btn whitespace-nowrap bg-blue-500 text-white hover:bg-blue-600">Masukan -</a>
-                    </td>
-                </tr>
+            @foreach ($nonEduQuestions as $tendik_position_id)
+                @foreach ($tendik_position_id as $key => $nonEduQuestion)
+                    @if ($key == 0)
+                        <tr>
+                            <td class="border p-2 text-center">{{ $nn++ }}</td>
+                            <td class="border p-2">{{ $nonEduQuestion->to->division }}</td>
+                            <td class="border p-2 text-center">
+                                <a href="{{ route('student.courses.feedback.nonedu', ['tendik_position_id' => $nonEduQuestion->to->id]) }}"
+                                    class="btn whitespace-nowrap bg-blue-500 text-white hover:bg-blue-600">Masukan
+                                    {{ $sent_feedbacks->where('tendik_position_id', $nonEduQuestion->to->id)->count() }}/{{ $tendik_position_id->where('tendik_position_id', $nonEduQuestion->to->id)->count() }}</a>
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
             @endforeach
         </table>
     </div>

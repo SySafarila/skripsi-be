@@ -62,7 +62,7 @@ class TendikPositionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:tendik_positions,name'],
+            'name' => ['required', 'string', 'max:255'],
             'division' => ['required', 'string', 'max:255']
         ]);
 
@@ -108,7 +108,7 @@ class TendikPositionController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', "unique:tendik_positions,name,$id"],
+            'name' => ['required', 'string', 'max:255'],
             'division' => ['required', 'string', 'max:255']
         ]);
 
