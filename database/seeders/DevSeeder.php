@@ -99,7 +99,7 @@ class DevSeeder extends Seeder
             'start_date' => now('Asia/Jakarta'),
             'end_date' => now('Asia/Jakarta')->addMonths(6),
             'is_active' => true,
-            'receive_feedback' => false
+            'receive_feedback' => true
         ]);
 
         $users = User::role(['dosen', 'tendik'])->get();
