@@ -1,13 +1,3 @@
-@php
-    function rolesProcessor($roles)
-    {
-        $string = '';
-        foreach ($roles as $role) {
-            $string = $role->name;
-        }
-        return $string;
-    }
-@endphp
 <x-app-layout>
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">Profil</h1>
@@ -19,8 +9,9 @@
                 <small class="line-clamp-1 uppercase">{{ Auth::user()->identifier }}:
                     {{ Auth::user()->identifier_number }}</small>
                 <div class="mt-1.5 flex gap-2">
-                    <small
-                        class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ rolesProcessor(Auth::user()->roles) }}</small>
+                    @foreach (Auth::user()->roles as $role)
+                        <small class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $role->name }}</small>
+                    @endforeach
                     <small
                         class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ Auth::user()->hasMajor->major->major }}</small>
                     <small class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">Semester

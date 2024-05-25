@@ -1,16 +1,3 @@
-@if (request()->filter == 'all' || request()->filter == null)
-    @php
-        function rolesProcessor($roles)
-        {
-            $string = '';
-            foreach ($roles as $role) {
-                $string = $role->name;
-            }
-            return $string;
-        }
-    @endphp
-@endif
-
 <x-app-layout>
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">Leaderboard</h1>
@@ -70,8 +57,10 @@
                                     <a href="{{ route('employees.profile.show', $point->user->id) }}"
                                         class="line-clamp-1 font-semibold">{{ $point->user->name ?? '-' }}</a>
                                     @if (request()->filter == 'all' || request()->filter == null)
-                                        <span
-                                            class="w-fit rounded-lg bg-yellow-400 px-2 pb-0.5 text-xs uppercase lg:pb-0">{{ rolesProcessor($point->user->roles) }}</span>
+                                    @foreach ($point->user->roles as $role)
+                                    <span
+                                        class="w-fit rounded-lg bg-yellow-400 px-2 pb-0.5 text-xs uppercase lg:pb-0">{{ $role->name }}</span>
+                                    @endforeach
                                     @endif
                                 </div>
                             </div>

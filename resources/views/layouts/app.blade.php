@@ -1,14 +1,3 @@
-{{-- @php
-    function rolesProcessor($roles)
-    {
-        $string = '';
-        foreach ($roles as $role) {
-            $string = $role->name;
-        }
-        return $string;
-    }
-@endphp --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
