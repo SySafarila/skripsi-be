@@ -3,6 +3,10 @@
 @section('head')
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+
+    {{-- Select2 --}}
+    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 @endsection
 
 @section('content')
@@ -15,7 +19,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.questions.index') }}">Pertanyaan Umpan Balik</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.questions.index') }}">Pertanyaan Umpan
+                                Balik</a></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
@@ -33,17 +38,20 @@
                             <label for="question" class="text-capitalize">Pertanyaan</label>
                             <input type="text" class="form-control" id="question" name="question" required>
                             @error('question')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="type" class="text-capitalize">Tipe</label>
-                            <select name="type" id="type" class="custom-select" required>
-                                <option value="" selected hidden>Pilih</option>
+                            <select name="type" id="type" class="select2" style="width: 100%;" required>
+                                <option value="" selected disabled hidden>Pilih</option>
                                 <option value="mahasiswa-to-dosen">Mahasiswa Ke Dosen</option>
+                                @foreach ($tendikPositions as $position)
+                                    <option value="mahasiswa-to-{{ $position->division }}">Mahasiswa Ke {{ $position->division }}</option>
+                                @endforeach
                             </select>
                             @error('type')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
@@ -55,4 +63,16 @@
 @endsection
 
 @section('script')
+    {{-- jQuery --}}
+    <script src="{{ asset('adminlte-3.2.0/plugins/jquery/jquery.min.js') }}"></script>
+    {{-- Bootstrap 4 --}}
+    <script src="{{ asset('adminlte-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- Select2 --}}
+    <script src="{{ asset('adminlte-3.2.0/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script>
+        $('.select2').select2({
+            theme: 'bootstrap4',
+            closeOnSelect: true
+        })
+    </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeedbackQuestion;
+use App\Models\TendikPosition;
 // use App\Models\KpiPeriod;
 // use App\Models\Subject;
 // use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 // use Illuminate\Validation\Rule;
 // use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class FeedbackQuestionController extends Controller
 {
@@ -37,7 +39,7 @@ class FeedbackQuestionController extends Controller
                             break;
 
                         default:
-                            return '-';
+                            return Str::headline($model->type);
                             break;
                     }
                 })
@@ -60,7 +62,9 @@ class FeedbackQuestionController extends Controller
      */
     public function create()
     {
-        return view('admin.feedback_questions.create');
+        $tendikPositions = TendikPosition::orderBy('division', 'asc')->orderBy('name', 'asc')->get();
+
+        return view('admin.feedback_questions.create', compact('tendikPositions'));
     }
 
     /**
@@ -73,12 +77,12 @@ class FeedbackQuestionController extends Controller
     {
         $request->validate([
             'question' => ['required', 'string', "unique:user_feedback,question"],
-            'type' => ['required', 'string', 'max:255', 'in:mahasiswa-to-dosen']
+            'type' => ['required', 'string', 'max:255']
         ]);
 
         FeedbackQuestion::create([
             'question' => $request->question,
-            'type' => $request->type
+            'type' => Str::slug($request->type, '-')
         ]);
 
         return redirect()->route('admin.questions.index')->with('success', 'Umpan Balik berhasil dibuat !');
@@ -119,14 +123,14 @@ class FeedbackQuestionController extends Controller
     {
         $request->validate([
             'question' => ['required', 'string', "unique:user_feedback,question,$id"],
-            'type' => ['required', 'string', 'max:255', 'in:mahasiswa-to-dosen']
+            'type' => ['required', 'string', 'max:255']
         ]);
 
         $question = FeedbackQuestion::findOrFail($id);
 
         $question->update([
             'question' => $request->question,
-            'type' => $request->type
+            'type' => Str::slug($request->type, '-')
         ]);
 
         return redirect()->route('admin.questions.index')->with('success', 'Umpan Balik diperbarui !');

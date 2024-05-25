@@ -7,6 +7,7 @@ use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
 use App\Models\Major;
 use App\Models\Point;
+use App\Models\TendikPosition;
 use App\Models\User;
 use App\Models\UserHasMajor;
 use App\Models\UsersHasSubject;
@@ -221,6 +222,17 @@ class DevSeeder extends Seeder
             'user_id' => 6,
             'major_id' => 1,
             'semester' => 2
+        ]);
+
+        // tendik positions
+        TendikPosition::create([
+            'name' => 'Dosen',
+            'division' => 'Edukatif'
+        ]);
+
+        TendikPosition::create([
+            'name' => 'Kepala Bagian',
+            'division' => 'Bagian Keuangan'
         ]);
     }
 }
