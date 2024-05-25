@@ -6,6 +6,7 @@ use App\Models\KpiPeriod;
 use App\Models\Point;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LeaderboardController extends Controller
 {
@@ -17,9 +18,12 @@ class LeaderboardController extends Controller
             $kpi = KpiPeriod::where('id', $request->kpi_period_id)->first();
         } else {
             $kpi = KpiPeriod::where('is_active', true)->first();
+            if (!$kpi) {
+                $kpi = KpiPeriod::orderBy('start_date', 'desc')->first();
+            }
         }
         if (!$kpi) {
-            return abort(400, 'KPI Not found');
+            return abort(404, 'KPI Not found');
         }
         if (!Point::where('kpi_period_id', $kpi->id)->where('user_id', $request->user()->id)->first()) {
             Point::create([
@@ -40,7 +44,7 @@ class LeaderboardController extends Controller
                 break;
 
             default:
-                $users = User::role(['dosen', 'tendik'])->get()->pluck('id');
+                $users = User::role(Auth::user()->roles[0]->name)->get()->pluck('id');
                 break;
         }
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();

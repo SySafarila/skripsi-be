@@ -17,9 +17,9 @@
                 <label for="filter">Kategori</label>
                 <select name="filter" id="filter" onchange="event.preventDefault(); this.closest('form').submit();"
                     class="rounded-md">
-                    <option value="all" {{ request()->filter == 'all' ? 'selected' : '' }}>Semua Karyawan
-                    </option>
-                    <option value="dosen" {{ request()->filter == 'dosen' ? 'selected' : '' }}>Dosen</option>
+                    {{-- <option value="all" {{ request()->filter == 'all' ? 'selected' : '' }}>Semua Karyawan
+                    </option> --}}
+                    <option value="dosen" {{ request()->filter == 'dosen' || !request()->filter ? 'selected' : '' }}>Dosen</option>
                     <option value="tendik" {{ request()->filter == 'tendik' ? 'selected' : '' }}>Tendik</option>
                 </select>
             </div>
@@ -56,12 +56,6 @@
                                 <div class="flex flex-col">
                                     <a href="{{ route('employees.profile.show', $point->user->id) }}"
                                         class="line-clamp-1 font-semibold">{{ $point->user->name ?? '-' }}</a>
-                                    @if (request()->filter == 'all' || request()->filter == null)
-                                    @foreach ($point->user->roles as $role)
-                                    <span
-                                        class="w-fit rounded-lg bg-yellow-400 px-2 pb-0.5 text-xs uppercase lg:pb-0">{{ $role->name }}</span>
-                                    @endforeach
-                                    @endif
                                 </div>
                             </div>
                         </div>
