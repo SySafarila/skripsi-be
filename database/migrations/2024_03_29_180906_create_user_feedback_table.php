@@ -3,6 +3,7 @@
 use App\Models\Course;
 use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
+use App\Models\TendikPosition;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,11 +18,12 @@ return new class extends Migration
     {
         Schema::create('user_feedback', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class, 'sender_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->foreignIdFor(KpiPeriod::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(FeedbackQuestion::class)->nullable()->constrained()->nullOnDelete();
-            $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Course::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(TendikPosition::class)->nullable()->constrained()->cascadeOnDelete();
             $table->text('question');
             $table->integer('point');
             $table->text('message');

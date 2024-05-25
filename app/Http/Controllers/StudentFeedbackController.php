@@ -36,10 +36,12 @@ class StudentFeedbackController extends Controller
         $courses = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->orderBy('name', 'asc')->get();
         $course_ids = $courses->pluck('id');
         $sent_feedbacks = $user->sent_feedbacks()->where('kpi_period_id', $active_kpi->id)->whereIn('course_id', $course_ids)->get();
-        $questions = FeedbackQuestion::where('type', 'mahasiswa-to-dosen')->orderBy('question', 'asc')->get();
+        $eduQuestions = FeedbackQuestion::with('to')->orderBy('question', 'asc')->whereRelation('to', 'division', '=', 'Edukatif')->get();
+        $nonEduQuestions = FeedbackQuestion::with('to')->orderBy('question', 'asc')->whereRelation('to', 'division', '!=', 'Edukatif')->get();
         $n = 1;
-        // return $sent_feedbacks;
-        return view('students.courses', compact('active_kpi', 'user', 'semester', 'sent_feedbacks', 'courses', 'n', 'questions'));
+        $nn = 1;
+        // return $nonEduQuestions;
+        return view('students.courses', compact('active_kpi', 'user', 'semester', 'sent_feedbacks', 'courses', 'n', 'nn', 'eduQuestions', 'nonEduQuestions'));
     }
 
     public function feedback($course_id)
@@ -54,7 +56,7 @@ class StudentFeedbackController extends Controller
         $course = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->where('id', $course_id)->first();
         $questions = FeedbackQuestion::with(['responses' => function ($q) use ($active_kpi, $user, $course_id) {
             return $q->where('sender_id', $user->id)->where('kpi_period_id', $active_kpi->id)->where('course_id', $course_id);
-        }])->where('type', 'mahasiswa-to-dosen')->orderBy('question', 'asc')->get();
+        }])->whereRelation('to', 'division', '=', 'Edukatif')->orderBy('question', 'asc')->get();
         // return $questions;
         $n = 1;
         return view('students.feedback', compact('course', 'questions', 'n', 'active_kpi'));
@@ -68,7 +70,6 @@ class StudentFeedbackController extends Controller
             'points.*' => ['required', 'numeric', 'in:1,2,3,4,5'],
             'questions.*' => ['required', 'string']
         ]);
-        // return $request;
         $active_kpi = KpiPeriod::where('is_active', true)->where('receive_feedback', true)->first();
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');

@@ -163,9 +163,9 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
     Route::get('/students', [StudentFeedbackController::class, 'index'])->name('student.index');
     Route::get('/students/profile', [StudentFeedbackController::class, 'profile'])->name('student.profile');
-    Route::get('/students/courses', [StudentFeedbackController::class, 'courses'])->name('student.courses.index');
-    Route::get('/students/courses/{course_id}/feedback', [StudentFeedbackController::class, 'feedback'])->name('student.courses.feedback');
-    Route::post('/students/courses/{course_id}/feedback', [StudentFeedbackController::class, 'store'])->name('student.store');
+    Route::get('/students/feedback', [StudentFeedbackController::class, 'courses'])->name('student.courses.index');
+    Route::get('/students/feedback/{course_id}/course', [StudentFeedbackController::class, 'feedback'])->name('student.courses.feedback');
+    Route::post('/students/feedback/{course_id}/course', [StudentFeedbackController::class, 'store'])->name('student.store');
 });
 
 require __DIR__ . '/auth.php';
