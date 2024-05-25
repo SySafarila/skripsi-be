@@ -60,6 +60,9 @@ class DosenPageController extends Controller
     public function subject($subject_id)
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
+        if (!$kpi) {
+            abort(404, 'KPI Not found');
+        }
         // $user = User::with('presences')->where('id', request()->user()->id)->first();
         $subject = Subject::findOrFail($subject_id);
         // $presences = $user->presences()->where('kpi_period_id', $kpi->id)->where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
@@ -87,6 +90,9 @@ class DosenPageController extends Controller
     public function presence_index()
     {
         $kpi = KpiPeriod::where('is_active', true)->first();
+        if (!$kpi) {
+            abort(404, 'KPI Not found');
+        }
         $subjects = Auth::user()->subjects()->with('subject')->get();
 
         return view('employees.presences', compact('kpi', 'subjects'));
