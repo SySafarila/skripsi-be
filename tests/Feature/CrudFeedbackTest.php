@@ -19,7 +19,7 @@ class CrudFeedbackTest extends TestCase
     use RefreshDatabase;
     protected $seed = true;
 
-    public function test_read()
+    public function test_umpan_balik_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -29,7 +29,7 @@ class CrudFeedbackTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_delete()
+    public function test_umpan_balik_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();

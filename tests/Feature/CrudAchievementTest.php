@@ -22,7 +22,7 @@ class CrudAchievementTest extends TestCase
      *
      * @return void
      */
-    // public function test_create()
+    // public function test_pencapaian_create()
     // {
     //     // $this->seed();
     //     $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -37,7 +37,7 @@ class CrudAchievementTest extends TestCase
     //     $response->assertRedirect(route('admin.achievements.index'));
     // }
 
-    public function test_read()
+    public function test_pencapaian_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -47,7 +47,7 @@ class CrudAchievementTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // public function test_update()
+    // public function test_pencapaian_update()
     // {
     //     // $this->seed();
     //     $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -70,7 +70,7 @@ class CrudAchievementTest extends TestCase
     //     $response2->assertRedirect(route('admin.achievements.index'));
     // }
 
-    public function test_delete()
+    public function test_pencapaian_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();

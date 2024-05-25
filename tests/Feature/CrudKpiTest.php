@@ -19,7 +19,7 @@ class CrudKpiTest extends TestCase
      *
      * @return void
      */
-    public function test_create()
+    public function test_kpi_create()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -35,7 +35,7 @@ class CrudKpiTest extends TestCase
         $response->assertRedirect(route('admin.kpi.index'));
     }
 
-    public function test_read()
+    public function test_kpi_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -45,7 +45,7 @@ class CrudKpiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_update()
+    public function test_kpi_update()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -70,7 +70,7 @@ class CrudKpiTest extends TestCase
         $response2->assertRedirect(route('admin.kpi.index'));
     }
 
-    public function test_delete()
+    public function test_kpi_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();

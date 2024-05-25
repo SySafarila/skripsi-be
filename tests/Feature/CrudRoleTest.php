@@ -18,7 +18,7 @@ class CrudRoleTest extends TestCase
      *
      * @return void
      */
-    public function test_create()
+    public function test_role_create()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -30,7 +30,7 @@ class CrudRoleTest extends TestCase
         $response->assertRedirect(route('admin.roles.index'));
     }
 
-    public function test_read()
+    public function test_role_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -40,7 +40,7 @@ class CrudRoleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_update()
+    public function test_role_update()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -57,7 +57,7 @@ class CrudRoleTest extends TestCase
         $response2->assertRedirect(route('admin.roles.index'));
     }
 
-    public function test_delete()
+    public function test_role_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();

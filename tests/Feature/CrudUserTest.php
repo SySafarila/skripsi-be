@@ -12,7 +12,7 @@ class CrudUserTest extends TestCase
     use RefreshDatabase;
     protected $seed = true;
 
-    public function test_create()
+    public function test_pengguna_create()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -27,7 +27,7 @@ class CrudUserTest extends TestCase
         $response->assertRedirect(route('admin.users.index'));
     }
 
-    public function test_read()
+    public function test_pengguna_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -37,7 +37,7 @@ class CrudUserTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_update()
+    public function test_pengguna_update()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -58,7 +58,7 @@ class CrudUserTest extends TestCase
         $response2->assertRedirect(route('admin.users.index'));
     }
 
-    public function test_delete()
+    public function test_pengguna_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();

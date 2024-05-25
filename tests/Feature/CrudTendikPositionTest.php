@@ -21,7 +21,7 @@ class CrudTendikPositionTest extends TestCase
      *
      * @return void
      */
-    public function test_create()
+    public function test_jabatan_tendik_create()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -34,7 +34,7 @@ class CrudTendikPositionTest extends TestCase
         $response->assertRedirect(route('admin.tendik-positions.index'));
     }
 
-    public function test_read()
+    public function test_jabatan_tendik_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -44,7 +44,7 @@ class CrudTendikPositionTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_update()
+    public function test_jabatan_tendik_update()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -63,7 +63,7 @@ class CrudTendikPositionTest extends TestCase
         $response2->assertRedirect(route('admin.tendik-positions.index'));
     }
 
-    public function test_delete()
+    public function test_jabatan_tendik_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();

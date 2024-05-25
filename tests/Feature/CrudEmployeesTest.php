@@ -22,7 +22,7 @@ class CrudEmployeesTest extends TestCase
      *
      * @return void
      */
-    public function test_create()
+    public function test_karyawan_create()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -41,7 +41,7 @@ class CrudEmployeesTest extends TestCase
         $response->assertRedirect(route('admin.employees.index'));
     }
 
-    public function test_read()
+    public function test_karyawan_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -51,7 +51,7 @@ class CrudEmployeesTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_update()
+    public function test_karyawan_update()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -82,7 +82,7 @@ class CrudEmployeesTest extends TestCase
         $response2->assertRedirect(route('admin.employees.index'));
     }
 
-    public function test_delete()
+    public function test_karyawan_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();

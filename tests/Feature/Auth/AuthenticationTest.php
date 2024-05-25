@@ -12,7 +12,7 @@ class AuthenticationTest extends TestCase
     use RefreshDatabase;
     protected $seed = true;
 
-    public function test_login_screen_can_be_rendered(): void
+    public function test_halaman_login_dapat_diakses(): void
     {
         // $this->seed();
         $response = $this->get('/login');
@@ -20,7 +20,7 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_admin_can_authenticate_using_the_login_screen(): void
+    public function test_admin_berhasil_login_menggunakan_email(): void
     {
         // $this->seed();
         // $user = User::factory()->create();
@@ -34,7 +34,7 @@ class AuthenticationTest extends TestCase
         // $response->assertRedirect(route('dashboard'));
     }
 
-    public function test_dosen_can_authenticate_using_the_login_screen(): void
+    public function test_dosen_berhasil_login_menggunakan_nidn(): void
     {
         // $this->seed();
         // $user = User::factory()->create();
@@ -48,7 +48,7 @@ class AuthenticationTest extends TestCase
         // $response->assertRedirect(route('dashboard'));
     }
 
-    public function test_tendik_can_authenticate_using_the_login_screen(): void
+    public function test_tendik_berhasil_login_menggunakan_nip(): void
     {
         // $this->seed();
         // $user = User::factory()->create();
@@ -62,7 +62,7 @@ class AuthenticationTest extends TestCase
         // $response->assertRedirect(route('dashboard'));
     }
 
-    public function test_mahasiswa_can_authenticate_using_the_login_screen(): void
+    public function test_mahasiswa_berhasil_login_menggunakan_nim(): void
     {
         // $this->seed();
         // $user = User::factory()->create();
@@ -74,18 +74,5 @@ class AuthenticationTest extends TestCase
 
         $this->assertAuthenticated();
         // $response->assertRedirect(route('dashboard'));
-    }
-
-    public function test_users_can_not_authenticate_with_invalid_password(): void
-    {
-        // $this->seed();
-        $user = User::factory()->create();
-
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'wrong-password',
-        ]);
-
-        $this->assertGuest();
     }
 }

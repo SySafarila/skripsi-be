@@ -13,7 +13,7 @@ class CrudPermissionTest extends TestCase
     use RefreshDatabase;
     protected $seed = true;
 
-    public function test_create()
+    public function test_hak_akses_create()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -25,7 +25,7 @@ class CrudPermissionTest extends TestCase
         $response->assertRedirect(route('admin.permissions.index'));
     }
 
-    public function test_read()
+    public function test_hak_akses_read()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -35,7 +35,7 @@ class CrudPermissionTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_update()
+    public function test_hak_akses_update()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
@@ -52,7 +52,7 @@ class CrudPermissionTest extends TestCase
         $response2->assertRedirect(route('admin.permissions.index'));
     }
 
-    public function test_delete()
+    public function test_hak_akses_delete()
     {
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
