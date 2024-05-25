@@ -1,6 +1,6 @@
 <div id="sidebar">
     <a href="{{ Auth::user()->hasRole('mahasiswa') ? route('student.profile') : route('employees.profile') }}"
-        class="account">
+        class="account {{ request()->routeIs('student.profile') ? 'bg-gray-100' : '' }} {{ request()->routeIs('employees.profile') ? 'bg-gray-100' : '' }}">
         <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('images/profile.png') }}"
             alt="profile" class="h-10 w-10 flex-shrink-0 rounded-full">
         <div class="flex w-full flex-col">
