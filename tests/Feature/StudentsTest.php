@@ -37,12 +37,22 @@ class StudentsTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_mahasiswa_akses_list_feedback_form()
+    public function test_mahasiswa_akses_list_feedback_form_dosen()
     {
         // $this->seed();
         $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
 
         $response = $this->actingAs($mahasiswa)->get(route('student.courses.feedback', 2));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_mahasiswa_akses_list_feedback_form_tendik()
+    {
+        // $this->seed();
+        $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
+
+        $response = $this->actingAs($mahasiswa)->get(route('student.courses.feedback.nonedu', 3));
 
         $response->assertStatus(200);
     }
@@ -57,21 +67,21 @@ class StudentsTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_mahasiswa_mengisi_feedback()
+    public function test_mahasiswa_mengisi_feedback_dosen()
     {
         // $this->seed();
         $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
 
         $response2 = $this->actingAs($mahasiswa)->post(route('student.store', 2), [
             "messages" => [
-                "Nobis voluptatem et",
-                "Ut amet quidem quis",
-                "Explicabo Distincti"
+                "Id cillum exercitat",
+                "In excepteur sint et",
+                "Animi atque error i"
             ],
             "points" => [
-                "2",
-                "2",
-                "1"
+                "5",
+                "5",
+                "4"
             ],
             "question_ids" => [
                 "3",
@@ -79,9 +89,31 @@ class StudentsTest extends TestCase
                 "2"
             ],
             "questions" => [
-                "Lorem  consectetur adipisicing elit.",
-                "lorem ipsum dolor",
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                "Apakah A dan B sama dengan AB?",
+                "Apakah A sama dengan B?",
+                "Apakah B sama dengan A?"
+            ]
+        ]);
+        $response2->assertSessionHas('success');
+    }
+
+    public function test_mahasiswa_mengisi_feedback_tendik()
+    {
+        // $this->seed();
+        $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
+
+        $response2 = $this->actingAs($mahasiswa)->post(route('student.store.nonedu', 3), [
+            "messages" => [
+                "Asperiores sapiente"
+            ],
+            "points" => [
+                "5"
+            ],
+            "question_ids" => [
+                "6"
+            ],
+            "questions" => [
+                "Apakah A dan Z sama dengan AZ?"
             ]
         ]);
         $response2->assertSessionHas('success');
