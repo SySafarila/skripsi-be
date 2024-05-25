@@ -137,8 +137,9 @@
                     data: 'question',
                     name: 'question'
                 }, {
-                    data: 'type',
-                    name: 'type'
+                    data: 'to',
+                    name: 'to',
+                    searchable: false
                 }, {
                     data: 'options',
                     name: 'options'
@@ -158,7 +159,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: 3
+                    targets: [2, 3]
                 }],
                 order: [
                     [1, 'asc']

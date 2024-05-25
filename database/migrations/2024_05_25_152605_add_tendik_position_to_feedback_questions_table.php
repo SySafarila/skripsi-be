@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TendikPosition;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feedback_questions', function (Blueprint $table) {
-            $table->id();
-            $table->text('question'); // options: mahasiswa-to-dosen
-            // $table->string('type');
-            $table->timestamps();
+        Schema::table('feedback_questions', function (Blueprint $table) {
+            $table->foreignIdFor(TendikPosition::class)->constrained()->cascadeOnDelete();
         });
     }
 
@@ -24,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feedback_questions');
+        Schema::table('feedback_questions', function (Blueprint $table) {
+            $table->dropConstrainedForeignIdFor(TendikPosition::class);
+        });
     }
 };

@@ -14,4 +14,8 @@ class FeedbackQuestion extends Model
     public function responses() {
         return $this->hasMany(UserFeedback::class);
     }
+
+    public function to() {
+        return $this->belongsTo(TendikPosition::class, 'tendik_position_id', 'id');
+    }
 }

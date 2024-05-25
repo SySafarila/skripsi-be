@@ -42,15 +42,18 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="type" class="text-capitalize">Tipe</label>
-                            <select name="type" id="type" class="select2" style="width: 100%;" required>
+                            <label for="tendik_position_id" class="text-capitalize">Tipe</label>
+                            <select name="tendik_position_id" id="tendik_position_id" class="select2" style="width: 100%;" required>
                                 <option value="" selected disabled hidden>Pilih</option>
-                                <option value="mahasiswa-to-dosen">Mahasiswa Ke Dosen</option>
                                 @foreach ($tendikPositions as $position)
-                                    <option value="mahasiswa-to-{{ $position->division }}">Mahasiswa Ke {{ $position->division }}</option>
+                                    @if ($position->division == 'Edukatif')
+                                        <option value="{{ $position->id }}">Mahasiswa Ke Dosen</option>
+                                    @else
+                                        <option value="{{ $position->id }}">Mahasiswa Ke {{ $position->division }}</option>
+                                    @endif
                                 @endforeach
                             </select>
-                            @error('type')
+                            @error('tendik_position_id')
                                 <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>

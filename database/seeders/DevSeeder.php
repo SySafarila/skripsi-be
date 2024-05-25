@@ -122,20 +122,6 @@ class DevSeeder extends Seeder
         }
         DB::table('points')->insert($arr);
 
-        // feedback question
-        FeedbackQuestion::create([
-            'question' => 'lorem ipsum dolor',
-            'type' => 'mahasiswa-to-dosen'
-        ]);
-        FeedbackQuestion::create([
-            'question' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-            'type' => 'mahasiswa-to-dosen'
-        ]);
-        FeedbackQuestion::create([
-            'question' => 'Lorem  consectetur adipisicing elit.',
-            'type' => 'mahasiswa-to-dosen'
-        ]);
-
         // kuota absensi
         UsersHasSubject::create([
             'user_id' => 3,
@@ -233,6 +219,24 @@ class DevSeeder extends Seeder
         TendikPosition::create([
             'name' => 'Kepala Bagian',
             'division' => 'Bagian Keuangan'
+        ]);
+
+        // feedback question
+        FeedbackQuestion::create([
+            'question' => 'Apakah A sama dengan B?',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Apakah B sama dengan A?',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Apakah A dan B sama dengan AB?',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Apakah C dan B sama dengan CB?',
+            'tendik_position_id' => 2 // mahasiswa to Bagian Keuangan
         ]);
     }
 }

@@ -29,7 +29,7 @@ class CrudQuestionTest extends TestCase
 
         $response = $this->actingAs($super_admin)->post(route('admin.questions.store'), [
             'question' => "Testing",
-            'type' => "mahasiswa-to-dosen"
+            'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
 
         $response->assertRedirect(route('admin.questions.index'));
@@ -52,14 +52,14 @@ class CrudQuestionTest extends TestCase
 
         $response = $this->actingAs($super_admin)->post(route('admin.questions.store'), [
             'question' => "Testing",
-            'type' => "mahasiswa-to-dosen"
+            'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         $response->assertRedirect(route('admin.questions.index'));
 
         $kpi = FeedbackQuestion::where('question', 'Testing')->first();
         $response2 = $this->actingAs($super_admin)->patch(route('admin.questions.update', $kpi->id), [
             'question' => "Testing 2",
-            'type' => "mahasiswa-to-dosen"
+            'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         $response2->assertRedirect(route('admin.questions.index'));
     }
@@ -71,7 +71,7 @@ class CrudQuestionTest extends TestCase
 
         $response = $this->actingAs($super_admin)->post(route('admin.questions.store'), [
             'question' => "Testing",
-            'type' => "mahasiswa-to-dosen"
+            'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         $response->assertRedirect(route('admin.questions.index'));
 

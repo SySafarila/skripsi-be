@@ -30,18 +30,13 @@ class FeedbackQuestionController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(FeedbackQuestion::query())
+            return DataTables::of(FeedbackQuestion::query()->with('to'))
                 ->addColumn('options', 'admin.feedback_questions.datatables.options')
-                ->editColumn('type', function ($model) {
-                    switch ($model->type) {
-                        case 'mahasiswa-to-dosen':
-                            return 'Mahasiswa Ke Dosen';
-                            break;
-
-                        default:
-                            return Str::headline($model->type);
-                            break;
+                ->editColumn('to', function ($model) {
+                    if ($model->to->division == 'Edukatif') {
+                        return 'Mahasiswa ke Dosen';
                     }
+                    return 'Mahasiswa ke ' . $model->to->division;
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
@@ -77,12 +72,12 @@ class FeedbackQuestionController extends Controller
     {
         $request->validate([
             'question' => ['required', 'string', "unique:user_feedback,question"],
-            'type' => ['required', 'string', 'max:255']
+            'tendik_position_id' => ['required', 'exists:tendik_positions,id']
         ]);
 
         FeedbackQuestion::create([
             'question' => $request->question,
-            'type' => Str::slug($request->type, '-')
+            'tendik_position_id' => $request->tendik_position_id
         ]);
 
         return redirect()->route('admin.questions.index')->with('success', 'Umpan Balik berhasil dibuat !');
@@ -108,8 +103,9 @@ class FeedbackQuestionController extends Controller
     public function edit($id)
     {
         $question = FeedbackQuestion::findOrFail($id);
+        $tendikPositions = TendikPosition::orderBy('division', 'asc')->orderBy('name', 'asc')->get();
 
-        return view('admin.feedback_questions.edit', compact('question'));
+        return view('admin.feedback_questions.edit', compact('question', 'tendikPositions'));
     }
 
     /**
@@ -123,14 +119,14 @@ class FeedbackQuestionController extends Controller
     {
         $request->validate([
             'question' => ['required', 'string', "unique:user_feedback,question,$id"],
-            'type' => ['required', 'string', 'max:255']
+            'tendik_position_id' => ['required', 'exists:tendik_positions,id']
         ]);
 
         $question = FeedbackQuestion::findOrFail($id);
 
         $question->update([
             'question' => $request->question,
-            'type' => Str::slug($request->type, '-')
+            'tendik_position_id' => $request->tendik_position_id
         ]);
 
         return redirect()->route('admin.questions.index')->with('success', 'Umpan Balik diperbarui !');
