@@ -32,7 +32,7 @@ class StudentsTest extends TestCase
         // $this->seed();
         $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
 
-        $response = $this->actingAs($mahasiswa)->get(route('student.courses'));
+        $response = $this->actingAs($mahasiswa)->get(route('student.courses.index'));
 
         $response->assertStatus(200);
     }

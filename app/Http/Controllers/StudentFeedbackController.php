@@ -114,6 +114,6 @@ class StudentFeedbackController extends Controller
             //throw $th;
         }
 
-        return redirect()->route('student.courses')->with('success', 'Masukan berhasil terkirim.');
+        return redirect()->route('student.courses.index')->with('success', 'Masukan berhasil terkirim.');
     }
 }

@@ -9,6 +9,6 @@
 <body>
     <h1>Halaman Mahasiswa</h1>
     <a href="{{ route('student.index') }}">Halaman Utama</a>
-    <a href="{{ route('student.courses') }}">Survey</a>
+    <a href="{{ route('student.courses.index') }}">Survey</a>
 </body>
 </html>

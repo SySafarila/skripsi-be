@@ -11,7 +11,7 @@
                 <img src="{{ asset('icons/account.svg') }}" alt="" class="w-12">
                 <span class="block text-center">Profil</span>
             </a>
-            <a href="{{ route('student.courses') }}"
+            <a href="{{ route('student.courses.index') }}"
                 class="flex flex-col items-center justify-center gap-2 rounded-lg border p-4 hover:bg-gray-100">
                 <img src="{{ asset('icons/feedback.svg') }}" alt="" class="w-12">
                 <span class="block text-center">Feedback</span>

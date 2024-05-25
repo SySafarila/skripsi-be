@@ -38,7 +38,7 @@
             <img src="{{ asset('icons/home.svg') }}" alt="home">
             <span>Beranda</span>
         </a>
-        <a href="{{ route('student.courses') }}"
+        <a href="{{ route('student.courses.index') }}"
             class="{{ request()->routeIs('student.courses.*') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
             <img src="{{ asset('icons/feedback.svg') }}" alt="feedback">
             <span>Feedback</span>
