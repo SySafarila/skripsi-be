@@ -147,6 +147,10 @@ class StudentFeedbackController extends Controller
             'points.*' => ['required', 'numeric', 'in:1,2,3,4,5'],
             'questions.*' => ['required', 'string']
         ]);
+        $tendik_position = TendikPosition::find($tendik_position_id);
+        if (!$tendik_position) {
+            abort(404, 'Tendik tidak ditemukan');
+        }
         $active_kpi = KpiPeriod::where('is_active', true)->where('receive_feedback', true)->first();
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
@@ -187,7 +191,7 @@ class StudentFeedbackController extends Controller
         try {
             UserFeedback::where('sender_id', $user->id)->where('tendik_position_id', $tendik_position_id)->where('kpi_period_id', $active_kpi->id)->delete();
             DB::table('user_feedback')->insert($feedbacks);
-            // $this->setPoint($active_kpi, $course->user);
+            $this->setPointNonEdu($active_kpi, $tendik_position);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();

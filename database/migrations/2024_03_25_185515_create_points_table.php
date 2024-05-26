@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(KpiPeriod::class)->constrained()->cascadeOnDelete();
             $table->double('points');
             $table->double('presence_points');
