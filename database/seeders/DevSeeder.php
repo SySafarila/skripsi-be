@@ -23,6 +23,20 @@ class DevSeeder extends Seeder
      */
     public function run(): void
     {
+        // tendik positions
+        TendikPosition::create([
+            'name' => 'Dosen',
+            'division' => 'Edukatif'
+        ]);
+        TendikPosition::create([
+            'name' => 'Kepala Bagian',
+            'division' => 'Bagian Keuangan'
+        ]);
+        TendikPosition::create([
+            'name' => 'Kepala Bagian',
+            'division' => 'Bagian Lab'
+        ]);
+
         // users
         $dosen = User::create([
             'name' => 'Dosen',
@@ -50,7 +64,18 @@ class DevSeeder extends Seeder
             'password' => Hash::make('password'),
             'identifier' => 'nip',
             'identifier_number' => 1234,
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+            'tendik_position_id' => 2 // bagian keuangan
+        ]);
+        $tendik->syncRoles(['tendik']);
+        $tendik = User::create([
+            'name' => 'Tendik',
+            'email' => 'tendik2@tendik2.com',
+            'password' => Hash::make('password'),
+            'identifier' => 'nip',
+            'identifier_number' => 1235,
+            'email_verified_at' => now(),
+            'tendik_position_id' => 2 // bagian keuangan
         ]);
         $tendik->syncRoles(['tendik']);
 
@@ -205,23 +230,9 @@ class DevSeeder extends Seeder
 
         // assign mahasiswa
         UserHasMajor::create([
-            'user_id' => 6,
+            'user_id' => $mahasiswa->id,
             'major_id' => 1,
             'semester' => 2
-        ]);
-
-        // tendik positions
-        TendikPosition::create([
-            'name' => 'Dosen',
-            'division' => 'Edukatif'
-        ]);
-        TendikPosition::create([
-            'name' => 'Kepala Bagian',
-            'division' => 'Bagian Keuangan'
-        ]);
-        TendikPosition::create([
-            'name' => 'Kepala Bagian',
-            'division' => 'Bagian Lab'
         ]);
 
         // feedback question

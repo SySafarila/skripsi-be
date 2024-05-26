@@ -73,6 +73,7 @@ class EmployeesTest extends TestCase
     {
         // $this->seed();
         $super_admin = User::where('email', 'dosen@dosen.com')->first();
+        $tendik = User::where('email', 'tendik@tendik.com')->first();
 
         $response = $this->actingAs($super_admin)->get(route('employees.presence.show', 1));
         $response->assertStatus(200);
@@ -83,6 +84,16 @@ class EmployeesTest extends TestCase
             "control" => "+"
         ]);
         $response2->assertSessionHas('success');
+
+        $response3 = $this->actingAs($tendik)->get(route('employees.presence.show', 5));
+        $response3->assertStatus(200);
+
+        $response4 = $this->actingAs($tendik)->post(route('employees.presence.store', 5), [
+            "kpi_period_id" => "1",
+            "subject_id" => "5",
+            "control" => "+"
+        ]);
+        $response4->assertSessionHas('success');
     }
 
     public function test_karyawan_akses_hapus_absensi()

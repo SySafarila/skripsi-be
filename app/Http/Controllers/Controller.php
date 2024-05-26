@@ -54,33 +54,31 @@ class Controller extends BaseController
     public function setPointNonEdu($kpi, $tendik_position)
     {
         // set points
-        $checkPoints = Point::where('tendik_position_id', $tendik_position->id)->where('kpi_period_id', $kpi->id)->first();
-        // $quotas = UsersHasSubject::where('user_id', $user->id)->get()->pluck('quota')->toArray();
+        $checkTendikPoint = Point::where('tendik_position_id', $tendik_position->id)->where('kpi_period_id', $kpi->id)->first();
 
-        // presences point
-        // $quota = array_sum($quotas);
+        // users
+        $users = $tendik_position->users;
+        $user_ids = $users->pluck('id');
+        $user_presences_points = Point::whereIn('user_id', $user_ids)->where('kpi_period_id', $kpi->id)->get();
+        $presence_points = $user_presences_points->count() == 0 ? 0 : array_sum($user_presences_points->pluck('presence_points')->toArray()) / $user_presences_points->count();
 
         // survey points
         $feedbackPointsArr = UserFeedback::where('kpi_period_id', $kpi->id)->where('tendik_position_id', $tendik_position->id)->get();
         $feedbackPoints = array_sum($feedbackPointsArr->pluck('point')->toArray());
         $resultFeedbackPoints = $feedbackPoints == 0 ? 0 : ($feedbackPoints * 100) / $feedbackPointsArr->count();
 
-        // presence points
-        // $presencePoints = UserPresence::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->get()->count();
-        // $resultX = $presencePoints * 100;
-        // $resultPresencePoints = $resultX == 0 ? 0 : $resultX / $quota;
-        if (!$checkPoints) {
+        if (!$checkTendikPoint) {
             $point = Point::create([
                 'tendik_position_id' => $tendik_position->id,
                 'kpi_period_id' => $kpi->id,
                 'points' => $resultFeedbackPoints,
-                'presence_points' => 0,
+                'presence_points' => $presence_points ?? 0,
                 'feedback_points' => $resultFeedbackPoints ?? 0
             ]);
         } else {
             $point = Point::where('tendik_position_id', $tendik_position->id)->where('kpi_period_id', $kpi->id)->update([
                 'points' => $resultFeedbackPoints,
-                'presence_points' => 0,
+                'presence_points' => $presence_points ?? 0,
                 'feedback_points' => $resultFeedbackPoints ?? 0
             ]);
         }

@@ -216,7 +216,7 @@ class EmployeeController extends Controller
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                // 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
                 'identifier_number' => $request->identifier_number,
                 'tendik_position_id' => $request->position == '-' ? null : $request->position

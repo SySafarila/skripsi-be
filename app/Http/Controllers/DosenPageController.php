@@ -160,6 +160,9 @@ class DosenPageController extends Controller
             }
 
             $this->setPoint($kpi, $request->user());
+            if (Auth::user()->position->division != 'Edukatif') {
+                $this->setPointNonEdu($kpi, Auth::user()->position);
+            }
 
             DB::commit();
         } catch (\Throwable $th) {

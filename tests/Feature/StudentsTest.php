@@ -104,16 +104,20 @@ class StudentsTest extends TestCase
 
         $response2 = $this->actingAs($mahasiswa)->post(route('student.store.nonedu', 3), [
             "messages" => [
-                "Asperiores sapiente"
+                "Officiis dolorum eve",
+                "Facilis in repellend"
             ],
             "points" => [
-                "5"
+                "5",
+                "2"
             ],
             "question_ids" => [
-                "6"
+                "4",
+                "5"
             ],
             "questions" => [
-                "Apakah A dan Z sama dengan AZ?"
+                "Apakah C dan B sama dengan CB?",
+                "Apakah X dan A sama dengan XA?"
             ]
         ]);
         $response2->assertSessionHas('success');
