@@ -96,7 +96,7 @@ class DevSeeder extends Seeder
             'email' => 'mahasiswa@mahasiswa.com',
             'password' => Hash::make('password'),
             'identifier' => 'nim',
-            'identifier_number' => 207,
+            'identifier_number' => 207200005,
             'email_verified_at' => now()
         ]);
         $mahasiswa->syncRoles(['mahasiswa']);

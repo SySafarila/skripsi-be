@@ -35,7 +35,7 @@ class CrudEmployeesTest extends TestCase
             'role' => 'dosen',
             'identifier' => 'nidn',
             'identifier_number' => 1234567890,
-            'position' => '-'
+            'position' => 1 // Edukatif
         ]);
 
         $response->assertRedirect(route('admin.employees.index'));
@@ -64,7 +64,7 @@ class CrudEmployeesTest extends TestCase
             'role' => 'dosen',
             'identifier' => 'nidn',
             'identifier_number' => 1234567890,
-            'position' => '-'
+            'position' => 1 // Edukatif
         ]);
         $response->assertRedirect(route('admin.employees.index'));
 
@@ -77,7 +77,7 @@ class CrudEmployeesTest extends TestCase
             'role' => 'dosen',
             'identifier' => 'nidn',
             'identifier_number' => 1234567890,
-            'position' => '-'
+            'position' => 1 // Edukatif
         ]);
         $response2->assertRedirect(route('admin.employees.index'));
     }
@@ -95,7 +95,7 @@ class CrudEmployeesTest extends TestCase
             'role' => 'dosen',
             'identifier' => 'nidn',
             'identifier_number' => 1234567890,
-            'position' => '-'
+            'position' => 1 // Edukatif
         ]);
         $response->assertRedirect(route('admin.employees.index'));
 
