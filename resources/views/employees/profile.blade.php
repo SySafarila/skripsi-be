@@ -2,17 +2,19 @@
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">Profil</h1>
         <div class="flex flex-col items-center gap-2">
-            <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('images/profile.png') }}"
+            <img src="{{ $user->image ? asset('storage/' . $user->image) : asset('images/profile.png') }}"
                 alt="profil" class="w-20">
             <div class="flex w-full flex-col items-center">
-                <p class="font-semibold capitalize">{{ Auth::user()->name }}</p>
-                <small class="line-clamp-1 uppercase">{{ Auth::user()->identifier }}:
-                    {{ Auth::user()->identifier_number }}</small>
-                <div class="mt-1.5 flex">
+                <p class="font-semibold capitalize">{{ $user->name }}</p>
+                <small class="line-clamp-1 uppercase">{{ $user->identifier }}:
+                    {{ $user->identifier_number }}</small>
+                <div class="mt-1.5 flex gap-2">
                     @foreach ($roles as $role)
-                        <small
-                            class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $role }}</small>
+                        <small class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $role }}</small>
                     @endforeach
+                    @if ($user->position)
+                        <small class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $user->position->name }} - {{ $user->position->division }}</small>
+                    @endif
                 </div>
             </div>
         </div>

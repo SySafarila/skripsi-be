@@ -90,10 +90,10 @@
                 @endif
             </div>
             <div class="row">
-                <div class="card mx-2 w-100">
+                <div class="card w-100 mx-2">
                     <div class="card-body">
                         <canvas id="usersChart"
-                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                 </div>
             </div>
@@ -103,21 +103,25 @@
 
 @section('script')
     <!-- ChartJS -->
-    <script src="{{ asset('adminlte-3.2.0/plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('js/chart-4.4.3.js') }}"></script>
     <script>
         $(function() {
             var areaChartData = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+                    'Oktober', 'November', 'Desember'
+                ],
                 datasets: [{
-                        label: 'Users ' + new Date().getFullYear(),
-                        backgroundColor: '#17a2b8',
-                        borderColor: 'rgba(60,141,188,0.8)',
-                        pointRadius: false,
-                        pointColor: '#3b8bba',
-                        pointStrokeColor: 'rgba(60,141,188,1)',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: {{ Js::from($userResult) }}
+                        label: new Date().getFullYear(),
+                        // backgroundColor: '#17a2b8',
+                        // borderColor: 'rgba(60,141,188,0.8)',
+                        // pointRadius: false,
+                        // pointColor: '#3b8bba',
+                        // pointStrokeColor: 'rgba(60,141,188,1)',
+                        // pointHighlightFill: '#fff',
+                        // pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data: {{ Js::from($userResult) }},
+                        borderWidth: 1,
+                        pointRadius: 5,
                     },
                     // {
                     //     label: 'Electronics',
@@ -140,16 +144,27 @@
             // barChartData.datasets[0] = temp1
             barChartData.datasets[0] = temp0
 
-            var barChartOptions = {
+            var options = {
                 responsive: true,
-                maintainAspectRatio: false,
-                datasetFill: false
+                // maintainAspectRatio: false,
+                // datasetFill: false
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Data seluruh pengguna'
+                    }
+                }
             }
 
             new Chart(barChartCanvas, {
-                type: 'bar',
+                type: 'line',
                 data: barChartData,
-                options: barChartOptions
+                options: options
             })
         })
     </script>

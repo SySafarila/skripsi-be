@@ -33,9 +33,10 @@ class DosenPageController extends Controller
             return $q->where('user_id', request()->user()->id);
         }])->orderBy('start_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', request()->user()->id)->where('position', '<=', 5)->latest()->get();
-        $roles = Auth::user()->roles->pluck('name');
+        $user = Auth::user();
+        $roles = $user->roles->pluck('name');
 
-        return view('employees.profile', compact('kpi', 'achievements', 'points', 'roles'));
+        return view('employees.profile', compact('kpi', 'achievements', 'points', 'roles', 'user'));
     }
 
     public function my_feedback()

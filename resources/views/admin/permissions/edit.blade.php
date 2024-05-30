@@ -32,10 +32,10 @@
                         @method('PATCH')
                         <div class="form-group">
                             <label for="name" class="text-capitalize">name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Permission name"
-                                value="{{ $permission->name }}" required>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Permission name" value="{{ $permission->name }}" required>
                             @error('name')
-                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>

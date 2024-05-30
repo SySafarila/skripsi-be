@@ -1,12 +1,12 @@
 @extends('layouts.adminlte', [
-    'title' => 'Periode KPI'
+    'title' => 'Permissions'
 ])
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
 @endsection
@@ -17,15 +17,15 @@
             <x-adminlte.session-notifications />
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Periode KPI</h1>
-                    @can('kpi-create')
-                        <a href="{{ route('admin.kpi.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                    <h1 class="m-0">Permissions</h1>
+                    @can('permissions-create')
+                        <a href="{{ route('admin.permissions.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">KPI</li>
+                        <li class="breadcrumb-item active">Permissions</li>
                     </ol>
                 </div>
             </div>
@@ -43,10 +43,9 @@
                                     <input type="checkbox" class="w-100" style="cursor: pointer">
                                     <span style="display: none;">Selector</span>
                                 </th>
-                                <th>Judul</th>
-                                <th>Status Aktif</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Berakhir</th>
+                                <th>Name</th>
+                                <th>Guard Name</th>
+                                <th>Created At</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -58,7 +57,7 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/jquery.dataTables.1.12.1.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     {{-- <script src="{{ asset('adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script> --}}
     <script src="{{ asset('adminlte-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('adminlte-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -71,7 +70,7 @@
     <script src="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('adminlte-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-    <script src="{{ asset('js/dataTables.select.1.3.3.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     <script src="{{ asset('js/datatables/select-deselect-all.js') }}"></script>
     <script src="{{ asset('js/datatables/delete-button-init.js') }}"></script>
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
@@ -115,7 +114,7 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.kpi.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.permissions.massDestroy') }}')
                 }
             }, ];
 
@@ -128,25 +127,22 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.kpi.index') !!}',
+                ajax: '{!! route('admin.permissions.index') !!}',
                 lengthMenu: [
-                    [10, 50, 100, 500, 1000],
-                    [10, 50, 100, 500, 1000]
+                    [10, 50, 100, 500, 1000, -1],
+                    [10, 50, 100, 500, 1000, 'All']
                 ],
                 columns: [{
                     defaultContent: ''
                 }, {
-                    data: 'title',
-                    name: 'title'
+                    data: 'name',
+                    name: 'name'
                 }, {
-                    data: 'is_active',
-                    name: 'is_active'
+                    data: 'guard_name',
+                    name: 'guard_name'
                 }, {
-                    data: 'start_date',
-                    name: 'start_date'
-                }, {
-                    data: 'end_date',
-                    name: 'end_date'
+                    data: 'created_at',
+                    name: 'created_at'
                 }, {
                     data: 'options',
                     name: 'options'
@@ -166,7 +162,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: 5
+                    targets: 4
                 }],
                 order: [
                     // [1, 'asc']
