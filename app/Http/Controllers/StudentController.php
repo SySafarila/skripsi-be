@@ -39,10 +39,12 @@ class StudentController extends Controller
      */
     public function index()
     {
-        // return User::query()->role('dosen')->get();
         if (request()->ajax()) {
-            $questions = FeedbackQuestion::where('type', 'mahasiswa-to-dosen')->get();
+            $questions = FeedbackQuestion::get();
             $active_kpi = KpiPeriod::where('is_active', true)->first();
+            if (!$active_kpi) {
+                $active_kpi = KpiPeriod::latest()->first();
+            }
             $model = User::role('mahasiswa')->with('hasMajor.major', 'sent_feedbacks');
             if (request()->semester) {
                 $model->whereRelation('hasMajor', 'semester', request()->semester);
@@ -51,7 +53,7 @@ class StudentController extends Controller
                 $model->whereRelation('hasMajor', 'major_id', request()->major_id);
             }
             return DataTables::of($model)
-                ->addColumn('roles', 'admin.students.datatables.roles')
+                // ->addColumn('roles', 'admin.students.datatables.roles')
                 // ->addColumn('created_at', function ($model) {
                 //     return $model->created_at->diffForHumans();
                 // })
@@ -61,7 +63,7 @@ class StudentController extends Controller
                 })
                 ->addColumn('feedback', function ($query) use ($questions, $active_kpi) {
                     if ($query->hasMajor) {
-                        return $questions->count() * $query->hasMajor->major->courses->where('semester', $query->hasMajor->semester)->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', $active_kpi->id)->count() . ' (' . Carbon::parse($active_kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($active_kpi->end_date)->format('d/m/Y') . ')';
+                        return $questions->count() * $query->hasMajor->major->courses->where('semester', $query->hasMajor->semester)->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', @$active_kpi->id)->count();
                     }
                     return '-';
                 })
@@ -88,7 +90,7 @@ class StudentController extends Controller
                         return $model->id;
                     }
                 ])
-                ->rawColumns(['roles', 'options'])
+                ->rawColumns(['options'])
                 ->toJson();
         }
 

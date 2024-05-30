@@ -205,7 +205,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [3, 4, 5]
+                    targets: [3, 4, 5, 6]
                 }],
                 order: [
                     // [1, 'asc']
