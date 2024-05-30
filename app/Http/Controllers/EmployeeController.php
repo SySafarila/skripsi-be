@@ -136,7 +136,7 @@ class EmployeeController extends Controller
                 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
                 'identifier_number' => $request->identifier_number,
-                'tendik_position_id' => $request->position == '-' ? null : $request->position
+                'tendik_position_id' => !$request->position ? 1 : $request->position
             ]);
 
             $user->syncRoles($request->role);
@@ -219,7 +219,7 @@ class EmployeeController extends Controller
                 // 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
                 'identifier_number' => $request->identifier_number,
-                'tendik_position_id' => $request->position == '-' ? null : $request->position
+                'tendik_position_id' => !$request->position ? 1 : $request->position
             ]);
 
             if ($request->password || $request->password_confirmation) {

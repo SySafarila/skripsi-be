@@ -44,7 +44,8 @@ class DevSeeder extends Seeder
             'password' => Hash::make('password'),
             'identifier' => 'nidn',
             'identifier_number' => 133,
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+            'tendik_position_id' => 1 // edukatif
         ]);
         $dosen->syncRoles(['dosen']);
 
@@ -54,7 +55,8 @@ class DevSeeder extends Seeder
             'password' => Hash::make('password'),
             'identifier' => 'nidn',
             'identifier_number' => 123,
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+            'tendik_position_id' => 1 // edukatif
         ]);
         $dosen2->syncRoles(['dosen']);
 
