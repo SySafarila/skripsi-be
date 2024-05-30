@@ -124,15 +124,17 @@ class DosenPageController extends Controller
             return abort(400, 'Kadaluarsa');
         }
 
+        $user = Auth::user();
+
         DB::beginTransaction();
         try {
             if ($request->control == '+') {
                 // add presence
                 // check quota
-                $checkQuota = UsersHasSubject::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->first();
+                $checkQuota = UsersHasSubject::where('user_id', $user->id)->where('subject_id', $request->subject_id)->first();
 
                 // count presences
-                $checkPresences = UserPresence::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->get();
+                $checkPresences = UserPresence::where('user_id', $user->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->get();
                 if ($checkPresences->count() < $checkQuota->quota) {
                     if ($request->hasFile('image')) {
                         $path = Storage::disk('public')->putFile('presences', new File($request->file('image')), 'public');
@@ -150,7 +152,7 @@ class DosenPageController extends Controller
                 }
             } else {
                 // delete presence
-                $presence = UserPresence::where('user_id', $request->user()->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->where('id', $request->presence_id)->first();
+                $presence = UserPresence::where('user_id', $user->id)->where('subject_id', $request->subject_id)->where('kpi_period_id', $request->kpi_period_id)->where('id', $request->presence_id)->first();
                 if ($presence) {
                     if ($presence->image && Storage::disk('public')->exists($presence->image)) {
                         Storage::disk('public')->delete($presence->image);
@@ -159,16 +161,18 @@ class DosenPageController extends Controller
                 }
             }
 
-            $this->setPoint($kpi, $request->user());
-            if (Auth::user()->position->division != 'Edukatif') {
-                $this->setPointNonEdu($kpi, Auth::user()->position);
+            $this->setPoint($kpi, $user);
+            if ($user->position) {
+                if ($user->position->division != 'Edukatif') {
+                    $this->setPointNonEdu($kpi, $user->position);
+                }
             }
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error('DosenPageController Error: . ' . $th->getMessage());
-            //throw $th;
+            throw $th;
         }
 
         if ($request->control == '+') {

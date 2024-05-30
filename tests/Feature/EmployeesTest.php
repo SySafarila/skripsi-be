@@ -72,13 +72,13 @@ class EmployeesTest extends TestCase
     public function test_karyawan_akses_isi_absensi()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'dosen@dosen.com')->first();
+        $dosen = User::where('email', 'dosen@dosen.com')->first();
         $tendik = User::where('email', 'tendik@tendik.com')->first();
 
-        $response = $this->actingAs($super_admin)->get(route('employees.presence.show', 1));
+        $response = $this->actingAs($dosen)->get(route('employees.presence.show', 1));
         $response->assertStatus(200);
 
-        $response2 = $this->actingAs($super_admin)->post(route('employees.presence.store', 1), [
+        $response2 = $this->actingAs($dosen)->post(route('employees.presence.store', 1), [
             "kpi_period_id" => "1",
             "subject_id" => "1",
             "control" => "+"

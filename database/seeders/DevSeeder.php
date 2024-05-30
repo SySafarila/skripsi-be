@@ -59,7 +59,7 @@ class DevSeeder extends Seeder
         $dosen2->syncRoles(['dosen']);
 
         $tendik = User::create([
-            'name' => 'Tendik',
+            'name' => 'Tendik 1',
             'email' => 'tendik@tendik.com',
             'password' => Hash::make('password'),
             'identifier' => 'nip',
@@ -68,8 +68,8 @@ class DevSeeder extends Seeder
             'tendik_position_id' => 2 // bagian keuangan
         ]);
         $tendik->syncRoles(['tendik']);
-        $tendik = User::create([
-            'name' => 'Tendik',
+        $tendik2 = User::create([
+            'name' => 'Tendik 2',
             'email' => 'tendik2@tendik2.com',
             'password' => Hash::make('password'),
             'identifier' => 'nip',
@@ -77,7 +77,17 @@ class DevSeeder extends Seeder
             'email_verified_at' => now(),
             'tendik_position_id' => 2 // bagian keuangan
         ]);
-        $tendik->syncRoles(['tendik']);
+        $tendik2->syncRoles(['tendik']);
+        $tendik3 = User::create([
+            'name' => 'Tendik 3',
+            'email' => 'tendik3@tendik3.com',
+            'password' => Hash::make('password'),
+            'identifier' => 'nip',
+            'identifier_number' => 1236,
+            'email_verified_at' => now(),
+            'tendik_position_id' => 3 // bagian lab
+        ]);
+        $tendik3->syncRoles(['tendik']);
 
         $mahasiswa = User::create([
             'name' => 'mahasiswa',

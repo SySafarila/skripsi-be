@@ -133,7 +133,7 @@ class StudentFeedbackController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            //throw $th;
+            throw $th;
         }
 
         return redirect()->route('student.courses.index')->with('success', 'Masukan berhasil terkirim.');
@@ -155,19 +155,8 @@ class StudentFeedbackController extends Controller
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
         }
+
         $user = Auth::user();
-        // $semester = $user->hasMajor->semester;
-        // $major_id = $user->hasMajor->major_id;
-        // return $request;
-        // $courses = $user->hasMajor->major->courses()->where('semester', $semester)->orderBy('name', 'asc')->get();
-        // $courses = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->get();
-        // $course_ids = $courses->pluck('id')->toArray();
-        // $course = Course::where('id', $course_id)->firstOrFail();
-
-        // if (!in_array($course_id, $course_ids)) {
-        //     return abort(400, 'Invalid request');
-        // }
-
         $feedbacks = [];
 
         foreach ($request->question_ids as $key => $question_id) {
