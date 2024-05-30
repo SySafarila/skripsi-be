@@ -13,6 +13,22 @@ class LeaderboardController extends Controller
     public function index()
     {
         $request = request();
+        switch ($request->filter) {
+            case 'dosen':
+                $users = User::role('dosen')->get()->pluck('id');
+                break;
+
+            case 'tendik':
+                $users = User::role('tendik')->get()->pluck('id');
+                break;
+
+            default:
+                if (Auth::user()->hasRole('tendik')) {
+                    return redirect()->route('employees.leaderboard.index', ['filter' => 'tendik']);
+                }
+                $users = User::role(Auth::user()->roles[0]->name)->get()->pluck('id');
+                break;
+        }
         $kpis = KpiPeriod::limit(10)->orderBy('start_date', 'desc')->limit(5)->get();
         if ($request->kpi_period_id) {
             $kpi = KpiPeriod::where('id', $request->kpi_period_id)->first();
@@ -33,19 +49,6 @@ class LeaderboardController extends Controller
             ]);
 
             return redirect()->route('employees.leaderboard.index', ['kpi_period_id' => $request->kpi_period_id]);
-        }
-        switch ($request->filter) {
-            case 'dosen':
-                $users = User::role('dosen')->get()->pluck('id');
-                break;
-
-            case 'tendik':
-                $users = User::role('tendik')->get()->pluck('id');
-                break;
-
-            default:
-                $users = User::role(Auth::user()->roles[0]->name)->get()->pluck('id');
-                break;
         }
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
         $n = 4;
