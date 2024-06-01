@@ -35,6 +35,11 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             @if ($point->points > 0)
+                                @if ($loop->index > 0 && $points[$loop->index - 1]->points > $point->points)
+                                    @php
+                                        $n++;
+                                    @endphp
+                                @endif
                                 @switch($n)
                                     @case(1)
                                         <img src="{{ asset('icons/number-one.svg') }}" alt="" class="h-8 w-8">
@@ -49,12 +54,9 @@
                                     @break
 
                                     @default
-                                        <div class="flex h-8 w-8 items-center justify-center font-semibold">{{ $n++ }}
+                                        <div class="flex h-8 w-8 items-center justify-center font-semibold">{{ $n }}
                                         </div>
                                 @endswitch
-                                @php
-                                    $n++;
-                                @endphp
                             @else
                                 <div class="flex h-8 w-8 items-center justify-center font-semibold">0</div>
                             @endif
