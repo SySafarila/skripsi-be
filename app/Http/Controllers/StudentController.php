@@ -63,7 +63,12 @@ class StudentController extends Controller
                 })
                 ->addColumn('feedback', function ($query) use ($questions, $active_kpi) {
                     if ($query->hasMajor) {
-                        return $questions->count() * $query->hasMajor->major->courses->where('semester', $query->hasMajor->semester)->count() . '/' . $query->sent_feedbacks->where('kpi_period_id', @$active_kpi->id)->count();
+                        $courses = $query->hasMajor->major->courses->where('semester', $query->hasMajor->semester);
+                        $sent = $query->sent_feedbacks->where('kpi_period_id', @$active_kpi->id)->count();
+                        $edu_quota = $questions->where('tendik_position_id', 1)->count() * $courses->count();
+                        $nonedu_quota = $questions->where('tendik_position_id', '!=', 1)->count();
+                        $quota = $edu_quota + $nonedu_quota;
+                        return "$quota/$sent";
                     }
                     return '-';
                 })
