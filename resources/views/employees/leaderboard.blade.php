@@ -19,7 +19,8 @@
                     class="rounded-md">
                     {{-- <option value="all" {{ request()->filter == 'all' ? 'selected' : '' }}>Semua Karyawan
                     </option> --}}
-                    <option value="dosen" {{ request()->filter == 'dosen' || !request()->filter ? 'selected' : '' }}>Dosen</option>
+                    <option value="dosen" {{ request()->filter == 'dosen' || !request()->filter ? 'selected' : '' }}>
+                        Dosen</option>
                     <option value="tendik" {{ request()->filter == 'tendik' ? 'selected' : '' }}>Tendik</option>
                 </select>
             </div>
@@ -33,23 +34,30 @@
                 <div class="py-4" id="user-points">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            @switch($loop->index)
-                                @case(0)
-                                    <img src="{{ asset('icons/number-one.svg') }}" alt="" class="h-8 w-8">
-                                @break
+                            @if ($point->points > 0)
+                                @switch($n)
+                                    @case(1)
+                                        <img src="{{ asset('icons/number-one.svg') }}" alt="" class="h-8 w-8">
+                                    @break
 
-                                @case(1)
-                                    <img src="{{ asset('icons/number-two.svg') }}" alt="" class="h-8 w-8">
-                                @break
+                                    @case(2)
+                                        <img src="{{ asset('icons/number-two.svg') }}" alt="" class="h-8 w-8">
+                                    @break
 
-                                @case(2)
-                                    <img src="{{ asset('icons/number-three.svg') }}" alt="" class="h-8 w-8">
-                                @break
+                                    @case(3)
+                                        <img src="{{ asset('icons/number-three.svg') }}" alt="" class="h-8 w-8">
+                                    @break
 
-                                @default
-                                    <div class="flex h-8 w-8 items-center justify-center font-semibold">{{ $n++ }}
-                                    </div>
-                            @endswitch
+                                    @default
+                                        <div class="flex h-8 w-8 items-center justify-center font-semibold">{{ $n++ }}
+                                        </div>
+                                @endswitch
+                                @php
+                                    $n++;
+                                @endphp
+                            @else
+                                <div class="flex h-8 w-8 items-center justify-center font-semibold">0</div>
+                            @endif
                             <img src="{{ $point->user->image ? asset('storage/' . $point->user->image) : asset('images/profile.png') }}"
                                 alt="profile" class="h-10 w-10 rounded-full">
                             <div class="flex flex-col">
@@ -61,7 +69,7 @@
                         </div>
                         <button class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-100"
                             onclick="event.preventDefault(); this.closest('#user-points').querySelector('#detail-points').classList.toggle('hidden'); this.querySelector('img').classList.toggle('rotate-180')">
-                            <span>{{ number_format($point->points, 0) }} XP</span>
+                            <span>{{ number_format($point->points, 2) }} XP</span>
                             <img src="{{ asset('icons/chevron.svg') }}" class="transition-transform ease-in-out"
                                 alt="arrow">
                         </button>
@@ -70,12 +78,12 @@
                         <div class="flex items-center justify-end gap-2">
                             <span>Kehadiran</span>
                             <span>-</span>
-                            <span>{{ number_format($point->presence_points, 0) }} XP</span>
+                            <span>{{ number_format($point->presence_points, 2) }} XP</span>
                         </div>
                         <div class="flex items-center justify-end gap-2">
                             <span>Umpan Balik</span>
                             <span>-</span>
-                            <span>{{ number_format($point->feedback_points, 0) }} XP</span>
+                            <span>{{ number_format($point->feedback_points, 2) }} XP</span>
                         </div>
                     </div>
                 </div>

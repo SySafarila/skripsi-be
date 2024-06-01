@@ -133,7 +133,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/courses', [CourseController::class, 'massDestroy'])->name('courses.massDestroy');
     Route::delete('/bulk-delete/achievements', [AchievementController::class, 'massDestroy'])->name('achievements.massDestroy');
     Route::delete('/bulk-delete/feedbacks', [FeedbackController::class, 'massDestroy'])->name('feedbacks.massDestroy');
-    Route::delete('/bulk-delete/tendik-positions', [FeedbackController::class, 'massDestroy'])->name('tendik-positions.massDestroy');
+    Route::delete('/bulk-delete/tendik-positions', [TendikPositionController::class, 'massDestroy'])->name('tendik-positions.massDestroy');
     // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
 });
 

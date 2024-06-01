@@ -113,6 +113,9 @@ class TendikPositionController extends Controller
         ]);
 
         $subject = TendikPosition::findOrFail($id);
+        if ($subject->id == 1) {
+            return redirect()->route('admin.tendik-positions.index')->with('warning', 'Data ini tidak bisa diperbarui !');
+        }
 
         $subject->update([
             'name' => $request->name,
@@ -128,9 +131,14 @@ class TendikPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TendikPosition $tendik)
     {
-        TendikPosition::destroy($id);
+        if ($tendik->id == 1) {
+            return response()->json([
+                'message' => 'You cannot delete this position'
+            ], 400);
+        };
+        TendikPosition::destroy($tendik);
 
         if (request()->ajax()) {
             return response()->json(true);
@@ -143,9 +151,11 @@ class TendikPositionController extends Controller
     {
         $arr = explode(',', $request->ids);
 
-        // foreach ($arr as $data) {
-        // TendikPosition::destroy($data);
-        // }
+        foreach ($arr as $key => $data) {
+            if ($data == 1) {
+                unset($arr[$key]);
+            }
+        }
 
         TendikPosition::destroy($arr);
 

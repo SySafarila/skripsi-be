@@ -45,13 +45,15 @@ class LeaderboardController extends Controller
             Point::create([
                 'kpi_period_id' => $kpi->id,
                 'user_id' => $request->user()->id,
-                'points' => 0
+                'points' => 0,
+                'presence_points' => 0,
+                'feedback_points' => 0
             ]);
 
             return redirect()->route('employees.leaderboard.index', ['kpi_period_id' => $request->kpi_period_id]);
         }
         $points = Point::with('user.roles')->where('kpi_period_id', $kpi->id)->whereIn('user_id', $users->toArray())->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
-        $n = 4;
+        $n = 1;
         // return $points;
         return view('employees.leaderboard', compact('points', 'n', 'kpi', 'kpis'));
     }
