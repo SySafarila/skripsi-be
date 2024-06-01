@@ -101,6 +101,39 @@ class DevSeeder extends Seeder
         ]);
         $mahasiswa->syncRoles(['mahasiswa']);
 
+        $dosen3 = User::create([
+            'name' => 'Dosen 3',
+            'email' => 'dosen3@dosen3.com',
+            'password' => Hash::make('password'),
+            'identifier' => 'nidn',
+            'identifier_number' => 12333,
+            'email_verified_at' => now(),
+            'tendik_position_id' => 1 // edukatif
+        ]);
+        $dosen3->syncRoles(['dosen']);
+
+        $dosen4 = User::create([
+            'name' => 'Dosen 4',
+            'email' => 'dosen4@dosen4.com',
+            'password' => Hash::make('password'),
+            'identifier' => 'nidn',
+            'identifier_number' => 12344,
+            'email_verified_at' => now(),
+            'tendik_position_id' => 1 // edukatif
+        ]);
+        $dosen4->syncRoles(['dosen']);
+
+        $tendik4 = User::create([
+            'name' => 'Tendik 4',
+            'email' => 'tendik4@tendik4.com',
+            'password' => Hash::make('password'),
+            'identifier' => 'nip',
+            'identifier_number' => 12366,
+            'email_verified_at' => now(),
+            'tendik_position_id' => 3 // bagian lab
+        ]);
+        $tendik4->syncRoles(['tendik']);
+
         // mata kuliah
         $subjects = [
             [
