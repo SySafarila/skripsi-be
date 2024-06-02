@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\SampleEmployees;
+use App\Exports\SampleStudents;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\AdminIndex;
@@ -22,6 +24,7 @@ use App\Http\Controllers\TendikPositionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,9 +106,15 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/employees-presence-quota', LecturerManagementController::class)->except(['show']);
 
     // employee
+    Route::get('/employees/sample', function(){
+        return Excel::download(new SampleEmployees, 'employees.xlsx');
+    })->name('download-sample-employees');
     Route::resource('/employees', EmployeeController::class)->except(['show']);
 
     // mahasiswa
+    Route::get('/students/sample', function(){
+        return Excel::download(new SampleStudents, 'students.xlsx');
+    })->name('download-sample-students');
     Route::resource('/students', StudentController::class)->except(['show']);
 
     // achievement

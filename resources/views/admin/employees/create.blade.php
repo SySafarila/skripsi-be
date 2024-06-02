@@ -45,7 +45,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                            <a href="{{ asset('imports/Employees.xlsx') }}" class="btn btn-sm btn-success">Download Sample
+                            <a href="{{ route('admin.download-sample-employees') }}" class="btn btn-sm btn-success">Download Sample
                                 Excel</a>
                         </form>
                     @else
