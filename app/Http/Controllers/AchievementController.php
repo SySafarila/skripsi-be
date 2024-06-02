@@ -40,20 +40,20 @@ class AchievementController extends Controller
             }
         }
 
-        $employees = [];
-        foreach ($points as $index => $point) {
-            if ($point->points > 0) {
-                $index = $index + 1;
-                array_push($employees, [
-                    'user_id' => $point->user_id,
-                    'kpi_period_id' => $kpi_id,
-                    'title' => "Karyawan #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
-                    'position' => $index,
-                    'created_at' => $kpi->end_date,
-                    'updated_at' => $kpi->end_date
-                ]);
-            }
-        }
+        // $employees = [];
+        // foreach ($points as $index => $point) {
+        //     if ($point->points > 0) {
+        //         $index = $index + 1;
+        //         array_push($employees, [
+        //             'user_id' => $point->user_id,
+        //             'kpi_period_id' => $kpi_id,
+        //             'title' => "Karyawan #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
+        //             'position' => $index,
+        //             'created_at' => $kpi->end_date,
+        //             'updated_at' => $kpi->end_date
+        //         ]);
+        //     }
+        // }
 
         // dosen
         $dosenArr = [];
@@ -100,7 +100,7 @@ class AchievementController extends Controller
         DB::beginTransaction();
         try {
             Achievement::where('kpi_period_id', $kpi_id)->delete();
-            DB::table('achievements')->insert($employees); // pegawai
+            // DB::table('achievements')->insert($employees); // pegawai
             DB::table('achievements')->insert($dosenArr); // dosen
             DB::table('achievements')->insert($tendikArr); // tendik
             // DB::table('achievements')->insert($staffArr); // staff
