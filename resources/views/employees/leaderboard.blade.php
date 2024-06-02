@@ -30,7 +30,7 @@
             <span class="break-words">Periode KPI yang berlangsung akan berakhir dalam <b>9 Hari</b></span>
         </div> --}}
         <div class="flex flex-col divide-y">
-            @foreach ($points as $point)
+            @forelse ($points as $point)
                 <div class="py-4" id="user-points">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
@@ -69,8 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-100"
-                            onclick="event.preventDefault(); this.closest('#user-points').querySelector('#detail-points').classList.toggle('hidden'); this.querySelector('img').classList.toggle('rotate-180')">
+                        <button class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-100" id="expand-points">
                             <span>{{ number_format($point->points, 2) }} XP</span>
                             <img src="{{ asset('icons/chevron.svg') }}" class="transition-transform ease-in-out"
                                 alt="arrow">
@@ -89,7 +88,11 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <p class="text-center lg:text-start">
+                    Data tidak tersedia
+                </p>
+            @endforelse
         </div>
     </div>
 </x-app-layout>

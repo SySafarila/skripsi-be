@@ -54,6 +54,7 @@
         <span>Logout</span>
     </a>
     <hr>
-    <p class="px-4 py-3 text-center text-xs">Program ini dibuat sebagai syarat untuk menyelesaikan pendidikan
-        sarjana.</p>
+    <p class="px-4 py-3 text-center text-xs text-black/70">Sistem ini dibuat sebagai salah satu syarat untuk menyelesaikan pendidikan
+        S1 di Universitas Putra Indonesia.</p>
+    <p class="px-4 py-3 pt-0 text-center text-xs text-black/70">2024 | <a href="http://github.com/SySafarila" target="_blank" rel="noopener noreferrer" class="hover:underline">Syahrul Safarila</a></p>
 </div>

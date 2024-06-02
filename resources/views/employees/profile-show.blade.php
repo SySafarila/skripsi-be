@@ -7,11 +7,14 @@
             <div class="flex w-full flex-col items-center">
                 <p class="font-semibold capitalize">{{ $user->name }}</p>
                 <small class="line-clamp-1 uppercase">{{ $user->identifier }}: {{ $user->identifier_number }}</small>
-                <div class="mt-1.5 flex">
+                <div class="mt-1.5 flex gap-2">
                     @foreach ($roles as $role)
                     <small
                         class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $role }}</small>
                     @endforeach
+                    @if ($user->position)
+                        <small class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $user->position->name }} - {{ $user->position->division }}</small>
+                    @endif
                 </div>
             </div>
         </div>
