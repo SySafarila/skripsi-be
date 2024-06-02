@@ -187,18 +187,22 @@
         const feedbackCount = [];
         const rawData = {{ Js::from($kpis) }}
 
-        function sum(accumulator, a) {
-            return accumulator + a;
-        }
-
         rawData.forEach(kpi => {
             const endDate = kpi.end_date;
             const date = new Date(endDate).getDate()
             const month = new Date(endDate).getMonth() + 1
             const year = new Date(endDate).getFullYear()
             labels.push(`${date}/${month}/${year}`)
-            presencePoints.push(kpi.points[0]?.presence_points ?? undefined)
-            feedbackPoints.push(kpi.points[0]?.feedback_points ?? undefined)
+
+            let presenceSum = 0;
+            let feedbackSum = 0;
+            kpi.points.forEach(point => {
+                presenceSum = presenceSum + point.presence_points;
+                feedbackSum = feedbackSum + point.feedback_points;
+            });
+
+            presencePoints.push(presenceSum)
+            feedbackPoints.push(feedbackSum)
             feedbackCount.push(kpi.feedbacks_count ?? undefined)
         });
 
