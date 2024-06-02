@@ -97,6 +97,13 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="card w-100 mx-2">
+                    <div class="card-body">
+                        <canvas id="kpi_chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -157,6 +164,10 @@
                     title: {
                         display: true,
                         text: 'Data seluruh pengguna'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'Diurutkan berdasarkan bulan'
                     }
                 }
             }
@@ -167,5 +178,72 @@
                 options: options
             })
         })
+    </script>
+    <script>
+        const ctx = document.getElementById('kpi_chart');
+        const labels = [];
+        const presencePoints = [];
+        const feedbackPoints = [];
+        const feedbackCount = [];
+        const rawData = {{ Js::from($kpis) }}
+
+        function sum(accumulator, a) {
+            return accumulator + a;
+        }
+
+        rawData.forEach(kpi => {
+            const endDate = kpi.end_date;
+            const date = new Date(endDate).getDate()
+            const month = new Date(endDate).getMonth() + 1
+            const year = new Date(endDate).getFullYear()
+            labels.push(`${date}/${month}/${year}`)
+            presencePoints.push(kpi.points[0]?.presence_points ?? undefined)
+            feedbackPoints.push(kpi.points[0]?.feedback_points ?? undefined)
+            feedbackCount.push(kpi.feedbacks_count ?? undefined)
+        });
+
+        while (labels.length < 12) {
+            labels.push('-')
+        }
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Poin Kehadiran',
+                    data: presencePoints,
+                    borderWidth: 1,
+                    pointRadius: 5,
+                }, {
+                    label: 'Poin Feedback',
+                    data: feedbackPoints,
+                    borderWidth: 1,
+                    pointRadius: 5,
+                }, {
+                    label: 'Jumlah Feedback',
+                    data: feedbackCount,
+                    borderWidth: 1,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Statistik KPI'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'Diurutkan berdasarkan tanggal dimulainya periode KPI'
+                    }
+                }
+            }
+        });
     </script>
 @endsection
