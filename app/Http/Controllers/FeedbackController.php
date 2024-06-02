@@ -32,7 +32,7 @@ class FeedbackController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $model = UserFeedback::with(['user', 'sender', 'course']);
+            $model = UserFeedback::with(['user', 'sender', 'course', 'tendik_position']);
             if (request()->user_id) {
                 $model->where('user_id', request()->user_id);
             }
@@ -47,6 +47,18 @@ class FeedbackController extends Controller
             }
             return DataTables::of($model)
                 ->addColumn('options', 'admin.feedbacks.datatables.options')
+                ->addColumn('for', function($query) {
+                    if ($query->user_id) {
+                        return $query->user->name;
+                    }
+                    return $query->tendik_position->division;
+                })
+                ->addColumn('course_name', function($query) {
+                    if ($query->user_id) {
+                        return $query->course->name;
+                    }
+                    return '-';
+                })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;

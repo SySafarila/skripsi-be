@@ -93,7 +93,7 @@
                                 <th>Pertanyaan</th>
                                 <th>Pesan/Jawaban</th>
                                 <th>Point</th>
-                                <th>Karyawan</th>
+                                <th>Untuk</th>
                                 <th>Mata Kuliah</th>
                                 <th>Pengirim</th>
                                 <th class="d-print-none">Options</th>
@@ -200,12 +200,12 @@
                     data: 'point',
                     name: 'point'
                 }, {
-                    data: 'user.name',
-                    name: 'user.name',
+                    data: 'for',
+                    name: 'for',
                     searchable: false
                 }, {
-                    data: 'course.name',
-                    name: 'course.name',
+                    data: 'course_name',
+                    name: 'course_name',
                     searchable: false
                 }, {
                     data: 'sender.name',

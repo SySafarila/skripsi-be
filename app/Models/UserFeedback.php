@@ -34,4 +34,8 @@ class UserFeedback extends Model
     public function course() {
         return $this->belongsTo(Course::class);
     }
+
+    public function tendik_position() {
+        return $this->belongsTo(TendikPosition::class, 'tendik_position_id', 'id');
+    }
 }
