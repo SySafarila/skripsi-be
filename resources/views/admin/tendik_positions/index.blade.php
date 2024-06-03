@@ -44,7 +44,7 @@
                                     <span style="display: none;">Selector</span>
                                 </th>
                                 <th>Divisi</th>
-                                <th>Jabatan</th>
+                                {{-- <th>Jabatan</th> --}}
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -137,9 +137,6 @@
                     data: 'division',
                     name: 'division'
                 }, {
-                    data: 'name',
-                    name: 'name'
-                }, {
                     data: 'options',
                     name: 'options'
                 }],
@@ -158,7 +155,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: 3
+                    targets: 2
                 }],
                 order: [
                     [1, 'asc']

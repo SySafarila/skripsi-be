@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tendik_positions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('division');
+            // $table->string('name');
+            $table->string('division')->unique();
             $table->timestamps();
         });
     }

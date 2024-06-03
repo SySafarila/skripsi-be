@@ -57,7 +57,7 @@ class FeedbackQuestionController extends Controller
      */
     public function create()
     {
-        $tendikPositions = TendikPosition::orderBy('division', 'asc')->orderBy('name', 'asc')->get();
+        $tendikPositions = TendikPosition::orderBy('division', 'asc')->get();
 
         return view('admin.feedback_questions.create', compact('tendikPositions'));
     }
@@ -103,7 +103,7 @@ class FeedbackQuestionController extends Controller
     public function edit($id)
     {
         $question = FeedbackQuestion::findOrFail($id);
-        $tendikPositions = TendikPosition::orderBy('division', 'asc')->orderBy('name', 'asc')->get();
+        $tendikPositions = TendikPosition::orderBy('division', 'asc')->get();
 
         return view('admin.feedback_questions.edit', compact('question', 'tendikPositions'));
     }

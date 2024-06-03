@@ -37,13 +37,13 @@
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="name" class="text-capitalize">Nama Jabatan</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $tendik->name }}" required>
                             @error('name')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </form>
                 </div>

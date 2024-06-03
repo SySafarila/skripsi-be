@@ -70,7 +70,7 @@ class EmployeeController extends Controller
                     return $query->identifier_number ? $query->identifier_number . " - " . Str::upper($query->identifier) : '-';
                 })
                 ->editColumn('tendik_position_id', function ($query) {
-                    return $query->tendik_position_id ? $query->position->division . ' - ' . $query->position->name : '-';
+                    return $query->tendik_position_id ? $query->position->division : '-';
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
@@ -81,7 +81,7 @@ class EmployeeController extends Controller
                 ->toJson();
         }
 
-        $positions = TendikPosition::orderBy('name')->get();
+        $positions = TendikPosition::orderBy('division')->get();
 
         return view('admin.employees.index', compact('positions'));
     }
@@ -98,7 +98,7 @@ class EmployeeController extends Controller
         }
 
         $roles = Role::whereIn('name', ['dosen', 'tendik'])->orderBy('name')->get();
-        $positions = TendikPosition::orderBy('name')->get();
+        $positions = TendikPosition::orderBy('division')->get();
 
         return view('admin.employees.create', compact('roles', 'positions'));
     }
@@ -174,7 +174,7 @@ class EmployeeController extends Controller
     {
         $user = User::findOrFail($id);
         $roles = Role::whereIn('name', ['dosen', 'tendik'])->orderBy('name')->get();
-        $positions = TendikPosition::orderBy('name')->get();
+        $positions = TendikPosition::orderBy('division')->get();
 
         return view('admin.employees.edit', compact('user', 'roles', 'positions'));
     }

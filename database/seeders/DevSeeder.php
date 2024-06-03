@@ -25,15 +25,15 @@ class DevSeeder extends Seeder
     {
         // tendik positions
         TendikPosition::create([
-            'name' => 'Dosen',
+            // 'name' => 'Dosen',
             'division' => 'Edukatif'
         ]);
         TendikPosition::create([
-            'name' => 'Kepala Bagian',
+            // 'name' => 'Kepala Bagian',
             'division' => 'Bagian Keuangan'
         ]);
         TendikPosition::create([
-            'name' => 'Kepala Bagian',
+            // 'name' => 'Kepala Bagian',
             'division' => 'Bagian Lab'
         ]);
 

@@ -87,7 +87,7 @@
                                         <option value="-">-</option>
                                         @foreach ($positions as $position)
                                             <option value="{{ $position->id }}">
-                                                {{ Str::ucfirst($position->division . ' - ' . $position->name) }}</option>
+                                                {{ Str::ucfirst($position->division) }}</option>
                                         @endforeach
                                     </select>
                                     @error('role')
