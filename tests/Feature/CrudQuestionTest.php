@@ -27,6 +27,9 @@ class CrudQuestionTest extends TestCase
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
+        $response1 = $this->actingAs($super_admin)->get(route('admin.questions.create'));
+        $response1->assertStatus(200);
+
         $response = $this->actingAs($super_admin)->post(route('admin.questions.store'), [
             'question' => "Testing",
             'tendik_position_id' => 1 // mahasiswa to dosen
@@ -57,6 +60,8 @@ class CrudQuestionTest extends TestCase
         $response->assertRedirect(route('admin.questions.index'));
 
         $kpi = FeedbackQuestion::where('question', 'Testing')->first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.questions.edit', $kpi->id));
+        $response1->assertStatus(200);
         $response2 = $this->actingAs($super_admin)->patch(route('admin.questions.update', $kpi->id), [
             'question' => "Testing 2",
             'tendik_position_id' => 1 // mahasiswa to dosen

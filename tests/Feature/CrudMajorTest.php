@@ -25,6 +25,9 @@ class CrudMajorTest extends TestCase
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
+        $response1 = $this->actingAs($super_admin)->get(route('admin.majors.create'));
+        $response1->assertStatus(200);
+
         $response = $this->actingAs($super_admin)->post(route('admin.majors.store'), [
             "major" => "Incididunt enim qui",
         ]);
@@ -53,6 +56,8 @@ class CrudMajorTest extends TestCase
         $response->assertRedirect(route('admin.majors.index'));
 
         $kpi = Subject::first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.majors.edit', $kpi->id));
+        $response1->assertStatus(200);
         $response2 = $this->actingAs($super_admin)->patch(route('admin.majors.update', $kpi->id), [
             "major" => "Testing"
         ]);

@@ -27,6 +27,9 @@ class CrudStudentsTest extends TestCase
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
+        $response1 = $this->actingAs($super_admin)->get(route('admin.students.create'));
+        $response1->assertStatus(200);
+
         $response = $this->actingAs($super_admin)->post(route('admin.students.store'), [
             'name' => 'testing',
             'email' => null,
@@ -71,6 +74,8 @@ class CrudStudentsTest extends TestCase
         $response->assertRedirect(route('admin.students.index'));
 
         $kpi = User::where('name', 'testing')->first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.students.edit', $kpi->id));
+        $response1->assertStatus(200);
         $response2 = $this->actingAs($super_admin)->patch(route('admin.students.update', $kpi->id), [
             'name' => 'testing 2',
             'email' => null,

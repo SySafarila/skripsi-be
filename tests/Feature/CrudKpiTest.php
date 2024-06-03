@@ -24,6 +24,9 @@ class CrudKpiTest extends TestCase
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
+        $response1 = $this->actingAs($super_admin)->get(route('admin.kpi.create'));
+        $response1->assertStatus(200);
+
         $response = $this->actingAs($super_admin)->post(route('admin.kpi.store'), [
             "title" => "Incididunt enim qui",
             "start_date" => "2024-05-23",
@@ -60,6 +63,8 @@ class CrudKpiTest extends TestCase
         $response->assertRedirect(route('admin.kpi.index'));
 
         $kpi = KpiPeriod::first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.kpi.edit', $kpi->id));
+        $response1->assertStatus(200);
         $response2 = $this->actingAs($super_admin)->patch(route('admin.kpi.update', $kpi->id), [
             "title" => "Testing",
             "start_date" => "2024-05-23",

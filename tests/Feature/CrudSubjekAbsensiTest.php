@@ -25,6 +25,9 @@ class CrudSubjekAbsensiTest extends TestCase
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
+        $response1 = $this->actingAs($super_admin)->get(route('admin.presence-scopes.create'));
+        $response1->assertStatus(200);
+
         $response = $this->actingAs($super_admin)->post(route('admin.presence-scopes.store'), [
             "name" => "Incididunt enim qui",
         ]);
@@ -53,6 +56,8 @@ class CrudSubjekAbsensiTest extends TestCase
         $response->assertRedirect(route('admin.presence-scopes.index'));
 
         $kpi = Subject::first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.presence-scopes.edit', $kpi->id));
+        $response1->assertStatus(200);
         $response2 = $this->actingAs($super_admin)->patch(route('admin.presence-scopes.update', $kpi->id), [
             "name" => "Testing"
         ]);

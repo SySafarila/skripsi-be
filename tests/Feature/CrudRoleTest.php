@@ -23,6 +23,8 @@ class CrudRoleTest extends TestCase
         // $this->seed();
         $super_admin = User::where('email', 'super.admin@admin.com')->first();
 
+        $response1 = $this->actingAs($super_admin)->get(route('admin.roles.create'));
+        $response1->assertStatus(200);
         $response = $this->actingAs($super_admin)->post(route('admin.roles.store'), [
             'name' => 'testing'
         ]);
@@ -51,6 +53,8 @@ class CrudRoleTest extends TestCase
         $response->assertRedirect(route('admin.roles.index'));
 
         $role = Role::findByName('testing');
+        $response1 = $this->actingAs($super_admin)->get(route('admin.roles.edit', $role->id));
+        $response1->assertStatus(200);
         $response2 = $this->actingAs($super_admin)->patch(route('admin.roles.update', $role->id), [
             'name' => 'testing2'
         ]);
