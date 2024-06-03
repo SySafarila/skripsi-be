@@ -314,6 +314,8 @@ class EmployeeController extends Controller
         ]);
         $excel = $request->file('excel');
 
+        $current_user_identifier = User::all()->pluck('identifier_number')->toArray();
+
         $array = Excel::toArray(new EmployeesImport, $excel);
         $positions = TendikPosition::all();
         $tendik_position_ids = [];
@@ -321,26 +323,29 @@ class EmployeeController extends Controller
         $identifier_numbers = [];
 
         foreach ($positions as $key => $position) {
-            $tendik_position_ids[$position->division] = $position->id;
+            $tendik_position_ids[Str::upper($position->division . ' - ' . $position->name)] = $position->id;
         }
 
         foreach ($array[0] as $index => $data) {
             if ($index > 0) {
                 if ($data[0]) {
-                    array_push($employees, [
-                        'name' => $data[2],
-                        'email' => null,
-                        'password' => Hash::make($data[4]),
-                        'identifier' => Str::lower($data[0]),
-                        'identifier_number' => $data[1],
-                        'tendik_position_id' => $tendik_position_ids[$data[3]] ?? null,
-                        'created_at' => now(),
-                        'updated_at' => now()
-                    ]);
-                    array_push($identifier_numbers, $data[1]);
+                    if (!in_array($data[1], $current_user_identifier)) {
+                        array_push($employees, [
+                            'name' => $data[2],
+                            'email' => null,
+                            'password' => Hash::make($data[4]),
+                            'identifier' => Str::lower($data[0]),
+                            'identifier_number' => $data[1],
+                            'tendik_position_id' => $tendik_position_ids[$data[3]] ?? null,
+                            'created_at' => now(),
+                            'updated_at' => now()
+                        ]);
+                        array_push($identifier_numbers, $data[1]);
+                    }
                 }
             }
         }
+
         DB::beginTransaction();
         try {
             DB::table('users')->insert($employees);
