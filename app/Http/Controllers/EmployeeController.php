@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 // use App\Jobs\SendEmailVerification;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 // use Illuminate\Auth\Events\Registered;
 // use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
@@ -313,12 +314,45 @@ class EmployeeController extends Controller
         ]);
         $excel = $request->file('excel');
 
+        $array = Excel::toArray(new EmployeesImport, $excel);
+        $positions = TendikPosition::all();
+        $tendik_position_ids = [];
+        $employees = [];
+        $identifier_numbers = [];
+
+        foreach ($positions as $key => $position) {
+            $tendik_position_ids[$position->division] = $position->id;
+        }
+
+        foreach ($array[0] as $index => $data) {
+            if ($index > 0) {
+                if ($data[0]) {
+                    array_push($employees, [
+                        'name' => $data[2],
+                        'email' => null,
+                        'password' => Hash::make($data[4]),
+                        'identifier' => $data[0],
+                        'identifier_number' => $data[1],
+                        'tendik_position_id' => $tendik_position_ids[$data[3]] ?? null,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                    array_push($identifier_numbers, $data[1]);
+                }
+            }
+        }
+        DB::beginTransaction();
         try {
-            Excel::import(new EmployeesImport, $excel);
+            DB::table('users')->insert($employees);
+            $users = User::whereIn('identifier_number', $identifier_numbers)->get();
+            foreach ($users as $user) {
+                $user->syncRoles($user->tendik_position_id == 1 ? 'dosen' : 'tendik');
+                $user->markEmailAsVerified();
+            }
+            DB::commit();
             return redirect()->route('admin.employees.index')->with('success', 'Import berhasil');
         } catch (\Throwable $th) {
             throw $th;
-            return redirect()->route('admin.employees.index')->with('error', 'Import gagal');
         }
     }
 }
