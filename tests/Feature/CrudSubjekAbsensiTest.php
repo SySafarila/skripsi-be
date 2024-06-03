@@ -55,10 +55,10 @@ class CrudSubjekAbsensiTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.presence-scopes.index'));
 
-        $kpi = Subject::first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.presence-scopes.edit', $kpi->id));
+        $subject = Subject::first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.presence-scopes.edit', $subject->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.presence-scopes.update', $kpi->id), [
+        $response2 = $this->actingAs($super_admin)->patch(route('admin.presence-scopes.update', $subject->id), [
             "name" => "Testing"
         ]);
         $response2->assertRedirect(route('admin.presence-scopes.index'));
@@ -74,8 +74,8 @@ class CrudSubjekAbsensiTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.presence-scopes.index'));
 
-        $kpi = Subject::first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.presence-scopes.destroy', $kpi->id));
+        $subject = Subject::first();
+        $response2 = $this->actingAs($super_admin)->delete(route('admin.presence-scopes.destroy', $subject->id));
         $response2->assertRedirect(route('admin.presence-scopes.index'));
     }
 }

@@ -59,10 +59,10 @@ class CrudQuestionTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.questions.index'));
 
-        $kpi = FeedbackQuestion::where('question', 'Testing')->first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.questions.edit', $kpi->id));
+        $feedbackQuestion = FeedbackQuestion::where('question', 'Testing')->first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.questions.edit', $feedbackQuestion->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.questions.update', $kpi->id), [
+        $response2 = $this->actingAs($super_admin)->patch(route('admin.questions.update', $feedbackQuestion->id), [
             'question' => "Testing 2",
             'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
@@ -80,8 +80,8 @@ class CrudQuestionTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.questions.index'));
 
-        $kpi = FeedbackQuestion::where('question', 'Testing')->first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.questions.destroy', $kpi->id));
+        $feedbackQuestion = FeedbackQuestion::where('question', 'Testing')->first();
+        $response2 = $this->actingAs($super_admin)->delete(route('admin.questions.destroy', $feedbackQuestion->id));
         $response2->assertRedirect(route('admin.questions.index'));
     }
 }

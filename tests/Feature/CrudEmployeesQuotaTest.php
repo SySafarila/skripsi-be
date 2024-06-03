@@ -61,10 +61,10 @@ class CrudEmployeesQuotaTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.employees-presence-quota.index'));
 
-        $kpi = UsersHasSubject::where('user_id', 3)->where('subject_id', 1)->where('quota', 16)->first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.employees-presence-quota.edit', $kpi->id));
+        $userHasSubject = UsersHasSubject::where('user_id', 3)->where('subject_id', 1)->where('quota', 16)->first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.employees-presence-quota.edit', $userHasSubject->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.employees-presence-quota.update', $kpi->id), [
+        $response2 = $this->actingAs($super_admin)->patch(route('admin.employees-presence-quota.update', $userHasSubject->id), [
             'user_id' => 3, // dosen
             'subject_id' => 1, // kalkulus 1
             'quota' => 20
@@ -84,8 +84,8 @@ class CrudEmployeesQuotaTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.employees-presence-quota.index'));
 
-        $kpi = UsersHasSubject::where('user_id', 3)->where('subject_id', 1)->where('quota', 16)->first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.employees-presence-quota.destroy', $kpi->id));
+        $userHasSubject = UsersHasSubject::where('user_id', 3)->where('subject_id', 1)->where('quota', 16)->first();
+        $response2 = $this->actingAs($super_admin)->delete(route('admin.employees-presence-quota.destroy', $userHasSubject->id));
         $response2->assertRedirect(route('admin.employees-presence-quota.index'));
     }
 }

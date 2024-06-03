@@ -49,8 +49,8 @@ class CrudFeedbackTest extends TestCase
         ]);
         DB::table('user_feedback')->insert($feedbacks);
 
-        $kpi = UserFeedback::where('message', 'testing')->first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.feedbacks.destroy', $kpi->id));
+        $userFeedback = UserFeedback::where('message', 'testing')->first();
+        $response2 = $this->actingAs($super_admin)->delete(route('admin.feedbacks.destroy', $userFeedback->id));
         $response2->assertRedirect(route('admin.feedbacks.index'));
     }
 }

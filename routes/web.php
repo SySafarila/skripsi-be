@@ -38,7 +38,6 @@ use Maatwebsite\Excel\Facades\Excel;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
     $user = Auth::user();
     if (!$user) {
         return redirect()->route('login');
@@ -53,7 +52,6 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::get('/dashboard', function () {
-    // return redirect()->route('admin.index');
     $user = Auth::user();
     if (!$user) {
         return redirect()->route('login');
@@ -153,10 +151,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('account', AccountController::class)->only(['index', 'edit', 'update']);
 });
 
-// authenticated dosen
-Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
-});
-
 // authenticated employees
 Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
     Route::get('/employees', [DosenPageController::class, 'welcome'])->name('employees.welcome');
@@ -166,7 +160,6 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
     Route::post('/employees/presence', [DosenPageController::class, 'presence'])->name('employees.presence.store');
     Route::get('/employees/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('employees.presence.show');
     Route::get('/employees/presence', [DosenPageController::class, 'presence_index'])->name('employees.presence.index');
-    // Route::get('/employees/feedback', [DosenPageController::class, 'my_feedback'])->name('employees.feedback.index');
 });
 
 // authenticated students

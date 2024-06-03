@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\KpiPeriod;
+use App\Models\Major;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -55,10 +56,10 @@ class CrudMajorTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.majors.index'));
 
-        $kpi = Subject::first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.majors.edit', $kpi->id));
+        $major = Major::first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.majors.edit', $major->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.majors.update', $kpi->id), [
+        $response2 = $this->actingAs($super_admin)->patch(route('admin.majors.update', $major->id), [
             "major" => "Testing"
         ]);
         $response2->assertRedirect(route('admin.majors.index'));
@@ -74,8 +75,8 @@ class CrudMajorTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.majors.index'));
 
-        $kpi = Subject::first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.majors.destroy', $kpi->id));
+        $major = Major::first();
+        $response2 = $this->actingAs($super_admin)->delete(route('admin.majors.destroy', $major->id));
         $response2->assertRedirect(route('admin.majors.index'));
     }
 }

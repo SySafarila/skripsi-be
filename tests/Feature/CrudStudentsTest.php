@@ -73,10 +73,10 @@ class CrudStudentsTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.students.index'));
 
-        $kpi = User::where('name', 'testing')->first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.students.edit', $kpi->id));
+        $user = User::where('name', 'testing')->first();
+        $response1 = $this->actingAs($super_admin)->get(route('admin.students.edit', $user->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.students.update', $kpi->id), [
+        $response2 = $this->actingAs($super_admin)->patch(route('admin.students.update', $user->id), [
             'name' => 'testing 2',
             'email' => null,
             'password' => 'password',
@@ -108,8 +108,8 @@ class CrudStudentsTest extends TestCase
         ]);
         $response->assertRedirect(route('admin.students.index'));
 
-        $kpi = User::where('name', 'testing')->first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.students.destroy', $kpi->id));
+        $user = User::where('name', 'testing')->first();
+        $response2 = $this->actingAs($super_admin)->delete(route('admin.students.destroy', $user->id));
         $response2->assertRedirect(route('admin.students.index'));
     }
 }
