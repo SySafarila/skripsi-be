@@ -23,12 +23,12 @@ const navbarActions = () => {
         }
     };
 
-    navHamburger.addEventListener("click", (e) => {
+    navHamburger?.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
         menusToggle();
     });
-    backdrop.addEventListener("click", (e) => {
+    backdrop?.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
         menusToggle();
