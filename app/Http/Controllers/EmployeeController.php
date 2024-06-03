@@ -331,7 +331,7 @@ class EmployeeController extends Controller
                         'name' => $data[2],
                         'email' => null,
                         'password' => Hash::make($data[4]),
-                        'identifier' => $data[0],
+                        'identifier' => Str::lower($data[0]),
                         'identifier_number' => $data[1],
                         'tendik_position_id' => $tendik_position_ids[$data[3]] ?? null,
                         'created_at' => now(),
