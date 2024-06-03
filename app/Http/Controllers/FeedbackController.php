@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
+use App\Models\TendikPosition;
 use App\Models\User;
 use App\Models\UserFeedback;
 // use App\Models\KpiPeriod;
@@ -45,6 +46,9 @@ class FeedbackController extends Controller
             if (request()->course_id) {
                 $model->where('course_id', request()->course_id);
             }
+            if (request()->tendik_position_id) {
+                $model->where('tendik_position_id', request()->tendik_position_id);
+            }
             return DataTables::of($model)
                 ->addColumn('options', 'admin.feedbacks.datatables.options')
                 ->addColumn('for', function($query) {
@@ -72,8 +76,9 @@ class FeedbackController extends Controller
         $questions = FeedbackQuestion::orderBy('question')->get();
         $kpis = KpiPeriod::orderBy('start_date')->get();
         $courses = Course::orderBy('name')->get();
+        $tendik_positions = TendikPosition::orderBy('division')->get();
 
-        return view('admin.feedbacks.index', compact('users', 'questions', 'kpis', 'courses'));
+        return view('admin.feedbacks.index', compact('users', 'questions', 'kpis', 'courses', 'tendik_positions'));
     }
 
     /**

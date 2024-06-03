@@ -52,6 +52,15 @@
                             {{ $user->name }}</option>
                     @endforeach
                 </select>
+                <select name="tendik_position_id" id="tendik_position_id" class="custom-select">
+                    <option value="">Semua Tendik</option>
+                    @foreach ($tendik_positions as $position)
+                        @if ($position->id != 1)
+                        <option value="{{ $position->id }}" {{ request()->tendik_position_id == $position->id ? 'selected' : '' }}>
+                            {{ $position->division }}</option>
+                        @endif
+                    @endforeach
+                </select>
                 <select name="question_id" id="question_id" class="custom-select">
                     <option value="">Semua Pertanyaan</option>
                     @foreach ($questions as $question)
@@ -183,6 +192,7 @@
                     'question_id' => request()->question_id,
                     'kpi_period_id' => request()->kpi_period_id,
                     'course_id' => request()->course_id,
+                    'tendik_position_id' => request()->tendik_position_id
                 ]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000],
