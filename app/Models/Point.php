@@ -14,4 +14,8 @@ class Point extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function tendik() {
+        return $this->belongsTo(TendikPosition::class, 'tendik_position_id', 'id');
+    }
 }

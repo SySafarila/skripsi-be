@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Controller extends BaseController
 {
@@ -61,6 +62,7 @@ class Controller extends BaseController
                     'feedback_points' => $resultFeedbackPoints ?? 0
                 ]);
             } else {
+                Log::debug($resultFeedbackPoints);
                 $point = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->update([
                     'points' => $resultPresencePoints + $resultFeedbackPoints,
                     'presence_points' => $resultPresencePoints ?? 0,
@@ -114,7 +116,8 @@ class Controller extends BaseController
                 'feedback_points' => $resultFeedbackPoints ?? 0
             ]);
 
-            foreach ($user_points as $key => $user_point) {
+            $user_points2 = Point::whereIn('user_id', $user_ids->toArray())->where('kpi_period_id', $kpi->id)->get();
+            foreach ($user_points2 as $key => $user_point) {
                 // $user_point->points = $user_point->presence_points + $user_point->feedback_points;
                 // $user_point->update();
                 $user_point->update([

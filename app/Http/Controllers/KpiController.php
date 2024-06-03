@@ -21,6 +21,44 @@ class KpiController extends Controller
         $this->middleware('can:kpi-update')->only(['edit', 'update']);
         $this->middleware('can:kpi-delete')->only(['destroy', 'massDestroy']);
     }
+
+    public function leaderboard(KpiPeriod $kpi_id) {
+        if (request()->ajax()) {
+            if (request()->show == 'tendik') {
+                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '!=', null)->with('user', 'tendik');
+            } else {
+                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '=', null)->with('user', 'tendik');
+            }
+            return DataTables::of($model)
+                ->addColumn('name', function($query) {
+                    if ($query->user) {
+                        return $query->user->name;
+                    }
+                    if ($query->tendik) {
+                        return $query->tendik->division;
+                    }
+                    return '-';
+                })
+                ->editColumn('points', function($query) {
+                    return number_format($query->points, 2);
+                })
+                ->editColumn('presence_points', function($query) {
+                    return number_format($query->presence_points, 2);
+                })
+                ->editColumn('feedback_points', function($query) {
+                    return number_format($query->feedback_points, 2);
+                })
+                // ->addColumn('options', 'admin.kpi_periods.datatables.options')
+                // ->setRowAttr([
+                //     'data-model-id' => function ($model) {
+                //         return $model->id;
+                //     }
+                // ])
+                // ->rawColumns(['options'])
+                ->toJson();
+        }
+        return view('admin.kpi_periods.leaderboard', ['kpi_id' => $kpi_id->id]);
+    }
     /**
      * Display a listing of the resource.
      *
