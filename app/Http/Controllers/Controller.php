@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 class Controller extends BaseController
 {
@@ -62,7 +62,10 @@ class Controller extends BaseController
                     'feedback_points' => $resultFeedbackPoints ?? 0
                 ]);
             } else {
-                Log::debug($resultFeedbackPoints);
+                // Log::debug($resultFeedbackPoints);
+                if (@$resultFeedbackPoints->id != null) {
+                    $resultFeedbackPoints = $resultFeedbackPoints->feedback_points;
+                }
                 $point = Point::where('user_id', $user->id)->where('kpi_period_id', $kpi->id)->update([
                     'points' => $resultPresencePoints + $resultFeedbackPoints,
                     'presence_points' => $resultPresencePoints ?? 0,
