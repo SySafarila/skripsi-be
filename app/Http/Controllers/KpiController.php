@@ -57,7 +57,7 @@ class KpiController extends Controller
                 // ->rawColumns(['options'])
                 ->toJson();
         }
-        return view('admin.kpi_periods.leaderboard', ['kpi_id' => $kpi_id->id]);
+        return view('admin.kpi_periods.leaderboard', ['kpi_id' => $kpi_id->id, 'kpi' => $kpi_id]);
     }
     /**
      * Display a listing of the resource.

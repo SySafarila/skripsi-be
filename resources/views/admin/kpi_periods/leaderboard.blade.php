@@ -18,15 +18,15 @@
             <x-adminlte.session-notifications />
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Leaderboard</h1>
-                    @can('kpi-create')
+                    <h1 class="m-0">Leaderboard {{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }}</h1>
+                    {{-- @can('kpi-create')
                         <a href="{{ route('admin.kpi.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
-                    @endcan
+                    @endcan --}}
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">KPI</li>
+                        <li class="breadcrumb-item active">KPI Leaderboard</li>
                     </ol>
                 </div>
             </div>
