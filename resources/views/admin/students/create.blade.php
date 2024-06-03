@@ -41,7 +41,7 @@
                                     <div class="text-danger text-sm">{{ $message ?? 'Something error' }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Import</button>
                             <a href="{{ route('admin.download-sample-students') }}" class="btn btn-sm btn-success">Download Sample Excel</a>
                         </form>
                     @else

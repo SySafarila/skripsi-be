@@ -342,12 +342,52 @@ class StudentController extends Controller
         ]);
         $excel = $request->file('excel');
 
-        try {
-            Excel::import(new StudentsImport, $excel);
-            return redirect()->route('admin.students.index')->with('success', 'Import berhasil');
-        } catch (\Throwable $th) {
-            throw $th;
-            return redirect()->route('admin.students.index')->with('error', 'Import gagal');
+        $raw_majors = Major::all();
+        $majors = [];
+        foreach ($raw_majors as $raw_major) {
+            $majors[Str::upper($raw_major->major)] = $raw_major->id;
         }
+
+        $array = Excel::toArray(new StudentsImport, $excel);
+
+        $student_nims = User::role('mahasiswa')->get('identifier_number');
+        $exists_nims = [];
+        foreach ($student_nims as $student_nim) {
+            array_push($exists_nims, $student_nim->identifier_number);
+        }
+
+        foreach ($array[0] as $key => $row) {
+            // skrip first row
+            if ($key > 0 && $row[0] != null && in_array($row[0], $exists_nims) == false) {
+                $name = $row[1];
+                $nim = $row[0];
+                $password = $row[2];
+                $semester = $row[3];
+                $major = $row[4];
+
+                DB::beginTransaction();
+                try {
+                    $student = User::create([
+                        'name' => $name,
+                        'email' => null,
+                        'password' => Hash::make($password),
+                        'identifier' => 'nim',
+                        'identifier_number' => $nim,
+                        'email_verified_at' => now()
+                    ]);
+                    $student->hasMajor()->create([
+                        'semester' => $semester,
+                        'major_id' => $majors[$major]
+                    ]);
+                    $student->syncRoles(['mahasiswa']);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    DB::rollBack();
+                    throw $th;
+                }
+            }
+        }
+
+        return redirect()->route('admin.students.index')->with('success', 'Import berhasil');
     }
 }

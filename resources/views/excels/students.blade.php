@@ -26,10 +26,10 @@
                         {{-- <td>DOSEN</td> --}}
                         <td>08052001</td>
                         <td>8</td>
-                        <td>Teknik Informatika</td>
+                        <td>{{ Str::upper('Teknik Informatika') }}</td>
                         <td></td>
                         <td></td>
-                        <td>{{ $major->major }}</td>
+                        <td>{{ Str::upper($major->major) }}</td>
                         <td></td>
                         <td style="color: red;">*Format tanggal lahir DDMMYYYY contoh 08052007 karena tanggal lahir tersebut akan digunakan sebagai password default, kolom Jurusan harus sesuai dengan isian pada kolom H</td>
                     </tr>
@@ -46,7 +46,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{{ $major->major }}</td>
+                        <td>{{ Str::upper($major->major) }}</td>
                     </tr>
                 @break
 
@@ -62,7 +62,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{{ $major->major }}</td>
+                    <td>{{ Str::upper($major->major) }}</td>
                 </tr>
             @endswitch
         @endforeach
