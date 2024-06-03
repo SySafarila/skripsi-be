@@ -13,7 +13,7 @@
                         class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $role }}</small>
                     @endforeach
                     @if ($user->position)
-                        <small class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $user->position->name }} - {{ $user->position->division }}</small>
+                        <small class="rounded-full bg-yellow-400 px-2 pb-0.5 capitalize">{{ $user->position->division }}</small>
                     @endif
                 </div>
             </div>
@@ -34,7 +34,6 @@
 
 
     <script src="{{ asset('js/chart-4.4.3.js') }}"></script>
-
     <script>
         const ctx = document.getElementById('myChart');
         const labels = [];
