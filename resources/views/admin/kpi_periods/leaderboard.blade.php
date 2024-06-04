@@ -130,7 +130,8 @@
                     [10, 50, 100, 500, 1000]
                 ],
                 columns: [{
-                    defaultContent: ''
+                    defaultContent: '',
+                    visible: false
                 }
                 , {
                     data: 'name',
