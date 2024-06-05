@@ -18,7 +18,7 @@ class KpiController extends Controller
     public function __construct()
     {
         $this->middleware('can:kpi-create')->only(['create', 'store']);
-        $this->middleware('can:kpi-read')->only('index');
+        $this->middleware('can:kpi-read')->only(['index', 'leaderboard']);
         $this->middleware('can:kpi-update')->only(['edit', 'update']);
         $this->middleware('can:kpi-delete')->only(['destroy', 'massDestroy']);
     }

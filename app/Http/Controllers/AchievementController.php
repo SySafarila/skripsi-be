@@ -13,6 +13,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AchievementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:achievements-create')->only(['create', 'store', 'generate']);
+        $this->middleware('can:achievements-read')->only(['index']);
+        $this->middleware('can:achievements-update')->only(['edit', 'update']);
+        $this->middleware('can:achievements-delete')->only(['destroy', 'massDestroy']);
+    }
+
     public function generate($kpi_id)
     {
         $kpi = KpiPeriod::where('id', $kpi_id)->where('is_active', true)->firstOrFail();
