@@ -6,6 +6,12 @@ Rumus penilaian kehadiran:
 (Jumlah kehadiran * 100) / kuota kehadiran
 ```
 
+Rumus persentase kehadiran:
+
+```
+(jumlah kehadiran * 100) / akumulasi kuota yang harus dipenuhi
+```
+
 Rumus penilaian umpan balik:
 
 ```
