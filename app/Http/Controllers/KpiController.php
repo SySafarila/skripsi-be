@@ -25,9 +25,9 @@ class KpiController extends Controller
     public function leaderboard(KpiPeriod $kpi_id) {
         if (request()->ajax()) {
             if (request()->show == 'tendik') {
-                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '!=', null)->with('user.subjects', 'user.presences', 'tendik');
+                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '!=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik');
             } else {
-                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '=', null)->with('user.subjects', 'user.presences', 'tendik');
+                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik');
             }
             return DataTables::of($model)
                 ->addColumn('name', function($query) {
@@ -50,7 +50,9 @@ class KpiController extends Controller
                     return "($sum_total_quota/$total_presences) " . "$percentage";
                 })
                 ->editColumn('feedback_points', function($query) {
-                    return number_format($query->feedback_points, 2);
+                    $point = $query->feedback_points == 5 ? $query->feedback_points : number_format($query->feedback_points, 2);
+                    $total_feedback = $query->user->feedback->where('kpi_period_id', $query->kpi_period_id)->count();
+                    return "5/$point ($total_feedback feedback)";
                 })
                 // ->addColumn('options', 'admin.kpi_periods.datatables.options')
                 // ->setRowAttr([
