@@ -323,7 +323,7 @@ class EmployeeController extends Controller
         $identifier_numbers = [];
 
         foreach ($positions as $key => $position) {
-            $tendik_position_ids[Str::upper($position->division . ' - ' . $position->name)] = $position->id;
+            $tendik_position_ids[Str::upper($position->division)] = $position->id;
         }
 
         foreach ($array[0] as $index => $data) {
@@ -345,6 +345,10 @@ class EmployeeController extends Controller
                 }
             }
         }
+        // return [
+        //     'tendik' => $tendik_position_ids,
+        //     'employees' => $employees
+        // ];
 
         DB::beginTransaction();
         try {
