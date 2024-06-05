@@ -48,8 +48,8 @@
                                 </th>
                                 <th>Nama</th>
                                 <th>Point</th>
-                                <th>Point Kehadiran</th>
-                                <th>Point Feedback</th>
+                                <th>Point Kehadiran (Kuota/Jumlah Kehadiran)</th>
+                                <th>Point Feedback (Max/Rata-rata)</th>
                             </tr>
                         </thead>
                     </table>

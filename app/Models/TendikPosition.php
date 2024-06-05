@@ -19,4 +19,8 @@ class TendikPosition extends Model
     public function points() {
         return $this->hasMany(Point::class, 'tendik_position_id', 'id');
     }
+
+    public function feedback() {
+        return $this->hasMany(UserFeedback::class, 'tendik_position_id', 'id');
+    }
 }

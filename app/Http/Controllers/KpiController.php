@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
@@ -25,9 +26,9 @@ class KpiController extends Controller
     public function leaderboard(KpiPeriod $kpi_id) {
         if (request()->ajax()) {
             if (request()->show == 'tendik') {
-                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '!=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik');
+                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '!=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik.feedback', 'tendik.users.subjects', 'tendik.users.presences');
             } else {
-                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik');
+                $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik.feedback', 'tendik.users.subjects', 'tendik.users.presences');
             }
             return DataTables::of($model)
                 ->addColumn('name', function($query) {
@@ -44,14 +45,31 @@ class KpiController extends Controller
                 })
                 ->editColumn('presence_points', function($query) {
                     $percentage = number_format($query->presence_points, 2) . '%';
-                    $total_quota = $query->user->subjects->pluck('quota')->toArray();
-                    $sum_total_quota = array_sum($total_quota);
-                    $total_presences = $query->user->presences->where('kpi_period_id', $query->kpi_period_id)->count();
-                    return "($sum_total_quota/$total_presences) " . "$percentage";
+                    if ($query->tendik_position_id == null) {
+                        $total_quota = $query->user->subjects->pluck('quota')->toArray();
+                        $sum_total_quota = array_sum($total_quota);
+                        $total_presences = $query->user->presences->where('kpi_period_id', $query->kpi_period_id)->count();
+                        return "($sum_total_quota/$total_presences) " . $percentage;
+                    }
+                    $tendik_users = $query->tendik->users;
+                    $quota_arr = [];
+                    $presences_arr = [];
+                    foreach ($tendik_users as $key => $user) {
+                        array_push($quota_arr, array_sum($user->subjects->pluck('quota')->toArray()));
+                        array_push($presences_arr, $user->presences->where('kpi_period_id', $query->kpi_period_id)->count());
+                    }
+                    $quota_sum = array_sum($quota_arr);
+                    $presences_sum = array_sum(($presences_arr));
+
+                    return "($quota_sum/$presences_sum) " . $percentage;
                 })
                 ->editColumn('feedback_points', function($query) {
                     $point = $query->feedback_points == 5 ? $query->feedback_points : number_format($query->feedback_points, 2);
-                    $total_feedback = $query->user->feedback->where('kpi_period_id', $query->kpi_period_id)->count();
+                    if ($query->tendik_position_id == null) {
+                        $total_feedback = $query->user->feedback->where('kpi_period_id', $query->kpi_period_id)->count();
+                        return "5/$point ($total_feedback feedback)";
+                    }
+                    $total_feedback = $query->tendik->feedback->where('kpi_period_id', $query->kpi_period_id)->count();
                     return "5/$point ($total_feedback feedback)";
                 })
                 // ->addColumn('options', 'admin.kpi_periods.datatables.options')
