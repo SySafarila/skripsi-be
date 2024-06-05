@@ -158,8 +158,8 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
     Route::get('/employees/profile', [DosenPageController::class, 'profile'])->name('employees.profile');
     Route::get('/employees/profile/{id}', [DosenPageController::class, 'profile_show'])->name('employees.profile.show');
     Route::post('/employees/presence', [DosenPageController::class, 'presence'])->name('employees.presence.store');
-    Route::get('/employees/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('employees.presence.show');
     Route::get('/employees/presence', [DosenPageController::class, 'presence_index'])->name('employees.presence.index');
+    Route::get('/employees/presence/{subject_id}', [DosenPageController::class, 'subject'])->name('employees.presence.show');
 });
 
 // authenticated students
