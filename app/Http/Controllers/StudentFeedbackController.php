@@ -54,7 +54,10 @@ class StudentFeedbackController extends Controller
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
-        $course = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->where('id', $course_id)->first();
+        $course = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->where('id', $course_id)->firstOrFail();
+        if (!$course->user) {
+            abort(404, 'Tidak ada dosen yang mengajar matakuliah ini');
+        }
         $questions = FeedbackQuestion::with(['responses' => function ($q) use ($active_kpi, $user, $course_id) {
             return $q->where('sender_id', $user->id)->where('kpi_period_id', $active_kpi->id)->where('course_id', $course_id);
         }])->whereRelation('to', 'division', '=', 'Edukatif')->orderBy('question', 'asc')->get();

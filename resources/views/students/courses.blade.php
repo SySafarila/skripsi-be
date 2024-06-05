@@ -13,7 +13,7 @@
                 <tr>
                     <td class="border p-2 text-center">{{ $n++ }}</td>
                     <td class="border p-2">{{ $course->name }}</td>
-                    <td class="border p-2">{{ $course->user->name }}</td>
+                    <td class="border p-2">{{ $course->user->name ?? '-' }}</td>
                     <td class="border p-2 text-center">
                         <a href="{{ route('student.courses.feedback', ['course_id' => $course->id]) }}"
                             class="btn whitespace-nowrap bg-blue-500 text-white hover:bg-blue-600">Masukan
