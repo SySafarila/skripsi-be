@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class AchievementController extends Controller
@@ -23,13 +24,11 @@ class AchievementController extends Controller
 
     public function generate($kpi_id)
     {
-        $kpi = KpiPeriod::where('id', $kpi_id)->where('is_active', true)->firstOrFail();
-        $points = Point::with('user.roles')->where('kpi_period_id', $kpi_id)->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
-        // return $points;
+        $kpi = KpiPeriod::where('id', $kpi_id)->firstOrFail();
+        $points = Point::with('user.roles')->where('kpi_period_id', $kpi_id)->where('tendik_position_id', null)->orderBy('points', 'desc')->orderBy('updated_at', 'asc')->get();
 
         $dosens = [];
         $tendiks = [];
-        // $staffs = [];
 
         foreach ($points as $index => $point) {
             if ($point->points > 0) {
@@ -41,27 +40,8 @@ class AchievementController extends Controller
                 if ($point->user->roles[0]->name == 'tendik') {
                     array_push($tendiks, $point->user_id);
                 }
-                // staffs
-                // if ($point->user->roles[0]->name == 'staff') {
-                //     array_push($staffs, $point->user_id);
-                // }
             }
         }
-
-        // $employees = [];
-        // foreach ($points as $index => $point) {
-        //     if ($point->points > 0) {
-        //         $index = $index + 1;
-        //         array_push($employees, [
-        //             'user_id' => $point->user_id,
-        //             'kpi_period_id' => $kpi_id,
-        //             'title' => "Karyawan #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
-        //             'position' => $index,
-        //             'created_at' => $kpi->end_date,
-        //             'updated_at' => $kpi->end_date
-        //         ]);
-        //     }
-        // }
 
         // dosen
         $dosenArr = [];
@@ -90,20 +70,6 @@ class AchievementController extends Controller
                 'updated_at' => $kpi->end_date
             ]);
         }
-
-        // staff
-        // $staffArr = [];
-        // foreach ($staffs as $index => $staff) {
-        //     $index = $index + 1;
-        //     array_push($staffArr, [
-        //         'user_id' => $staff,
-        //         'kpi_period_id' => $kpi_id,
-        //         'title' => "Staff #$index periode " . Carbon::parse($kpi->start_date)->format('d/m/Y') . ' - ' . Carbon::parse($kpi->end_date)->format('d/m/Y'),
-        //         'position' => $index,
-        //         'created_at' => $kpi->end_date,
-        //         'updated_at' => $kpi->end_date
-        //     ]);
-        // }
 
         DB::beginTransaction();
         try {
