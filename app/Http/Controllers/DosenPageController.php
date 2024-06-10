@@ -119,10 +119,10 @@ class DosenPageController extends Controller
         $kpi = KpiPeriod::findOrFail($request->kpi_period_id);
 
         if (now() < $kpi->start_date) {
-            return abort(400, 'Belum mulai');
+            return abort(404, 'Periode KPI belum dimulai');
         }
         if (now() > $kpi->end_date) {
-            return abort(400, 'Kadaluarsa');
+            return abort(404, 'Periode KPI telah kadaluarsa');
         }
 
         $user = Auth::user();

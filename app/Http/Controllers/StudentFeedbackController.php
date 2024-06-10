@@ -98,6 +98,12 @@ class StudentFeedbackController extends Controller
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
         }
+        if (now() < $active_kpi->start_date) {
+            return abort(404, 'Periode KPI belum dimulai');
+        }
+        if (now() > $active_kpi->end_date) {
+            return abort(404, 'Periode KPI telah kadaluarsa');
+        }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
@@ -157,6 +163,12 @@ class StudentFeedbackController extends Controller
         $active_kpi = KpiPeriod::where('is_active', true)->where('receive_feedback', true)->first();
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
+        }
+        if (now() < $active_kpi->start_date) {
+            return abort(404, 'Periode KPI belum dimulai');
+        }
+        if (now() > $active_kpi->end_date) {
+            return abort(404, 'Periode KPI telah kadaluarsa');
         }
 
         $user = Auth::user();
