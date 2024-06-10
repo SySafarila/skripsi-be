@@ -6,6 +6,7 @@ use App\Models\Point;
 use App\Models\UserFeedback;
 use App\Models\UserPresence;
 use App\Models\UsersHasSubject;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -149,5 +150,18 @@ class Controller extends BaseController
             DB::rollBack();
             throw $th;
         }
+    }
+
+    public function kpi_date_validator($kpi)
+    {
+        if (now() < $kpi->start_date) {
+            throw new Exception('Periode KPI belum dimulai');
+            // return abort(404, 'Periode KPI belum dimulai');
+        }
+        if (now() > $kpi->end_date) {
+            throw new Exception('Periode KPI telah berakhir');
+            // return abort(404, 'Periode KPI telah kadaluarsa');
+        }
+        return true;
     }
 }

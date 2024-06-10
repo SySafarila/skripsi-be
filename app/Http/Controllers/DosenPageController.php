@@ -60,9 +60,17 @@ class DosenPageController extends Controller
 
     public function subject($subject_id)
     {
+        $valid_kpi = true;
         $kpi = KpiPeriod::where('is_active', true)->first();
         if (!$kpi) {
             abort(404, 'KPI Not found');
+        }
+        try {
+            $this->kpi_date_validator($kpi);
+            $valid_kpi = true;
+        } catch (\Throwable $th) {
+            //throw $th;
+            $valid_kpi = $th->getMessage();
         }
         // $user = User::with('presences')->where('id', request()->user()->id)->first();
         $subject = Subject::findOrFail($subject_id);
@@ -75,7 +83,7 @@ class DosenPageController extends Controller
             array_push($isTodays, $this->isToday($presence->created_at));
         }
 
-        return view('employees.presences-show', compact('kpi', 'image_presence_setting', 'subject', 'presences', 'isTodays'));
+        return view('employees.presences-show', compact('kpi', 'image_presence_setting', 'subject', 'presences', 'isTodays', 'valid_kpi'));
     }
 
     private function isToday($date)
@@ -94,9 +102,16 @@ class DosenPageController extends Controller
         if (!$kpi) {
             abort(404, 'KPI Not found');
         }
+        try {
+            $this->kpi_date_validator($kpi);
+            $valid_kpi = true;
+        } catch (\Throwable $th) {
+            //throw $th;
+            $valid_kpi = $th->getMessage();
+        }
         $subjects = Auth::user()->subjects()->with('subject')->get();
 
-        return view('employees.presences', compact('kpi', 'subjects'));
+        return view('employees.presences', compact('kpi', 'subjects', 'valid_kpi'));
     }
 
     public function presence(Request $request)
@@ -116,19 +131,13 @@ class DosenPageController extends Controller
             ]);
         }
 
-        $kpi = KpiPeriod::findOrFail($request->kpi_period_id);
-
-        if (now() < $kpi->start_date) {
-            return abort(404, 'Periode KPI belum dimulai');
-        }
-        if (now() > $kpi->end_date) {
-            return abort(404, 'Periode KPI telah kadaluarsa');
-        }
+        $kpi = KpiPeriod::where('is_active', true)->where('id', $request->kpi_period_id)->firstOrFail();
 
         $user = Auth::user();
 
         DB::beginTransaction();
         try {
+            $this->kpi_date_validator($kpi);
             if ($request->control == '+') {
                 // add presence
                 // check quota

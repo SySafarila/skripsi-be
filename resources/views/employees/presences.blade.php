@@ -15,9 +15,15 @@
                         ({{ number_format((Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->where('kpi_period_id', $kpi->id)->count() *100) /$user_has_subject->quota,2) }}%)
                     </td>
                     <td class="border p-2 text-center">
-                        <a href="{{ route('employees.presence.show', $user_has_subject->subject_id) }}"
+                        @if ($valid_kpi !== true)
+                        <a href="#"
                             class="btn text-white bg-blue-500 hover:bg-blue-600">Absen
                             Masuk</a>
+                        @else
+                            <a href="{{ route('employees.presence.show', $user_has_subject->subject_id) }}"
+                                class="btn text-white bg-blue-500 hover:bg-blue-600">Absen
+                                Masuk</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -33,7 +39,17 @@
                 @endif
             </tr>
         </table>
-        <p class="text-center">KPI Aktif - <b>({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} -
-                {{ \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }})</b></p>
+        {{-- <p class="text-center">KPI Aktif - <b>({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} -
+                {{ \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }})</b></p> --}}
+        @if ($valid_kpi !== true)
+            <div>
+                <p class="text-center">{{ $valid_kpi }}, absensi belum bisa diisi</p>
+                <p class="text-center">Tanggal KPI - ({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }})</p>
+            </div>
+        @else
+            <div>
+                <p class="text-center">Tanggal KPI ({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }})</p>
+            </div>
+        @endif
     </div>
 </x-app-layout>

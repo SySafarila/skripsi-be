@@ -98,12 +98,6 @@ class StudentFeedbackController extends Controller
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
         }
-        if (now() < $active_kpi->start_date) {
-            return abort(404, 'Periode KPI belum dimulai');
-        }
-        if (now() > $active_kpi->end_date) {
-            return abort(404, 'Periode KPI telah kadaluarsa');
-        }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
@@ -136,6 +130,7 @@ class StudentFeedbackController extends Controller
 
         DB::beginTransaction();
         try {
+            $this->kpi_date_validator($active_kpi);
             UserFeedback::where('sender_id', $user->id)->where('course_id', $course_id)->where('kpi_period_id', $active_kpi->id)->delete();
             DB::table('user_feedback')->insert($feedbacks);
             $this->setPoint($active_kpi, $course->user);
@@ -164,12 +159,6 @@ class StudentFeedbackController extends Controller
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
         }
-        if (now() < $active_kpi->start_date) {
-            return abort(404, 'Periode KPI belum dimulai');
-        }
-        if (now() > $active_kpi->end_date) {
-            return abort(404, 'Periode KPI telah kadaluarsa');
-        }
 
         $user = Auth::user();
         $feedbacks = [];
@@ -193,6 +182,7 @@ class StudentFeedbackController extends Controller
 
         DB::beginTransaction();
         try {
+            $this->kpi_date_validator($active_kpi);
             UserFeedback::where('sender_id', $user->id)->where('tendik_position_id', $tendik_position_id)->where('kpi_period_id', $active_kpi->id)->delete();
             DB::table('user_feedback')->insert($feedbacks);
             $this->setPointNonEdu($active_kpi, $tendik_position);
