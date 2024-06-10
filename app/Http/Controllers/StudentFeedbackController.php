@@ -30,6 +30,13 @@ class StudentFeedbackController extends Controller
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif');
         }
+        try {
+            $this->kpi_date_validator($active_kpi);
+            $valid_kpi = true;
+        } catch (\Throwable $th) {
+            //throw $th;
+            $valid_kpi = $th->getMessage();
+        }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
@@ -42,7 +49,7 @@ class StudentFeedbackController extends Controller
         $n = 1;
         $nn = 1;
         // return $nonEduQuestions;
-        return view('students.courses', compact('active_kpi', 'user', 'semester', 'sent_feedbacks', 'courses', 'n', 'nn', 'eduQuestions', 'nonEduQuestions'));
+        return view('students.courses', compact('active_kpi', 'user', 'semester', 'sent_feedbacks', 'courses', 'n', 'nn', 'eduQuestions', 'nonEduQuestions', 'valid_kpi'));
     }
 
     public function feedback($course_id)
@@ -50,6 +57,13 @@ class StudentFeedbackController extends Controller
         $active_kpi = KpiPeriod::where('is_active', true)->first();
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif');
+        }
+        try {
+            $this->kpi_date_validator($active_kpi);
+            $valid_kpi = true;
+        } catch (\Throwable $th) {
+            //throw $th;
+            $valid_kpi = $th->getMessage();
         }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
@@ -63,7 +77,7 @@ class StudentFeedbackController extends Controller
         }])->whereRelation('to', 'division', '=', 'Edukatif')->orderBy('question', 'asc')->get();
         // return $questions;
         $n = 1;
-        return view('students.feedback', compact('course', 'questions', 'n', 'active_kpi'));
+        return view('students.feedback', compact('course', 'questions', 'n', 'active_kpi', 'valid_kpi'));
     }
 
     public function nonedu_feedback($tendik_position_id)
@@ -71,6 +85,13 @@ class StudentFeedbackController extends Controller
         $active_kpi = KpiPeriod::where('is_active', true)->first();
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif');
+        }
+        try {
+            $this->kpi_date_validator($active_kpi);
+            $valid_kpi = true;
+        } catch (\Throwable $th) {
+            //throw $th;
+            $valid_kpi = $th->getMessage();
         }
         $user = Auth::user();
         $semester = $user->hasMajor->semester;
@@ -83,7 +104,7 @@ class StudentFeedbackController extends Controller
         }])->whereRelation('to', 'id', '=', $tendik_position->id)->orderBy('question', 'asc')->get();
         // return $questions;
         $n = 1;
-        return view('students.feedback', compact('questions', 'n', 'active_kpi', 'tendik_position'));
+        return view('students.feedback', compact('questions', 'n', 'active_kpi', 'tendik_position', 'valid_kpi'));
     }
 
     public function store(Request $request, $course_id)

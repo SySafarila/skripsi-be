@@ -64,8 +64,17 @@
             @endforeach
             <div class="pl-6">
                 <button type="submit" class="btn bg-blue-500 text-white hover:bg-blue-600"
-                    {{ !$active_kpi->receive_feedback ? ' disabled' : '' }}>Save</button>
+                    {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>Save</button>
             </div>
         </form>
+        @if ($valid_kpi !== true)
+            <div>
+                <p class="text-center">Tanggal KPI ({{ \Carbon\Carbon::parse($active_kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($active_kpi->end_date)->format('d/m/Y') }})</p>
+            </div>
+        @else
+            <div>
+                <p class="text-center">Tanggal KPI ({{ \Carbon\Carbon::parse($active_kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($active_kpi->end_date)->format('d/m/Y') }})</p>
+            </div>
+        @endif
     </div>
 </x-app-layout>

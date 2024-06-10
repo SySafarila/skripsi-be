@@ -44,5 +44,14 @@
                 @endforeach
             @endforeach
         </table>
+        @if ($valid_kpi !== true)
+            <div>
+                <p class="text-center">Tanggal KPI ({{ \Carbon\Carbon::parse($active_kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($active_kpi->end_date)->format('d/m/Y') }})</p>
+            </div>
+        @else
+            <div>
+                <p class="text-center">Tanggal KPI ({{ \Carbon\Carbon::parse($active_kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($active_kpi->end_date)->format('d/m/Y') }})</p>
+            </div>
+        @endif
     </div>
 </x-app-layout>
