@@ -358,7 +358,7 @@ class StudentController extends Controller
 
         $array = Excel::toArray(new StudentsImport, $excel);
 
-        $student_nims = User::role('mahasiswa')->get('identifier_number');
+        $student_nims = User::all()->pluck('identifier_number')->toArray();
         $exists_nims = [];
         foreach ($student_nims as $student_nim) {
             array_push($exists_nims, $student_nim->identifier_number);
@@ -391,7 +391,7 @@ class StudentController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollBack();
-                    throw $th;
+                    // throw $th;
                 }
             }
         }
