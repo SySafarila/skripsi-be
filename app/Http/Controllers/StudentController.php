@@ -241,7 +241,7 @@ class StudentController extends Controller
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                // 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
                 'identifier_number' => $request->identifier_number,
                 'is_active' => $request->is_active

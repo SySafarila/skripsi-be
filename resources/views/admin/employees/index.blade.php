@@ -112,7 +112,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1, 2, 3, 4];
+            const exportOption = [1, 2, 3, 4, 5];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',

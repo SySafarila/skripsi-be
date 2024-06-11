@@ -152,7 +152,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // authenticated employees
-Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff', 'user_active'])->group(function () {
     Route::get('/employees', [DosenPageController::class, 'welcome'])->name('employees.welcome');
     Route::get('/employees/leaderboard', [LeaderboardController::class, 'index'])->name('employees.leaderboard.index');
     Route::get('/employees/profile', [DosenPageController::class, 'profile'])->name('employees.profile');
@@ -163,7 +163,7 @@ Route::middleware(['auth', 'verified', 'role:dosen|tendik|staff'])->group(functi
 });
 
 // authenticated students
-Route::middleware(['auth', 'verified', 'role:mahasiswa'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:mahasiswa', 'user_active'])->group(function () {
     Route::get('/students', [StudentFeedbackController::class, 'index'])->name('student.index');
     Route::get('/students/profile', [StudentFeedbackController::class, 'profile'])->name('student.profile');
     Route::get('/students/feedback', [StudentFeedbackController::class, 'feedbacks'])->name('student.courses.index');
