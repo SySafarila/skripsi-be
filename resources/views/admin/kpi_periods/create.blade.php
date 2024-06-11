@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="end_date" class="text-capitalize">Tanggal Berakhir</label>
-                            <input type="date" class="form-control" id="end_date" name="end_date" required>
+                            <input type="date" class="form-control" id="end_date" name="end_date" required disabled>
                             @error('end_date')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
@@ -81,4 +81,22 @@
 @endsection
 
 @section('script')
+    <script>
+        const start_date = document.querySelector('#start_date');
+        const end_date = document.querySelector('#end_date');
+
+        start_date.addEventListener('change', (e) => {
+            e.preventDefault();
+            const value = e.target.value;
+
+            if (!value) {
+                end_date.disabled = true;
+                end_date.min = '';
+                end_date.value = '';
+            } else {
+                end_date.disabled = false;
+                end_date.min = value;
+            }
+        })
+    </script>
 @endsection
