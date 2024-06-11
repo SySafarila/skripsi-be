@@ -44,7 +44,7 @@
             <span>Feedback</span>
         </a>
     @endrole
-    <a href="#" class="flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
+    <a href="{{ route('settings.index') }}" class="{{ request()->routeIs('settings.index') ? 'bg-gray-100' : '' }} flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100 lg:rounded-md">
         <img src="{{ asset('icons/settings.svg') }}" alt="settings">
         <span>Pengaturan</span>
     </a>

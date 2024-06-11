@@ -173,4 +173,11 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa', 'user_active'])->group(
     Route::post('/students/feedback/{tendik_position_id}/nonedu', [StudentFeedbackController::class, 'nonedu_store'])->name('student.store.nonedu');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/settings', function() {
+        return view('settings.index');
+    })->name('settings.index');
+    Route::patch('/settings/update', [AccountController::class, 'userUpdate'])->name('settings.update');
+});
+
 require __DIR__ . '/auth.php';

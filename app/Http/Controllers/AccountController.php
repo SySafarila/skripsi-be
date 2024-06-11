@@ -10,6 +10,7 @@ use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -203,5 +204,55 @@ class AccountController extends Controller
         $user->save();
 
         return redirect()->route('account.index')->with('success', $message);
+    }
+
+    public function userUpdate(Request $request)
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        $request->validate([
+            'update_image' => ['required', 'boolean'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password' => ['nullable', 'string', 'min:8']
+        ]);
+
+        if ($request->update_image == true) {
+            $request->validate([
+                'image' => ['required', 'file', 'image']
+            ]);
+
+            if ($user->image && Storage::disk('public')->exists($user->image)) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            $file = $request->file('image');
+            $path = Storage::disk('public')->putFile('display-pictures', new File($file));
+            $user->update([
+                'image' => $path
+            ]);
+        }
+
+        if ($request->password) {
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+            Log::debug('Password updated . ' . $request->password);
+        }
+
+        if ($user->email != $request->email) {
+            $token = uniqid();
+
+            $user->pendingNewEmails()->create([
+                'new_email' => $request->email,
+                'token' => $token
+            ]);
+
+            // $user->notify(new NewEmailVerification($token));
+            Mail::to($request->email)->send(new SendNewEmailVerification($token));
+            $message = 'Profile updated, and you have to check your inbox to verify your new email address';
+        }
+
+        return response()->json([
+            'message' => $message ?? 'Profil berhasil diperbarui'
+        ]);
     }
 }
