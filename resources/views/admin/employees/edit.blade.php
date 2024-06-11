@@ -98,6 +98,17 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="is_active" class="text-capitalize">Status Aktif</label>
+                            <select class="select2 form-control" name="is_active"
+                                data-placeholder="Select Status Aktif" style="width: 100%;">
+                                <option value="1" {{ $user->is_active == true ? 'selected' : '' }}>Aktif</option>
+                                <option value="0" {{ $user->is_active == false ? 'selected' : '' }}>Tidak Aktif</option>
+                            </select>
+                            @error('is_active')
+                                <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="password" class="text-capitalize">password</label>
                             <input type="password" class="form-control" id="password" name="password">
                             @error('password')

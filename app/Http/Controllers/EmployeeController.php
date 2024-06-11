@@ -72,6 +72,12 @@ class EmployeeController extends Controller
                 ->editColumn('tendik_position_id', function ($query) {
                     return $query->tendik_position_id ? $query->position->division : '-';
                 })
+                ->editColumn('is_active', function ($query) {
+                    if ($query->is_active == true) {
+                        return 'AKTIF';
+                    }
+                    return 'TIDAK AKTIF';
+                })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;
@@ -194,7 +200,8 @@ class EmployeeController extends Controller
             // 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'identifier' => ['required', 'string', 'in:nidn,nip'],
             'role' => ['required', 'string', 'in:dosen,staff,tendik'],
-            'position' => ['nullable']
+            'position' => ['nullable'],
+            'is_active' => ['required', 'boolean']
         ]);
 
         if ($request->position != '-') {
@@ -220,7 +227,8 @@ class EmployeeController extends Controller
                 // 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
                 'identifier_number' => $request->identifier_number,
-                'tendik_position_id' => !$request->position ? 1 : $request->position
+                'tendik_position_id' => !$request->position ? 1 : $request->position,
+                'is_active' => $request->is_active
             ]);
 
             if ($request->password || $request->password_confirmation) {

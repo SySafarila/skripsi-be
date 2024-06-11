@@ -79,6 +79,7 @@
                                 <th>Nomor Registrasi</th>
                                 <th>Tipe</th>
                                 <th>Jabatan</th>
+                                <th>Status Aktif</th>
                                 {{-- <th>Verified</th> --}}
                                 {{-- <th>Created At</th> --}}
                                 <th class="d-print-none">Options</th>
@@ -183,6 +184,9 @@
                     data: 'tendik_position_id',
                     name: 'tendik_position_id'
                 }, {
+                    data: 'is_active',
+                    name: 'is_active'
+                }, {
                     data: 'options',
                     name: 'options'
                 }],
@@ -201,7 +205,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [3, 5]
+                    targets: [3, 6]
                 }],
                 order: [
                     [1, 'asc']
