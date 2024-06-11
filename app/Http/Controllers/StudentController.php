@@ -90,6 +90,12 @@ class StudentController extends Controller
                     }
                     return '-';
                 })
+                ->editColumn('is_active', function ($model) {
+                    if ($model->is_active == true) {
+                        return 'AKTIF';
+                    }
+                    return 'TIDAK AKTIF';
+                })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;
@@ -216,7 +222,8 @@ class StudentController extends Controller
             // 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'identifier' => ['required', 'string', 'in:nim'],
             'major_id' => ['required', 'exists:majors,id'],
-            'semester' => ['required', 'numeric', 'min:1']
+            'semester' => ['required', 'numeric', 'min:1'],
+            'is_active' => ['required', 'boolean']
             // 'role' => ['required', 'string', 'in:dosen,staff,tendik']
         ]);
 
@@ -236,7 +243,8 @@ class StudentController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'identifier' => $request->identifier,
-                'identifier_number' => $request->identifier_number
+                'identifier_number' => $request->identifier_number,
+                'is_active' => $request->is_active
             ]);
 
             if ($request->password || $request->password_confirmation) {

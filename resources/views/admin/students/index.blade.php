@@ -77,8 +77,7 @@
                                 <th>Semester</th>
                                 <th>Jurusan</th>
                                 <th>Feedback</th>
-                                {{-- <th>Verified</th> --}}
-                                {{-- <th>Created At</th> --}}
+                                <th>Status Aktif</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -187,6 +186,9 @@
                     name: 'feedback',
                     searchable: false
                 }, {
+                    data: 'is_active',
+                    name: 'is_active',
+                }, {
                     data: 'options',
                     name: 'options'
                 }],
@@ -205,7 +207,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [3, 4, 5, 6]
+                    targets: [3, 4, 5, 7]
                 }],
                 order: [
                     // [1, 'asc']
