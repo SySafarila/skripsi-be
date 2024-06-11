@@ -3,7 +3,7 @@
         <h1 class="text-2xl font-bold">Profil</h1>
         <div class="flex flex-col items-center gap-2">
             <img src="{{ $user->image ? asset('storage/' . $user->image) : asset('images/profile.png') }}"
-                alt="profil" class="w-20">
+                alt="profil" class="w-20 rounded-full">
             <div class="flex w-full flex-col items-center">
                 <p class="font-semibold capitalize">{{ $user->name }}</p>
                 <small class="line-clamp-1 uppercase">{{ $user->identifier }}:

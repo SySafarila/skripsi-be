@@ -235,7 +235,6 @@ class AccountController extends Controller
             $user->update([
                 'password' => Hash::make($request->password)
             ]);
-            Log::debug('Password updated . ' . $request->password);
         }
 
         if ($user->email != $request->email) {
