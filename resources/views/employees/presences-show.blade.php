@@ -61,7 +61,7 @@
                 {{-- <input type="hidden" name="users_has_subject_id"
                     value="{{ Auth::user()->subjects->where('subject_id', $subject->id)->firstOrFail()->id }}"> --}}
                 <label for="image">Gambar{{ $image_presence_setting->value == 'true' ? '*' : '' }}</label>
-                <input type="file" name="image" id="image" accept="image/*"
+                <input type="file" name="image" id="image" capture="environment" accept="image/*"
                     {{ $image_presence_setting->value == 'true' ? 'required' : '' }}>
                 <div>
                     <button class="btn bg-blue-500 text-white hover:bg-blue-600" {{ $valid_kpi !== true ? 'disabled' : '' }}>Absen Masuk</button>
