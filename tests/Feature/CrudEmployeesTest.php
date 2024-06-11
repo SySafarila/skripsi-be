@@ -82,7 +82,8 @@ class CrudEmployeesTest extends TestCase
             'role' => 'dosen',
             'identifier' => 'nidn',
             'identifier_number' => 1234567890,
-            'position' => 1 // Edukatif
+            'position' => 1, // Edukatif
+            'is_active' => 1
         ]);
         $response2->assertRedirect(route('admin.employees.index'));
     }

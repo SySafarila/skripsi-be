@@ -85,7 +85,8 @@ class CrudStudentsTest extends TestCase
             'identifier' => 'nim',
             'identifier_number' => 1234567890,
             'semester' => 2,
-            'major_id' => 1 // teknik informatika
+            'major_id' => 1, // teknik informatika
+            'is_active' => 1
         ]);
         $response2->assertRedirect(route('admin.students.index'));
     }
