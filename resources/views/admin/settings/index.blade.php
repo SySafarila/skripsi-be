@@ -40,6 +40,23 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="" class="text-capitalize d-block">Pengaturan Semester per Mahasiswa</label>
+                            <div class="d-flex flex-column" style="gap: 4px;">
+                                <div class="align-items-center d-flex" style="gap: 5px;">
+                                    <input type="radio" name="semester_settings" id="semester_settings_netral" value="n" required checked>
+                                    <label class="font-weight-normal m-0" for="semester_settings_netral">Tetap</label>
+                                </div>
+                                <div class="align-items-center d-flex" style="gap: 5px;">
+                                    <input type="radio" name="semester_settings" id="semester_settings_+" value="+" required>
+                                    <label class="font-weight-normal m-0" for="semester_settings_+">Tambah 1 / (+1)</label>
+                                </div>
+                                <div class="align-items-center d-flex" style="gap: 5px;">
+                                    <input type="radio" name="semester_settings" id="semester_settings_-" value="-" required>
+                                    <label class="font-weight-normal m-0" for="semester_settings_-">Kurangi 1 / (-1)</label>
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </form>
                 </div>

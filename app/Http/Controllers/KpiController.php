@@ -140,7 +140,8 @@ class KpiController extends Controller
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
             'is_active' => ['required', 'in:1,0'],
-            'receive_feedback' => ['required', 'in:1,0']
+            'receive_feedback' => ['required', 'in:1,0'],
+            'increment_semester' => ['nullable', 'in:1']
         ]);
 
         DB::beginTransaction();
@@ -180,6 +181,11 @@ class KpiController extends Controller
                 }
             }
             DB::table('points')->insert($arr);
+
+            if ($request->increment_semester == 1) {
+                DB::table('user_has_majors')->increment('semester');
+            }
+
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();

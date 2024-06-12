@@ -21,6 +21,11 @@
                     </td>
                 </tr>
             @endforeach
+            @empty($courses->count())
+                <tr>
+                    <td class="border p-2 text-center" colspan="4">Kosong</td>
+                </tr>
+            @endempty
         </table>
         <table class="w-full border-collapse border">
             <tr>

@@ -134,6 +134,16 @@ class DevSeeder extends Seeder
         ]);
         $tendik4->syncRoles(['tendik']);
 
+        $mahasiswa2 = User::create([
+            'name' => 'mahasiswa 2',
+            'email' => 'mahasiswa2@mahasiswa2.com',
+            'password' => Hash::make('password'),
+            'identifier' => 'nim',
+            'identifier_number' => 207200006,
+            'email_verified_at' => now()
+        ]);
+        $mahasiswa2->syncRoles(['mahasiswa']);
+
         // mata kuliah
         $subjects = [
             [

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
 {
@@ -12,7 +13,8 @@ class SettingController extends Controller
         $this->middleware('can:general-settings');
     }
 
-    public function index() {
+    public function index()
+    {
         $reload = false;
         $image_presence = Setting::where('key', 'image_presence')->first();
 
@@ -30,15 +32,39 @@ class SettingController extends Controller
         return view('admin.settings.index', compact('image_presence'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $request->validate([
-            'image_presence' => ['required', 'boolean']
+            'image_presence' => ['required', 'boolean'],
+            'semester_settings' => ['required', 'string', 'in:+,-,n']
         ]);
 
-        $image_presence = Setting::where('key', 'image_presence')->first();
-        $image_presence->update([
-            'value' => $request->image_presence === '1' ? 'true' : 'false'
-        ]);
+        DB::beginTransaction();
+        try {
+            $image_presence = Setting::where('key', 'image_presence')->first();
+            $image_presence->update([
+                'value' => $request->image_presence === '1' ? 'true' : 'false'
+            ]);
+
+            switch ($request->semester_settings) {
+                case '+':
+                    DB::table('user_has_majors')->increment('semester');
+                    break;
+
+                case '-':
+                    DB::table('user_has_majors')->decrement('semester');
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
 
         return back()->with('success', 'Settings updated');
     }

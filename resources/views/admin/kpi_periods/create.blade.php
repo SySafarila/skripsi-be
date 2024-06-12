@@ -72,6 +72,16 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="align-items-center d-flex form-check">
+                                <input type="checkbox" class="form-check-input" id="increment_semester" name="increment_semester" value="1" checked>
+                                <label for="increment_semester" class="text-capitalize form-check-label">Semester + 1</label>
+                                @error('increment_semester')
+                                    <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                                @enderror
+                            </div>
+                            <small>*Data semester pada setiap mahasiswa akan ditambah 1 atau (+1) saat periode KPI dibuat</small>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </form>
                 </div>
