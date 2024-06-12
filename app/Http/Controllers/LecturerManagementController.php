@@ -189,7 +189,6 @@ class LecturerManagementController extends Controller
             } catch (\Throwable $th) {
                 DB::rollBack();
                 //throw $th;
-                Log::error('LecturerManagementController: ' . $th->getMessage());
             }
         }
 
@@ -217,7 +216,6 @@ class LecturerManagementController extends Controller
                 } catch (\Throwable $th) {
                     DB::rollBack();
                     //throw $th;
-                    Log::error('LecturerManagementController: ' . $th->getMessage());
                 }
             }
         }

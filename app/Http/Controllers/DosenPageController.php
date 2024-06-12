@@ -181,7 +181,6 @@ class DosenPageController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            Log::error('DosenPageController Error: . ' . $th->getMessage());
             throw $th;
         }
 
