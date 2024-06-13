@@ -134,6 +134,13 @@ class AccountController extends Controller
 
             PendingNewEmail::destroy($pendingNewEmails);
 
+            if ($user->hasRole('dosen') || $user->hasRole('tendik')) {
+                return redirect()->route('employees.welcome')->with('success', 'Email berhasil diubah');
+            }
+            if ($user->hasRole('mahasiswa')) {
+                return redirect()->route('student.index')->with('success', 'Email berhasil diubah');
+            }
+
             return redirect()->route('account.index')->with('success', 'Email updated !');
         }
 
