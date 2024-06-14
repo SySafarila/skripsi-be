@@ -12,7 +12,7 @@
                             <div class="flex flex-col w-full">
                                 <span class="font-semibold line-clamp-1 break-all">{{ $course->user->name }}</span>
                                 <span class="-mt-1 flex justify-between items-center">
-                                    <span class="w-full line-clamp-1 break-all">{{ $course->name }}</span>
+                                    <span class="w-full line-clamp-1 break-all pr-5">{{ $course->name }}</span>
                                     <small class="shrink-0 line-clamp-1 break-all"><b>{{ $eduQuestions->count() }}/{{ $sent_feedbacks->where('course_id', $course->id)->count() }}</b> terkirim</small>
                                 </span>
                             </div>
@@ -31,7 +31,7 @@
                                 <div class="flex items-center gap-2">
                                     <img src="{{ asset('icons/division.svg') }}" class="w-10 h-10 bg-black rounded-full p-1.5" alt="Photo profile">
                                     <div class="flex flex-row justify-between items-center w-full">
-                                        <span class="font-semibold line-clamp-1 break-all">{{ $nonEduQuestion->to->division }}</span>
+                                        <span class="font-semibold line-clamp-2 leading-tight pr-5">{{ $nonEduQuestion->to->division }}</span>
                                         <small class="line-clamp-1 shrink-0 break-all"><b>{{ $tendik_position_id->where('tendik_position_id', $nonEduQuestion->to->id)->count() }}/{{ $sent_feedbacks->where('tendik_position_id', $nonEduQuestion->to->id)->count() }}</b> terkirim</small>
                                     </div>
                                 </div>

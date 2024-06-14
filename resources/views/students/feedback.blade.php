@@ -6,26 +6,26 @@
         @endif
         <div class="rounded-md border p-4">
             @if (@$course)
-                <table>
-                    <tr>
-                        <td class="font-semibold">Mata Kuliah</td>
-                        <td class="px-2">:</td>
-                        <td>{{ $course->name }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Dosen</td>
-                        <td class="px-2">:</td>
-                        <td>{{ $course->user->name }}</td>
-                    </tr>
-                </table>
+                <div class="flex flex-col rounded-md">
+                    <div class="flex items-center gap-2">
+                        <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('images/profile.png') }}" class="w-10 h-10 rounded-full" alt="Photo profile">
+                        <div class="flex flex-col w-full">
+                            <span class="font-semibold line-clamp-1 break-all">{{ $course->user->name }}</span>
+                            <span class="-mt-1 flex justify-between items-center">
+                                <span class="w-full line-clamp-1 break-all">{{ $course->name }}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             @else
-                <table>
-                    <tr>
-                        <td class="font-semibold">Bagian</td>
-                        <td class="px-2">:</td>
-                        <td>{{ $tendik_position->division }}</td>
-                    </tr>
-                </table>
+                <div class="flex flex-col rounded-md">
+                    <div class="flex items-center gap-2">
+                        <img src="{{ asset('icons/division.svg') }}" class="w-10 h-10 bg-black rounded-full p-1.5" alt="Photo profile">
+                        <div class="flex flex-row justify-between items-center w-full">
+                            <span class="font-semibold line-clamp-2 leading-tight">{{ $tendik_position->division }}</span>
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
         <form action="{{ @$course ? route('student.store', $course) : route('student.store.nonedu', $tendik_position->id) }}"
@@ -37,21 +37,21 @@
                         <span class="w-4 flex-shrink-0">{{ $n++ }}.</span>
                         <label for="{{ $key }}-{{ $question->question }}">{{ $question->question }}</label>
                     </div>
-                    <div class="pl-6 pt-2">
-                        <textarea name="messages[{{ $key }}]" id="{{ $key }}-{{ $question->question }}"
-                            class="w-full rounded-md" placeholder="Tulis masukan kamu disini..." required
-                            {{ !$active_kpi->receive_feedback ? ' disabled' : '' }}>{{ $question->responses[0]->message ?? '' }}</textarea>
-                        {{-- <input type="number" name="points[{{ $key }}]" id="" placeholder="1-5" min="1" max="5" class="rounded-md" value="{{ $question->responses[0]->point ?? '' }}" required> --}}
-                        <span>Point:</span>
-                        <div class="flex flex-col gap-2 lg:flex-row lg:gap-4">
+                    <div class="pl-6 pt-2 flex flex-col gap-2">
+                        <div class="flex flex-col gap-1">
+                            <textarea name="messages[{{ $key }}]" id="{{ $key }}-{{ $question->question }}"
+                                class="w-full rounded-md" placeholder="Tulis masukan kamu disini..." required
+                                {{ !$active_kpi->receive_feedback ? ' disabled' : '' }}>{{ $question->responses[0]->message ?? '' }}</textarea>
+                            <small>Isi "-" jika tidak ingin mengirim masukan</small>
+                        </div>
+                        <div class="flex flex-col gap-2">
                             @for ($i = 1; $i <= 5; $i++)
                                 <div class="flex items-center gap-2">
                                     <input type="radio" name="points[{{ $key }}]"
                                         id="{{ $key }}-{{ $i }}" value="{{ $i }}"
                                         {{ @$question->responses[0]->point == $i ? 'checked' : '' }}
                                         {{ !$active_kpi->receive_feedback ? ' disabled' : '' }}>
-                                    <label for="{{ $key }}-{{ $i }}">{{ $i }}
-                                        Point</label>
+                                    <label for="{{ $key }}-{{ $i }}">{{ $points_detail[$i -1 ] }}</label>
                                 </div>
                             @endfor
                         </div>
@@ -64,7 +64,7 @@
             @endforeach
             <div class="pl-6">
                 <button type="submit" class="btn bg-blue-500 text-white hover:bg-blue-600"
-                    {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>Save</button>
+                    {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>Kirim</button>
             </div>
         </form>
         @if ($valid_kpi !== true)

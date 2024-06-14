@@ -77,7 +77,14 @@ class StudentFeedbackController extends Controller
         }])->whereRelation('to', 'division', '=', 'Edukatif')->orderBy('question', 'asc')->get();
         // return $questions;
         $n = 1;
-        return view('students.feedback', compact('course', 'questions', 'n', 'active_kpi', 'valid_kpi'));
+        $points_detail = [
+            '1 (Sangat Kurang)',
+            '2 (Kurang)',
+            '3 (Cukup)',
+            '4 (Baik)',
+            '5 (Sangat Baik)'
+        ];
+        return view('students.feedback', compact('course', 'questions', 'n', 'active_kpi', 'valid_kpi', 'points_detail'));
     }
 
     public function nonedu_feedback($tendik_position_id)
@@ -104,7 +111,14 @@ class StudentFeedbackController extends Controller
         }])->whereRelation('to', 'id', '=', $tendik_position->id)->orderBy('question', 'asc')->get();
         // return $questions;
         $n = 1;
-        return view('students.feedback', compact('questions', 'n', 'active_kpi', 'tendik_position', 'valid_kpi'));
+        $points_detail = [
+            '1 (Sangat Kurang)',
+            '2 (Kurang)',
+            '3 (Cukup)',
+            '4 (Baik)',
+            '5 (Sangat Baik)'
+        ];
+        return view('students.feedback', compact('questions', 'n', 'active_kpi', 'tendik_position', 'valid_kpi', 'points_detail'));
     }
 
     public function store(Request $request, $course_id)

@@ -1,4 +1,10 @@
-<!-- Dibuat oleh Syahrul Safarila untuk Universitas Putra Indonesia -->
+<!--
+    Dibuat oleh Syahrul Safarila untuk Universitas Putra Indonesia
+    sebagai salah satu syarat menyelesaikan pendidikan S1 Teknik Informatika
+    pada tahun 2024
+    Email: sysafarila.official@gmail.com
+    Portfolio: https://www.sysafarila.my.id
+-->
 <!DOCTYPE html>
 <html lang="en">
 

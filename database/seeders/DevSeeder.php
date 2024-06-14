@@ -335,10 +335,10 @@ class DevSeeder extends Seeder
             'question' => 'Kemampuan mengendalikan dri dari berbagai situasi dan kondisi',
             'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
-        FeedbackQuestion::create([
-            'question' => 'Saran dan Masukan',
-            'tendik_position_id' => 1 // mahasiswa to dosen
-        ]);
+        // FeedbackQuestion::create([
+        //     'question' => 'Saran dan Masukan',
+        //     'tendik_position_id' => 1 // mahasiswa to dosen
+        // ]);
         FeedbackQuestion::create([
             'question' => 'Kemampuan Bidang Akademik, Fakultas, Program Studi dan staff administrasi dalam memberikan layanan akademik (pengurusan KRS, KHS, dokumen seminar, Ijazah, dokumen ujian akhir, surat menyurat dll).',
             'tendik_position_id' => 2 // mahasiswa to layanan akademik
