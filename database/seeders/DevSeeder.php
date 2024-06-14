@@ -25,16 +25,16 @@ class DevSeeder extends Seeder
     {
         // tendik positions
         TendikPosition::create([
-            // 'name' => 'Dosen',
             'division' => 'Edukatif'
         ]);
         TendikPosition::create([
-            // 'name' => 'Kepala Bagian',
-            'division' => 'Bagian Keuangan'
+            'division' => 'Layanan Akademik'
         ]);
         TendikPosition::create([
-            // 'name' => 'Kepala Bagian',
-            'division' => 'Bagian Lab'
+            'division' => 'Layanan Kemahasiswaan'
+        ]);
+        TendikPosition::create([
+            'division' => 'Layanan Pengelolaan Keuangan Maupun Sarana Dan Prasarana'
         ]);
 
         // users
@@ -292,28 +292,112 @@ class DevSeeder extends Seeder
 
         // feedback question
         FeedbackQuestion::create([
-            'question' => 'Apakah A sama dengan B?',
+            'question' => 'Menjelaskan RPS Mata Kuliah yang diampu dan membuat kesepakatan mengenai kehadiran dan proses belajar dalam 1 semester',
             'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         FeedbackQuestion::create([
-            'question' => 'Apakah B sama dengan A?',
+            'question' => 'Tingkat Kehadiran Dosen dalam perkuliahan',
             'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         FeedbackQuestion::create([
-            'question' => 'Apakah A dan B sama dengan AB?',
+            'question' => 'Keteraturan dan ketertiban penyelenggaraan perkuliahan',
             'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         FeedbackQuestion::create([
-            'question' => 'Apakah C dan B sama dengan CB?',
-            'tendik_position_id' => 2 // mahasiswa to Bagian Keuangan
+            'question' => 'Kedisiplinan dan kepatuhan terhadap aturan akademik',
+            'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         FeedbackQuestion::create([
-            'question' => 'Apakah X dan A sama dengan XA?',
-            'tendik_position_id' => 2 // mahasiswa to Bagian Keuangan
+            'question' => 'Menciptakan suasana lingkungan belajar yang nyaman',
+            'tendik_position_id' => 1 // mahasiswa to dosen
         ]);
         FeedbackQuestion::create([
-            'question' => 'Apakah A dan Z sama dengan AZ?',
-            'tendik_position_id' => 3 // mahasiswa to Bagian Lab
+            'question' => 'Penguasaan media teknologi pembelajaran',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Penggunaan hasil-hasil penelitian untuk meningkatkan kualitas perkuliahaan',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Pelibatan mahasiswa dalam penelitian/kajian dan atau pengembangan/rekayasa/desain yang dilakukan dosen',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kewibawaan sebagai pribadi dosen',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Menjadi contoh dalam bersikap dan berperilaku',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemampuan mengendalikan dri dari berbagai situasi dan kondisi',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Saran dan Masukan',
+            'tendik_position_id' => 1 // mahasiswa to dosen
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemampuan Bidang Akademik, Fakultas, Program Studi dan staff administrasi dalam memberikan layanan akademik (pengurusan KRS, KHS, dokumen seminar, Ijazah, dokumen ujian akhir, surat menyurat dll).',
+            'tendik_position_id' => 2 // mahasiswa to layanan akademik
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemauan/kesediaan Bidang Akademik, Fakultas,  Program Studi dan staff administrasi dalam memberikan layanan akademik (pengurusan KRS, KHS, dokumen seminar, Ijazah, dokumen ujian akhir, surat menyurat dll)  dengan cepat.',
+            'tendik_position_id' => 2 // mahasiswa to layanan akademik
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Bidang Akademik, Fakultas, Program Studi dan staff administrasi dalam memberikan layanan akademik   (pengurusan KRS, KHS, dokumen seminar, Ijazah, dokumen ujian akhir, surat menyurat dll)   sudah sesuai dengan SOP/ketentuan.',
+            'tendik_position_id' => 2 // mahasiswa to layanan akademik
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kepedulian Bidang Akademik, Fakultas,  Program Studi dan staff administrasi dalam memberikan layanan akademik dengan budaya kerja yang unggul, sopan, ramah dan penuh perhatian.',
+            'tendik_position_id' => 2 // mahasiswa to layanan akademik
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Layanan akademik sudah menggunakan sarana dan prasarana (termasuk IT) yang memudahkan bagi pengguna.',
+            'tendik_position_id' => 2 // mahasiswa to layanan akademik
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemampuan layanan di bidang kemahasiswaan dalam memberikan layanan dan bimbingan di bidang kreativitas ilmiah (PKM, lomba karya tulis ilmiah, Penelitian yang melibatkan mahasiswa dan sejenisnya)',
+            'tendik_position_id' => 3 // mahasiswa to Layanan kemahasiswaan
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemauan/kesediaan layana di bidang kemahasiswaan dalam memberikan layanan dan bimbingan di bidang kreativitas ilmiah (PKM, lomba karya tulis ilmiah, Penelitian yang melibatkan mahasiswa dan sejenisnya)',
+            'tendik_position_id' => 3 // mahasiswa to Layanan kemahasiswaan
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Bidang kemahasiswaan dalam memberikan layanan dan bimbingan di bidang kreativitas ilmiah   (PKM, lomba karya tulis ilmiah, Penelitian yang melibatkan mahasiswa dan sejenisnya) sudah sesuai dengan SOP/ketentuan',
+            'tendik_position_id' => 3 // mahasiswa to Layanan kemahasiswaan
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kepedulian layanan di bidang kemahasiswaan dalam memberikan perhatian pada layanan dan bimbingan di bidang kreativitas ilmiah   (PKM, lomba karya tulis ilmiah, Penelitian yang melibatkan mahasiswa dan sejenisnya)',
+            'tendik_position_id' => 3 // mahasiswa to Layanan kemahasiswaan
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Layanan kemahasiswaan sudah menggunakan sarana dan prasarana (termasuk IT) yang memudahkan bagi pengguna.',
+            'tendik_position_id' => 3 // mahasiswa to Layanan kemahasiswaan
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemampuan tenaga kependidikan, dan pengelola dalam memberikan pelayanan keuangan, sarana dan prasarana.',
+            'tendik_position_id' => 4 // mahasiswa to LAYANAN PENGELOLAAN KEUANGAN MAUPUN SARANA DAN PRASARANA
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemauan tenaga kependidikan, dan pengelola dalam membantu mahasiswa untuk memberikan jasa dengan cepat dalam proses layanan keuangan, sarana dan prasarana.',
+            'tendik_position_id' => 4 // mahasiswa to LAYANAN PENGELOLAAN KEUANGAN MAUPUN SARANA DAN PRASARANA
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kemampuan tenaga kependidikan, dan pengelola untuk memberi keyakinan kepada mahasiswa bahwa pelayanan keuangan, sarana dan prasarana yang diberikan telah sesuai dengan ketentuan.',
+            'tendik_position_id' => 4 // mahasiswa to LAYANAN PENGELOLAAN KEUANGAN MAUPUN SARANA DAN PRASARANA
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Kesediaan/kepedulian tenaga kependidikan, dan pengelola untuk memberi perhatian kepada mahasiswa dalam memberikan layanan keuangan, sarana dan prasarana.',
+            'tendik_position_id' => 4 // mahasiswa to LAYANAN PENGELOLAAN KEUANGAN MAUPUN SARANA DAN PRASARANA
+        ]);
+        FeedbackQuestion::create([
+            'question' => 'Layanan keuangan, sarana dan prasarana. sudah menggunakan suatu sistem (termasuk IT) yang memudahkan bagi pengguna.',
+            'tendik_position_id' => 4 // mahasiswa to LAYANAN PENGELOLAAN KEUANGAN MAUPUN SARANA DAN PRASARANA
         ]);
     }
 }
