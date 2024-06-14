@@ -14,7 +14,7 @@
     }
 
     #sidebar {
-        @apply fixed flex flex-col right-0 w-1/2 h-screen top-0 bg-white overflow-y-auto transform translate-x-full transition-transform ease-in-out z-[60] lg:static lg:h-fit lg:w-[25rem] lg:translate-x-0 lg:z-40 lg:pr-4;
+        @apply fixed flex flex-col right-0 w-1/2 h-screen top-0 bg-white overflow-y-auto transform translate-x-full transition-transform ease-in-out z-[60] lg:sticky lg:h-fit lg:w-[25rem] lg:translate-x-0 lg:z-40 lg:pr-4 lg:top-[calc(47.99px+16px)];
     }
 
     #sidebar.active {
