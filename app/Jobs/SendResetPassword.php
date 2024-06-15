@@ -2,27 +2,27 @@
 
 namespace App\Jobs;
 
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Password;
 
-class SendEmailVerification implements ShouldQueue
+class SendResetPassword implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $user;
+    protected $request;
     public $tries = 5; // try 5 times if not succeed
 
     /**
      * Create a new job instance.
      */
-    public function __construct($user)
+    public function __construct($request)
     {
-        $this->user = $user;
+        $this->request = $request;
     }
 
     /**
@@ -30,7 +30,8 @@ class SendEmailVerification implements ShouldQueue
      */
     public function handle(): void
     {
-        $user = $this->user;
-        event(new Registered($user));
+        Password::sendResetLink(
+            $this->request
+        );
     }
 }
