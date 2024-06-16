@@ -11,7 +11,7 @@
                 <tr>
                     <td class="border p-2">{{ $user_has_subject->subject->name }}</td>
                     <td class="border p-2">
-                        {{ Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->where('kpi_period_id', $kpi->id)->count() }}/{{ $user_has_subject->quota }}
+                        {{ $user_has_subject->quota }}/{{ Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->where('kpi_period_id', $kpi->id)->count() }}
                         ({{ number_format((Auth::user()->presences->where('subject_id', $user_has_subject->subject_id)->where('kpi_period_id', $kpi->id)->count() *100) /$user_has_subject->quota,2) }}%)
                     </td>
                     <td class="border p-2 text-center">
@@ -23,7 +23,7 @@
                 <td class="border p-2">Total Kehadiran</td>
                 @if (Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() > 0)
                     <td colspan="2" class="border p-2">
-                        {{ Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() }}/{{ array_sum($subjects->pluck('quota')->toArray()) }}
+                        {{ array_sum($subjects->pluck('quota')->toArray()) }}/{{ Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() }}
                         ({{ number_format((Auth::user()->presences->where('kpi_period_id', $kpi->id)->count() *100) /array_sum($subjects->pluck('quota')->toArray()),2) }}%)
                     </td>
                 @else

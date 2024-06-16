@@ -42,7 +42,8 @@
             </div>
         </div>
         @if ($valid_kpi !== true)
-            <div>
+            <div class="flex flex-col items-center">
+                <p>{{ $valid_kpi }}</p>
                 <p class="text-center">Tanggal KPI
                     ({{ \Carbon\Carbon::parse($active_kpi->start_date)->format('d/m/Y') }} -
                     {{ \Carbon\Carbon::parse($active_kpi->end_date)->format('d/m/Y') }})</p>

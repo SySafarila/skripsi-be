@@ -4,6 +4,9 @@
         @if (!$active_kpi->receive_feedback)
             <x-app.session-notifications type="warning" message="Pengisian feedback/masukan belum dibuka." />
         @endif
+        @if ($valid_kpi !== true)
+            <x-app.session-notifications type="warning" message="{{ $valid_kpi }}" />
+        @endif
         <div class="rounded-md border p-4">
             @if (@$course)
                 <div class="flex flex-col rounded-md">
@@ -41,7 +44,7 @@
                         <div class="flex flex-col gap-1">
                             <textarea name="messages[{{ $key }}]" id="{{ $key }}-{{ $question->question }}"
                                 class="w-full rounded-md" placeholder="Tulis masukan kamu disini..." required
-                                {{ !$active_kpi->receive_feedback ? ' disabled' : '' }}>{{ $question->responses[0]->message ?? '' }}</textarea>
+                                {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>{{ $question->responses[0]->message ?? '' }}</textarea>
                             <small>Isi "-" jika tidak ingin mengirim masukan</small>
                         </div>
                         <div class="flex flex-col gap-2">
@@ -50,7 +53,7 @@
                                     <input type="radio" name="points[{{ $key }}]"
                                         id="{{ $key }}-{{ $i }}" value="{{ $i }}"
                                         {{ @$question->responses[0]->point == $i ? 'checked' : '' }}
-                                        {{ !$active_kpi->receive_feedback ? ' disabled' : '' }}>
+                                        {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>
                                     <label for="{{ $key }}-{{ $i }}">{{ $points_detail[$i -1 ] }}</label>
                                 </div>
                             @endfor
@@ -68,7 +71,8 @@
             </div>
         </form>
         @if ($valid_kpi !== true)
-            <div>
+            <div class="flex flex-col items-center">
+                <p>{{ $valid_kpi }}</p>
                 <p class="text-center">Tanggal KPI ({{ \Carbon\Carbon::parse($active_kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($active_kpi->end_date)->format('d/m/Y') }})</p>
             </div>
         @else
