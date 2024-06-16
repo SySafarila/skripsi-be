@@ -85,6 +85,10 @@
                     title: {
                         display: true,
                         text: 'Performa dalam 5 periode KPI'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'Diurutkan berdasarkan tanggal berakhirnya periode KPI'
                     }
                 }
             }

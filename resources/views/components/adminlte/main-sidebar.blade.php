@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="{{ route('admin.index') }}" class="brand-link">
-        <img src="{{ asset('adminlte-3.2.0/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+        <img src="{{ asset('images/logo_unpi.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle" style="opacity: .8">
-        <span class="brand-text font-weight-light">SySafarila</span>
+        <span class="brand-text font-weight-light">UNPI</span>
     </a>
 
     <div class="sidebar">

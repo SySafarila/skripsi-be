@@ -206,6 +206,11 @@
             feedbackCount.push(kpi.feedbacks_count ?? undefined)
         });
 
+        labels.reverse();
+        presencePoints.reverse();
+        feedbackPoints.reverse();
+        feedbackCount.reverse();
+
         while (labels.length < 12) {
             labels.push('-')
         }
@@ -244,7 +249,7 @@
                     },
                     subtitle: {
                         display: true,
-                        text: 'Diurutkan berdasarkan tanggal dimulainya periode KPI'
+                        text: 'Diurutkan berdasarkan tanggal berakhirnya periode KPI'
                     }
                 }
             }
