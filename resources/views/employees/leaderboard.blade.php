@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <button class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-100" id="expand-points">
-                            <span>{{ number_format($point->points, 2) }} XP</span>
+                            <span>{{ number_format($point->points, 2) }} Poin</span>
                             <img src="{{ asset('icons/chevron.svg') }}" class="transition-transform ease-in-out"
                                 alt="arrow">
                         </button>
@@ -79,12 +79,12 @@
                         <div class="flex items-center justify-end gap-2">
                             <span>Kehadiran</span>
                             <span>-</span>
-                            <span>{{ number_format($point->presence_points, 2) }} XP</span>
+                            <span>{{ number_format($point->presence_points, 2) }} Poin</span>
                         </div>
                         <div class="flex items-center justify-end gap-2">
                             <span>Umpan Balik</span>
                             <span>-</span>
-                            <span>{{ number_format($point->feedback_points, 2) }} XP</span>
+                            <span>{{ number_format($point->feedback_points, 2) }} Poin</span>
                         </div>
                     </div>
                 </div>

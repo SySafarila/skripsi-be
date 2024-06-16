@@ -48,7 +48,7 @@
         </table>
         @if ($valid_kpi !== true)
             <div>
-                <p class="text-center">{{ $valid_kpi }}, absensi belum bisa diisi</p>
+                <p class="text-center">{{ $valid_kpi }}</p>
                 <p class="text-center">Tanggal KPI - ({{ \Carbon\Carbon::parse($kpi->start_date)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($kpi->end_date)->format('d/m/Y') }})</p>
             </div>
         @else
