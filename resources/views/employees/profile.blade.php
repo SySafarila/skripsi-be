@@ -50,6 +50,10 @@
             feedbackPoints.push(kpi.points[0]?.feedback_points ?? undefined)
         });
 
+        labels.reverse();
+        presencePoints.reverse();
+        feedbackPoints.reverse();
+
         while (labels.length < 5) {
             labels.push('-')
         }

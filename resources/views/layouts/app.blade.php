@@ -20,7 +20,10 @@
 <body>
     <nav id="navbar">
         <div class="mx-auto flex w-full max-w-screen-lg items-center justify-between px-4">
-            <a href="/" id="brand" class="font-bold">BRAND</a>
+            <a href="/" id="brand" class="flex items-center gap-2">
+                <img src="{{ asset('images/logo_unpi.png') }}" alt="logo" class="h-8">
+                <span class="font-bold">UNPI</span>
+            </a>
             <button type="button" class="lg:hidden" id="hamburger">
                 <img src="{{ asset('icons/menu.svg') }}" alt="menu">
             </button>

@@ -31,7 +31,7 @@ class DosenPageController extends Controller
         $kpi = KpiPeriod::where('is_active', true)->first();
         $points = KpiPeriod::with(['points' => function ($q) {
             return $q->where('user_id', request()->user()->id);
-        }])->orderBy('start_date', 'desc')->limit(5)->get();
+        }])->orderBy('end_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', request()->user()->id)->where('position', '<=', 5)->latest()->get();
         $user = Auth::user();
         $roles = $user->roles->pluck('name');
@@ -53,7 +53,7 @@ class DosenPageController extends Controller
         // $user = User::with('subjects.subject')->where('id', $user->id)->first();
         $points = KpiPeriod::with(['points' => function ($q) use ($user) {
             return $q->where('user_id', $user->id);
-        }])->orderBy('start_date', 'desc')->limit(5)->get();
+        }])->orderBy('end_date', 'desc')->limit(5)->get();
         $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
         return view('employees.profile-show', compact('user', 'achievements', 'points', 'roles'));
     }
