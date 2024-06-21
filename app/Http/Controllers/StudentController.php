@@ -361,7 +361,9 @@ class StudentController extends Controller
         $student_nims = User::all()->pluck('identifier_number')->toArray();
         $exists_nims = [];
         foreach ($student_nims as $student_nim) {
-            array_push($exists_nims, $student_nim->identifier_number);
+            if ($student_nim != null) {
+                array_push($exists_nims, $student_nim);
+            }
         }
 
         foreach ($array[0] as $key => $row) {
