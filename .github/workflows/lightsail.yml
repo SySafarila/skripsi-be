@@ -3,6 +3,7 @@ name: Deploy to AWS lightsail
 on:
   pull_request:
     branches: ["prod"]
+    types: ['closed']
 
 jobs:
   build:
