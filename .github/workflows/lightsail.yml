@@ -1,15 +1,15 @@
-name: Deploy to lightsail
+name: Deploy to AWS lightsail
 
 on:
   pull_request:
-    branches: [ "prod" ]
+    branches: ["prod"]
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to lightsail
+      - name: Deploy to AWS lightsail
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
@@ -17,5 +17,9 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            whoami
-            ls -l
+            sh ~/skripsi-dockerized/shell-scripts/down.sh
+            cd ~/skripsi-dockerized/laravel/
+            git checkout prod
+            git fetch
+            git pull
+            sh ~/skripsi-dockerized/shell-scripts/up.sh
