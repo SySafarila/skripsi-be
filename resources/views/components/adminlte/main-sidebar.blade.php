@@ -29,23 +29,8 @@
                         </p>
                     </a>
                 </li>
-                @canany(['blogs-read', 'kpi-read'])
+                @canany(['kpi-read', 'achievements-read', 'presence-scopes-read', 'employees-presence-quota-read', 'feedback-questions-read', 'feedbacks-read', 'majors-read', 'courses-read', 'tendik-positions-read', 'employees-read', 'students-read'])
                     <li class="nav-header text-uppercase">Content Control</li>
-
-                    @if (Route::has('admin.blogs.index'))
-                        @can('blogs-read')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.blogs.index') }}"
-                                    class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-newspaper"></i>
-                                    <p>
-                                        Blogs
-                                        {{-- <span class="right badge badge-danger">New</span> --}}
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                    @endif
                     @can('kpi-read')
                         <li class="nav-item">
                             <a href="{{ route('admin.kpi.index') }}"

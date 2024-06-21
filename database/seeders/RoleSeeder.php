@@ -24,6 +24,8 @@ class RoleSeeder extends Seeder
         $mahasiswa = Role::create(['name' => 'mahasiswa']);
 
         $superAdmin->syncPermissions(['admin-access']);
-        $admin->syncPermissions(['admin-access']);
+
+        $adminPermissions = ['admin-access', 'kpi-create', 'kpi-read', 'kpi-update', 'kpi-delete', 'presence-scopes-create', 'presence-scopes-read', 'presence-scopes-update', 'presence-scopes-delete', 'feedback-questions-create', 'feedback-questions-read', 'feedback-questions-update', 'feedback-questions-delete', 'employees-presence-quota-create', 'employees-presence-quota-read', 'employees-presence-quota-update', 'employees-presence-quota-delete', 'semesters-create', 'semesters-read', 'semesters-update', 'semesters-delete', 'majors-create', 'majors-read', 'majors-update', 'majors-delete', 'courses-create', 'courses-read', 'courses-update', 'courses-delete', 'feedbacks-create', 'feedbacks-read', 'feedbacks-update', 'feedbacks-delete', 'employees-create', 'employees-read', 'employees-update', 'employees-delete', 'students-create', 'students-read', 'students-update', 'students-delete', 'achievements-create', 'achievements-read', 'achievements-update', 'achievements-delete', 'tendik-positions-create', 'tendik-positions-read', 'tendik-positions-update', 'tendik-positions-delete'];
+        $admin->syncPermissions($adminPermissions);
     }
 }

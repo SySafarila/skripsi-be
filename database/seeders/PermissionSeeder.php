@@ -202,6 +202,35 @@ class PermissionSeeder extends Seeder
             ],
         );
 
+        // feedbacks
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'feedbacks-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'feedbacks-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'feedbacks-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'feedbacks-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
         // employees-presence-quota / pengelolaan dosen
         array_push(
             $arr,
@@ -313,6 +342,122 @@ class PermissionSeeder extends Seeder
             [
                 'guard_name' => 'web',
                 'name' => 'courses-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
+        // employees
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'employees-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'employees-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'employees-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'employees-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
+        // students
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'students-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'students-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'students-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'students-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
+        // achievements
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'achievements-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'achievements-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'achievements-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'achievements-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
+        // tendik-positions
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'tendik-positions-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'tendik-positions-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'tendik-positions-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'tendik-positions-delete',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
