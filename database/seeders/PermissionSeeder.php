@@ -463,6 +463,17 @@ class PermissionSeeder extends Seeder
             ],
         );
 
+        // general-settings
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'general-settings',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
+
         DB::table('permissions')->insert($arr);
     }
 }
