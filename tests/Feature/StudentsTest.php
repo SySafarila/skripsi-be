@@ -72,6 +72,9 @@ class StudentsTest extends TestCase
         // $this->seed();
         $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
 
+        $response = $this->actingAs($mahasiswa)->get(route('student.courses.feedback', 2));
+        $response->assertStatus(200);
+
         $response2 = $this->actingAs($mahasiswa)->post(route('student.store', 2), [
             "messages" => [
                 "Id cillum exercitat",
@@ -102,6 +105,9 @@ class StudentsTest extends TestCase
         // $this->seed();
         $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
 
+        $response = $this->actingAs($mahasiswa)->get(route('student.courses.feedback.nonedu', 3));
+        $response->assertStatus(200);
+
         $response2 = $this->actingAs($mahasiswa)->post(route('student.store.nonedu', 3), [
             "messages" => [
                 "Officiis dolorum eve",
@@ -121,5 +127,20 @@ class StudentsTest extends TestCase
             ]
         ]);
         $response2->assertSessionHas('success');
+    }
+
+    public function test_mahasiswa_mengubah_pengaturan()
+    {
+        $mahasiswa = User::where('email', 'mahasiswa@mahasiswa.com')->first();
+
+        $response = $this->actingAs($mahasiswa)->get(route('settings.index'));
+        $response->assertStatus(200);
+
+        $response2 = $this->actingAs($mahasiswa)->patch(route('settings.update', [
+            'email' => 'mahasiswa@mahasiswa.com',
+            'password' => 'password2',
+            'update_image' => false
+        ]));
+        $response2->assertStatus(200);
     }
 }

@@ -119,4 +119,19 @@ class EmployeesTest extends TestCase
         ]);
         $response3->assertSessionHas('success');
     }
+
+    public function test_karyawan_mengubah_pengaturan()
+    {
+        $mahasiswa = User::where('email', 'dosen@dosen.com')->first();
+
+        $response = $this->actingAs($mahasiswa)->get(route('settings.index'));
+        $response->assertStatus(200);
+
+        $response2 = $this->actingAs($mahasiswa)->patch(route('settings.update', [
+            'email' => 'dosen@dosen.com',
+            'password' => 'password2',
+            'update_image' => false
+        ]));
+        $response2->assertStatus(200);
+    }
 }
