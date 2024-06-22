@@ -56,6 +56,6 @@
     <hr>
     <p class="px-4 pt-3 text-center text-xs text-black/70">Sistem ini dibuat sebagai salah satu syarat untuk menyelesaikan pendidikan
         S1 di Universitas Putra Indonesia.</p>
-    <p class="pt-1 px-4 text-center text-xs text-black/70">2024 | <a href="https://www.sysafarila.my.id/" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-500">Syahrul Safarila</a></p>
+    <p class="pt-1 px-4 text-center text-xs text-black/70">2024 | <a href="https://www.linkedin.com/in/sysafarila" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-500">Syahrul Safarila</a></p>
     <p class="pt-1 px-4 pb-3 text-center text-xs text-black/70">{{ config('app.version') }}</p>
 </div>
