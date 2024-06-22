@@ -3,11 +3,11 @@ name: Deploy to AWS lightsail
 on:
   pull_request:
     branches: ["prod"]
-    types: ['closed']
+    types: ["closed"]
 
 jobs:
   build:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to AWS lightsail
@@ -18,9 +18,11 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            sh ~/skripsi-dockerized/shell-scripts/down.sh
+            cd ~/skripsi-dockerized/
+            docker compose exec -it php-fpm sh -c "php artisan down"
             cd ~/skripsi-dockerized/laravel/
             git checkout prod
             git fetch
             git pull
-            sh ~/skripsi-dockerized/shell-scripts/up.sh
+            cd ~/skripsi-dockerized/
+            docker compose exec -it php-fpm sh -c "php artisan up"

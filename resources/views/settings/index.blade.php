@@ -109,8 +109,9 @@
 
         uploadBtn.addEventListener('click', (e) => {
             e.preventDefault()
-            // uploadBtn.disabled = true
+            uploadBtn.disabled = true
             uploadCropped()
+            uploadBtn.disabled = false
         })
     </script>
 </x-app-layout>
