@@ -95,6 +95,8 @@
                         // }, 1000);
                     },
                     error(e) {
+                        uploadBtn.disabled = false
+                        uploadBtn.innerText = "Save"
                         console.log(e);
                         // swal({
                         //     title: "Uploade failed !",
@@ -110,8 +112,8 @@
         uploadBtn.addEventListener('click', (e) => {
             e.preventDefault()
             uploadBtn.disabled = true
+            uploadBtn.innerText = "Loading..."
             uploadCropped()
-            uploadBtn.disabled = false
         })
     </script>
 </x-app-layout>
