@@ -1,4 +1,4 @@
-@canany(['users-read', 'permissions-read', 'roles-read'])
+@canany(['users-read', 'permissions-read', 'roles-read', 'general-settings'])
     <li class="nav-header text-uppercase">System Control</li>
 
     @can('users-read')
@@ -36,7 +36,7 @@
             </a>
         </li>
     @endcan
-    @can('settings-read')
+    @can('general-settings')
         <li class="nav-item">
             <a href="{{ route('admin.settings.index') }}"
                 class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
