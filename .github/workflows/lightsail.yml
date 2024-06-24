@@ -25,4 +25,6 @@ jobs:
             git fetch
             git pull
             cd ~/skripsi-dockerized/
+            docker compose exec -it php-fpm sh -c "php artisan optimize:clear"
+            docker compose exec -it php-fpm sh -c "php artisan optimize"
             docker compose exec -it php-fpm sh -c "php artisan up"
