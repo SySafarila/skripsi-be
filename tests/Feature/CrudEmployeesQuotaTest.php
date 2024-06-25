@@ -25,12 +25,12 @@ class CrudEmployeesQuotaTest extends TestCase
     public function test_kuota_absensi_create()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response1 = $this->actingAs($super_admin)->get(route('admin.employees-presence-quota.create'));
+        $response1 = $this->actingAs($admin)->get(route('admin.employees-presence-quota.create'));
         $response1->assertStatus(200);
 
-        $response = $this->actingAs($super_admin)->post(route('admin.employees-presence-quota.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.employees-presence-quota.store'), [
             'user_id' => 3, // dosen
             'subject_id' => 1, // kalkulus 1
             'quota' => 16
@@ -42,9 +42,9 @@ class CrudEmployeesQuotaTest extends TestCase
     public function test_kuota_absensi_read()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->get(route('admin.employees-presence-quota.index'));
+        $response = $this->actingAs($admin)->get(route('admin.employees-presence-quota.index'));
 
         $response->assertStatus(200);
     }
@@ -52,9 +52,9 @@ class CrudEmployeesQuotaTest extends TestCase
     public function test_kuota_absensi_update()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.employees-presence-quota.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.employees-presence-quota.store'), [
             'user_id' => 3, // dosen
             'subject_id' => 1, // kalkulus 1
             'quota' => 16
@@ -62,9 +62,9 @@ class CrudEmployeesQuotaTest extends TestCase
         $response->assertRedirect(route('admin.employees-presence-quota.index'));
 
         $userHasSubject = UsersHasSubject::where('user_id', 3)->where('subject_id', 1)->where('quota', 16)->first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.employees-presence-quota.edit', $userHasSubject->id));
+        $response1 = $this->actingAs($admin)->get(route('admin.employees-presence-quota.edit', $userHasSubject->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.employees-presence-quota.update', $userHasSubject->id), [
+        $response2 = $this->actingAs($admin)->patch(route('admin.employees-presence-quota.update', $userHasSubject->id), [
             'user_id' => 3, // dosen
             'subject_id' => 1, // kalkulus 1
             'quota' => 20
@@ -75,9 +75,9 @@ class CrudEmployeesQuotaTest extends TestCase
     public function test_kuota_absensi_delete()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.employees-presence-quota.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.employees-presence-quota.store'), [
             'user_id' => 3, // dosen
             'subject_id' => 1, // kalkulus 1
             'quota' => 16
@@ -85,7 +85,7 @@ class CrudEmployeesQuotaTest extends TestCase
         $response->assertRedirect(route('admin.employees-presence-quota.index'));
 
         $userHasSubject = UsersHasSubject::where('user_id', 3)->where('subject_id', 1)->where('quota', 16)->first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.employees-presence-quota.destroy', $userHasSubject->id));
+        $response2 = $this->actingAs($admin)->delete(route('admin.employees-presence-quota.destroy', $userHasSubject->id));
         $response2->assertRedirect(route('admin.employees-presence-quota.index'));
     }
 }

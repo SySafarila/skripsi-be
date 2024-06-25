@@ -23,12 +23,12 @@ class CrudSubjekAbsensiTest extends TestCase
     public function test_lingkup_absensi_create()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response1 = $this->actingAs($super_admin)->get(route('admin.presence-scopes.create'));
+        $response1 = $this->actingAs($admin)->get(route('admin.presence-scopes.create'));
         $response1->assertStatus(200);
 
-        $response = $this->actingAs($super_admin)->post(route('admin.presence-scopes.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.presence-scopes.store'), [
             "name" => "Incididunt enim qui",
         ]);
 
@@ -38,9 +38,9 @@ class CrudSubjekAbsensiTest extends TestCase
     public function test_lingkup_absensi_read()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->get(route('admin.presence-scopes.index'));
+        $response = $this->actingAs($admin)->get(route('admin.presence-scopes.index'));
 
         $response->assertStatus(200);
     }
@@ -48,17 +48,17 @@ class CrudSubjekAbsensiTest extends TestCase
     public function test_lingkup_absensi_update()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.presence-scopes.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.presence-scopes.store'), [
             "name" => "Incididunt enim qui"
         ]);
         $response->assertRedirect(route('admin.presence-scopes.index'));
 
         $subject = Subject::first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.presence-scopes.edit', $subject->id));
+        $response1 = $this->actingAs($admin)->get(route('admin.presence-scopes.edit', $subject->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.presence-scopes.update', $subject->id), [
+        $response2 = $this->actingAs($admin)->patch(route('admin.presence-scopes.update', $subject->id), [
             "name" => "Testing"
         ]);
         $response2->assertRedirect(route('admin.presence-scopes.index'));
@@ -67,15 +67,15 @@ class CrudSubjekAbsensiTest extends TestCase
     public function test_lingkup_absensi_delete()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.presence-scopes.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.presence-scopes.store'), [
             "name" => "Incididunt enim qui",
         ]);
         $response->assertRedirect(route('admin.presence-scopes.index'));
 
         $subject = Subject::first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.presence-scopes.destroy', $subject->id));
+        $response2 = $this->actingAs($admin)->delete(route('admin.presence-scopes.destroy', $subject->id));
         $response2->assertRedirect(route('admin.presence-scopes.index'));
     }
 }

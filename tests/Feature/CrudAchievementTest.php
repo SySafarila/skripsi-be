@@ -25,9 +25,9 @@ class CrudAchievementTest extends TestCase
     // public function test_pencapaian_create()
     // {
     //     // $this->seed();
-    //     $super_admin = User::where('email', 'super.admin@admin.com')->first();
+    //     $admin = User::where('email', 'admin@admin.com')->first();
 
-    //     $response = $this->actingAs($super_admin)->post(route('admin.achievements.store'), [
+    //     $response = $this->actingAs($admin)->post(route('admin.achievements.store'), [
     //         'name' => "Testing",
     //         'user_id' => 3, // dosen
     //         'semester' => 2,
@@ -40,9 +40,9 @@ class CrudAchievementTest extends TestCase
     public function test_pencapaian_read()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->get(route('admin.achievements.index'));
+        $response = $this->actingAs($admin)->get(route('admin.achievements.index'));
 
         $response->assertStatus(200);
     }
@@ -50,9 +50,9 @@ class CrudAchievementTest extends TestCase
     // public function test_pencapaian_update()
     // {
     //     // $this->seed();
-    //     $super_admin = User::where('email', 'super.admin@admin.com')->first();
+    //     $admin = User::where('email', 'admin@admin.com')->first();
 
-    //     $response = $this->actingAs($super_admin)->post(route('admin.achievements.store'), [
+    //     $response = $this->actingAs($admin)->post(route('admin.achievements.store'), [
     //         'name' => "Testing",
     //         'user_id' => 3, // dosen
     //         'semester' => 2,
@@ -61,7 +61,7 @@ class CrudAchievementTest extends TestCase
     //     $response->assertRedirect(route('admin.achievements.index'));
 
     //     $achievement = Achievement::where('name', 'Testing')->first();
-    //     $response2 = $this->actingAs($super_admin)->patch(route('admin.achievements.update', $achievement->id), [
+    //     $response2 = $this->actingAs($admin)->patch(route('admin.achievements.update', $achievement->id), [
     //         'name' => "Testing",
     //         'user_id' => 4, // dosen 2
     //         'semester' => 2,
@@ -73,7 +73,7 @@ class CrudAchievementTest extends TestCase
     public function test_pencapaian_delete()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
         $achievement = Achievement::create([
             'user_id' => 3,
@@ -82,7 +82,7 @@ class CrudAchievementTest extends TestCase
             'position' => 1,
         ]);
 
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.achievements.destroy', $achievement->id));
+        $response2 = $this->actingAs($admin)->delete(route('admin.achievements.destroy', $achievement->id));
         $response2->assertRedirect(route('admin.achievements.index'));
     }
 }
