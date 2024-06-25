@@ -22,7 +22,7 @@
     }
 
     #nav-backdrop {
-        @apply absolute z-[55] left-0 h-screen w-full top-0 transition-colors ease-in-out lg:hidden;
+        @apply fixed z-[55] left-0 h-screen w-full top-0 transition-colors ease-in-out lg:hidden;
     }
 
     #sidebar .account {
