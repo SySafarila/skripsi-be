@@ -53,7 +53,7 @@
                                     <input type="radio" name="points[{{ $key }}]"
                                         id="{{ $key }}-{{ $i }}" value="{{ $i }}"
                                         {{ @$question->responses[0]->point == $i ? 'checked' : '' }}
-                                        {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>
+                                        {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }} required>
                                     <label for="{{ $key }}-{{ $i }}">{{ $points_detail[$i -1 ] }}</label>
                                 </div>
                             @endfor

@@ -20,7 +20,11 @@ class StudentFeedbackController extends Controller
 
     public function profile()
     {
-        $courses = Auth::user()->hasMajor->major->courses()->with('user')->where('semester', Auth::user()->hasMajor->semester)->orderBy('name')->get();
+        $user = Auth::user();
+        if (!$user->hasMajor) {
+            abort(404, 'Akun kamu belum memiliki jurusan atau semester');
+        }
+        $courses = $user->hasMajor->major->courses()->with('user')->where('semester', Auth::user()->hasMajor->semester)->orderBy('name')->get();
         return view('students.profile', compact('courses'));
     }
 
@@ -38,6 +42,9 @@ class StudentFeedbackController extends Controller
             $valid_kpi = $th->getMessage();
         }
         $user = Auth::user();
+        if (!$user->hasMajor) {
+            abort(404, 'Akun kamu belum memiliki jurusan atau semester');
+        }
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
         // $courses = $user->hasMajor->major->courses()->where('semester', $semester)->orderBy('name', 'asc')->get();
@@ -66,6 +73,9 @@ class StudentFeedbackController extends Controller
             $valid_kpi = $th->getMessage();
         }
         $user = Auth::user();
+        if (!$user->hasMajor) {
+            abort(404, 'Akun kamu belum memiliki jurusan atau semester');
+        }
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
         $course = Course::with('user')->where('major_id', $major_id)->where('semester', $semester)->where('id', $course_id)->firstOrFail();
@@ -101,6 +111,9 @@ class StudentFeedbackController extends Controller
             $valid_kpi = $th->getMessage();
         }
         $user = Auth::user();
+        if (!$user->hasMajor) {
+            abort(404, 'Akun kamu belum memiliki jurusan atau semester');
+        }
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
         $tendik_position = TendikPosition::findOrFail($tendik_position_id);
@@ -134,6 +147,9 @@ class StudentFeedbackController extends Controller
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
         }
         $user = Auth::user();
+        if (!$user->hasMajor) {
+            abort(404, 'Akun kamu belum memiliki jurusan atau semester');
+        }
         $semester = $user->hasMajor->semester;
         $major_id = $user->hasMajor->major_id;
         // $courses = $user->hasMajor->major->courses()->where('semester', $semester)->orderBy('name', 'asc')->get();
@@ -196,6 +212,9 @@ class StudentFeedbackController extends Controller
         }
 
         $user = Auth::user();
+        if (!$user->hasMajor) {
+            abort(404, 'Akun kamu belum memiliki jurusan atau semester');
+        }
         $feedbacks = [];
 
         foreach ($request->question_ids as $key => $question_id) {
