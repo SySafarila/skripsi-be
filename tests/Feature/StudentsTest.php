@@ -98,6 +98,9 @@ class StudentsTest extends TestCase
             ]
         ]);
         $response2->assertSessionHas('success');
+
+        $response3 = $this->actingAs($mahasiswa)->get(route('student.courses.feedback', 2));
+        $response3->assertStatus(200);
     }
 
     public function test_mahasiswa_mengisi_feedback_tendik()
@@ -127,6 +130,9 @@ class StudentsTest extends TestCase
             ]
         ]);
         $response2->assertSessionHas('success');
+
+        $response3 = $this->actingAs($mahasiswa)->get(route('student.courses.feedback.nonedu', 3));
+        $response3->assertStatus(200);
     }
 
     public function test_mahasiswa_mengubah_pengaturan()
