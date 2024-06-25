@@ -26,6 +26,11 @@ class AuthenticationTest extends TestCase
         // $user = User::factory()->create();
 
         $response = $this->post('/login', [
+            'email' => 'admin@admin.com',
+            'password' => 'password',
+        ]);
+
+        $response2 = $this->post('/login', [
             'email' => 'super.admin@admin.com',
             'password' => 'password',
         ]);

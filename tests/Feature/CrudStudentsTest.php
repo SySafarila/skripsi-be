@@ -25,12 +25,12 @@ class CrudStudentsTest extends TestCase
     public function test_mahasiswa_create()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response1 = $this->actingAs($super_admin)->get(route('admin.students.create'));
+        $response1 = $this->actingAs($admin)->get(route('admin.students.create'));
         $response1->assertStatus(200);
 
-        $response = $this->actingAs($super_admin)->post(route('admin.students.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.students.store'), [
             'name' => 'testing',
             'email' => null,
             'password' => 'password',
@@ -48,9 +48,9 @@ class CrudStudentsTest extends TestCase
     public function test_mahasiswa_read()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->get(route('admin.students.index'));
+        $response = $this->actingAs($admin)->get(route('admin.students.index'));
 
         $response->assertStatus(200);
     }
@@ -58,9 +58,9 @@ class CrudStudentsTest extends TestCase
     public function test_mahasiswa_update()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.students.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.students.store'), [
             'name' => 'testing',
             'email' => null,
             'password' => 'password',
@@ -74,9 +74,9 @@ class CrudStudentsTest extends TestCase
         $response->assertRedirect(route('admin.students.index'));
 
         $user = User::where('name', 'testing')->first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.students.edit', $user->id));
+        $response1 = $this->actingAs($admin)->get(route('admin.students.edit', $user->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.students.update', $user->id), [
+        $response2 = $this->actingAs($admin)->patch(route('admin.students.update', $user->id), [
             'name' => 'testing 2',
             'email' => null,
             'password' => 'password',
@@ -94,9 +94,9 @@ class CrudStudentsTest extends TestCase
     public function test_mahasiswa_delete()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.students.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.students.store'), [
             'name' => 'testing',
             'email' => null,
             'password' => 'password',
@@ -110,7 +110,7 @@ class CrudStudentsTest extends TestCase
         $response->assertRedirect(route('admin.students.index'));
 
         $user = User::where('name', 'testing')->first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.students.destroy', $user->id));
+        $response2 = $this->actingAs($admin)->delete(route('admin.students.destroy', $user->id));
         $response2->assertRedirect(route('admin.students.index'));
     }
 }

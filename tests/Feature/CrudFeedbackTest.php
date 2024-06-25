@@ -22,9 +22,9 @@ class CrudFeedbackTest extends TestCase
     public function test_umpan_balik_read()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->get(route('admin.feedbacks.index'));
+        $response = $this->actingAs($admin)->get(route('admin.feedbacks.index'));
 
         $response->assertStatus(200);
     }
@@ -32,7 +32,7 @@ class CrudFeedbackTest extends TestCase
     public function test_umpan_balik_delete()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
         $feedbacks = [];
         array_push($feedbacks, [
@@ -50,7 +50,7 @@ class CrudFeedbackTest extends TestCase
         DB::table('user_feedback')->insert($feedbacks);
 
         $userFeedback = UserFeedback::where('message', 'testing')->first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.feedbacks.destroy', $userFeedback->id));
+        $response2 = $this->actingAs($admin)->delete(route('admin.feedbacks.destroy', $userFeedback->id));
         $response2->assertRedirect(route('admin.feedbacks.index'));
     }
 }

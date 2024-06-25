@@ -24,12 +24,12 @@ class CrudMajorTest extends TestCase
     public function test_jurusan_create()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response1 = $this->actingAs($super_admin)->get(route('admin.majors.create'));
+        $response1 = $this->actingAs($admin)->get(route('admin.majors.create'));
         $response1->assertStatus(200);
 
-        $response = $this->actingAs($super_admin)->post(route('admin.majors.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.majors.store'), [
             "major" => "Incididunt enim qui",
         ]);
 
@@ -39,9 +39,9 @@ class CrudMajorTest extends TestCase
     public function test_jurusan_read()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->get(route('admin.majors.index'));
+        $response = $this->actingAs($admin)->get(route('admin.majors.index'));
 
         $response->assertStatus(200);
     }
@@ -49,17 +49,17 @@ class CrudMajorTest extends TestCase
     public function test_jurusan_update()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.majors.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.majors.store'), [
             "major" => "Incididunt enim qui"
         ]);
         $response->assertRedirect(route('admin.majors.index'));
 
         $major = Major::first();
-        $response1 = $this->actingAs($super_admin)->get(route('admin.majors.edit', $major->id));
+        $response1 = $this->actingAs($admin)->get(route('admin.majors.edit', $major->id));
         $response1->assertStatus(200);
-        $response2 = $this->actingAs($super_admin)->patch(route('admin.majors.update', $major->id), [
+        $response2 = $this->actingAs($admin)->patch(route('admin.majors.update', $major->id), [
             "major" => "Testing"
         ]);
         $response2->assertRedirect(route('admin.majors.index'));
@@ -68,15 +68,15 @@ class CrudMajorTest extends TestCase
     public function test_jurusan_delete()
     {
         // $this->seed();
-        $super_admin = User::where('email', 'super.admin@admin.com')->first();
+        $admin = User::where('email', 'admin@admin.com')->first();
 
-        $response = $this->actingAs($super_admin)->post(route('admin.majors.store'), [
+        $response = $this->actingAs($admin)->post(route('admin.majors.store'), [
             "major" => "Incididunt enim qui",
         ]);
         $response->assertRedirect(route('admin.majors.index'));
 
         $major = Major::first();
-        $response2 = $this->actingAs($super_admin)->delete(route('admin.majors.destroy', $major->id));
+        $response2 = $this->actingAs($admin)->delete(route('admin.majors.destroy', $major->id));
         $response2->assertRedirect(route('admin.majors.index'));
     }
 }
