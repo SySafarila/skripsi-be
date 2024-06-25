@@ -7,6 +7,7 @@
         @if ($valid_kpi !== true)
             <x-app.session-notifications type="warning" message="{{ $valid_kpi }}" />
         @endif
+        <x-app.session-notifications />
         <div class="rounded-md border p-4">
             @if (@$course)
                 <div class="flex flex-col rounded-md">
@@ -44,7 +45,7 @@
                         <div class="flex flex-col gap-1">
                             <textarea name="messages[{{ $key }}]" id="{{ $key }}-{{ $question->question }}"
                                 class="w-full rounded-md" placeholder="Tulis masukan kamu disini..." required
-                                {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>{{ $question->responses[0]->message ?? '' }}</textarea>
+                                {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }}>{{ old('messages.' . $key) ?? @$question->responses[0]->message }}</textarea>
                             <small>Isi "-" jika tidak ingin mengirim masukan</small>
                         </div>
                         <div class="flex flex-col gap-2">
@@ -52,7 +53,7 @@
                                 <div class="flex items-center gap-2">
                                     <input type="radio" name="points[{{ $key }}]"
                                         id="{{ $key }}-{{ $i }}" value="{{ $i }}"
-                                        {{ @$question->responses[0]->point == $i ? 'checked' : '' }}
+                                        {{ @$question->responses[0]->point == $i || old('points.' . $key) == $i ? 'checked' : '' }}
                                         {{ !$active_kpi->receive_feedback || $valid_kpi !== true ? ' disabled' : '' }} required>
                                     <label for="{{ $key }}-{{ $i }}">{{ $points_detail[$i -1 ] }}</label>
                                 </div>
