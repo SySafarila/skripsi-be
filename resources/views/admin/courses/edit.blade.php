@@ -35,14 +35,14 @@
                         @method('PATCH')
                         <div class="form-group">
                             <label for="name" class="text-capitalize">Mata Kuliah</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ $course->name }}" required>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ?? @$course->name }}" required>
                             @error('name')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="semester" class="text-capitalize">Semester</label>
-                            <input type="number" class="form-control" id="semester" name="semester" value="{{ $course->semester }}" required>
+                            <input type="number" class="form-control" id="semester" name="semester" value="{{ old('semester') ?? @$course->semester }}" required>
                             @error('semester')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
@@ -50,10 +50,11 @@
                         <div class="form-group">
                             <label for="user_id" class="text-capitalize">Dosen</label>
                             <select class="select2 form-control" name="user_id"
-                                data-placeholder="Pilih Dosen" style="width: 100%;" required>
+                                data-placeholder="Pilih Dosen" style="width: 100%;">
                                 <option value="">Pilih</option>
+                                <option value="-" {{ !$course->user ? 'selected' : '' }}>TIDAK ADA DOSEN</option>
                                 @foreach ($dosens as $dosen)
-                                    <option value="{{ $dosen->id }}" {{ $course->user_id == $dosen->id ? 'selected' : '' }}>{{ $dosen->name }}</option>
+                                    <option value="{{ $dosen->id }}" {{ old('user_id') == $dosen->id || @$course->user_id == $dosen->id ? 'selected' : '' }}>{{ $dosen->name }}</option>
                                 @endforeach
                             </select>
                             @error('user_id')
@@ -66,7 +67,7 @@
                                 data-placeholder="Pilih Jurusan" style="width: 100%;" required>
                                 <option value="">Pilih</option>
                                 @foreach ($majors as $major)
-                                    <option value="{{ $major->id }}" {{ $course->major_id == $major->id ? 'selected' : '' }}>{{ $major->major }}</option>
+                                    <option value="{{ $major->id }}" {{ old('major_id') == $major->id || @$course->major_id == $major->id ? 'selected' : '' }}>{{ $major->major }}</option>
                                 @endforeach
                             </select>
                             @error('major_id')
@@ -91,7 +92,7 @@
     <script>
         $('.select2').select2({
             theme: 'bootstrap4',
-            closeOnSelect: true
+            closeOnSelect: true,
         })
     </script>
 @endsection
