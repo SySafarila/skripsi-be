@@ -8,10 +8,10 @@
                 @foreach ($courses as $course)
                     <a href="{{ route('student.courses.feedback', ['course_id' => $course->id]) }}" class="flex flex-col p-2 rounded-md hover:bg-gray-100">
                         <div class="flex items-center gap-2">
-                            <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('images/profile.png') }}" class="w-10 h-10 rounded-full" alt="Photo profile">
+                            <img src="{{ @$course->user->image ? asset('storage/' . @$course->user->image) : asset('images/profile.png') }}" class="w-10 h-10 rounded-full" alt="Photo profile">
                             <div class="flex items-center justify-between w-full">
                                 <div class="flex flex-col pr-5 w-full">
-                                    <span class="font-semibold line-clamp-1 break-all">{{ $course->user->name }}</span>
+                                    <span class="font-semibold line-clamp-1 break-all">{{ $course->user->name ?? '-' }}</span>
                                     <span class="w-full line-clamp-1 break-all">{{ $course->name }}</span>
                                 </div>
                                 <small class="shrink-0 line-clamp-1 break-all"><b>{{ $eduQuestions->count() }}/{{ $sent_feedbacks->where('course_id', $course->id)->count() }}</b> terkirim</small>
