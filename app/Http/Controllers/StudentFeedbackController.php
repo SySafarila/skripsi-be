@@ -137,11 +137,22 @@ class StudentFeedbackController extends Controller
     public function store(Request $request, $course_id)
     {
         $request->validate([
+            'question_ids' => ['required', 'array'],
             'question_ids.*' => ['required', 'exists:feedback_questions,id'],
+            'messages' => ['required', 'array'],
             'messages.*' => ['required', 'string'],
+            'points' => ['required', 'array'],
             'points.*' => ['required', 'numeric', 'in:1,2,3,4,5'],
+            'questions' => ['required', 'array'],
             'questions.*' => ['required', 'string']
         ]);
+        if (count($request->points) !== count($request->question_ids)) {
+            return back()->with('error', 'Semua poin harus diisi')->withInput();
+        };
+        if (count($request->messages) !== count($request->question_ids)) {
+            return back()->with('error', 'Semua masukan harus diisi, atau tinggalkan "-"')->withInput();
+        };
+
         $active_kpi = KpiPeriod::where('is_active', true)->where('receive_feedback', true)->first();
         if (!$active_kpi) {
             abort(404, 'Tidak ditemukan KPI yang aktif atau menerima masukan');
@@ -197,11 +208,23 @@ class StudentFeedbackController extends Controller
     public function nonedu_store(Request $request, $tendik_position_id)
     {
         $request->validate([
+            'question_ids' => ['required', 'array'],
             'question_ids.*' => ['required', 'exists:feedback_questions,id'],
+            'messages' => ['required', 'array'],
             'messages.*' => ['required', 'string'],
+            'points' => ['required', 'array'],
             'points.*' => ['required', 'numeric', 'in:1,2,3,4,5'],
+            'questions' => ['required', 'array'],
             'questions.*' => ['required', 'string']
         ]);
+
+        if (count($request->points) !== count($request->question_ids)) {
+            return back()->with('error', 'Semua poin harus diisi')->withInput();
+        };
+        if (count($request->messages) !== count($request->question_ids)) {
+            return back()->with('error', 'Semua masukan harus diisi, atau tinggalkan "-"')->withInput();
+        };
+
         $tendik_position = TendikPosition::find($tendik_position_id);
         if (!$tendik_position) {
             abort(404, 'Tendik tidak ditemukan');

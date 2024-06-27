@@ -30,7 +30,7 @@
                 <tr>
                     <td class="border p-2">{{ $course->name }}</td>
                     {{-- <td class="border p-2 text-center">{{ $course->semester }}</td> --}}
-                    <td class="border p-2">{{ $course->user->name }}</td>
+                    <td class="border p-2">{{ $course->user->name ?? '-' }}</td>
                 </tr>
             @empty
                 <tr>

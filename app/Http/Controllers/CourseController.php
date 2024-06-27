@@ -40,10 +40,10 @@ class CourseController extends Controller
             }
             return DataTables::of($model->with('user', 'major'))
                 ->addColumn('options', 'admin.courses.datatables.options')
-                ->editColumn('user_id', function($model) {
+                ->editColumn('user_id', function ($model) {
                     return $model->user ? $model->user->name : '-';
                 })
-                ->editColumn('major_id', function($model) {
+                ->editColumn('major_id', function ($model) {
                     return $model->major ? $model->major->major : '-';
                 })
                 ->setRowAttr([
@@ -80,16 +80,21 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->user_id == '-') {
+            $user_id_validation = ['string', 'in:-'];
+        } else {
+            $user_id_validation = ['required', 'exists:users,id'];
+        }
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:courses,name'],
-            'user_id' => ['required', 'exists:users,id'],
+            'user_id' => $user_id_validation,
             'semester' => ['required', 'numeric', 'min:1'],
             'major_id' => ['required', 'exists:majors,id']
         ]);
 
         Course::create([
             'name' => $request->name,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user_id == '-' ? null : $request->user_id,
             'semester' => $request->semester,
             'major_id' => $request->major_id
         ]);
@@ -132,9 +137,14 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request->user_id == '-') {
+            $user_id_validation = ['string', 'in:-'];
+        } else {
+            $user_id_validation = ['required', 'exists:users,id'];
+        }
         $request->validate([
             'name' => ['required', 'string', 'max:255', "unique:courses,name,$id"],
-            'user_id' => ['required', 'exists:users,id'],
+            'user_id' => $user_id_validation,
             'semester' => ['required', 'numeric', 'min:1'],
             'major_id' => ['required', 'exists:majors,id']
         ]);
@@ -143,7 +153,7 @@ class CourseController extends Controller
 
         $subject->update([
             'name' => $request->name,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user_id == '-' ? null : $request->user_id,
             'semester' => $request->semester,
             'major_id' => $request->major_id
         ]);
