@@ -19,88 +19,90 @@
 
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{ count($users) }}</h3>
-
-                            <p>Users</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <a href="{{ route('admin.users.index') }}" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>{{ count($roles) }}
-                                {{-- <sup style="font-size: 20px">%</sup> --}}
-                            </h3>
-
-                            <p>Roles</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-user-tag"></i>
-                        </div>
-                        <a href="{{ route('admin.roles.index') }}" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{ count($permissions) }}</h3>
-
-                            <p>Permissions</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-low-vision"></i>
-                        </div>
-                        <a href="{{ route('admin.permissions.index') }}" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                @if (Route::has('admin.blogs.index'))
-                    <!-- ./col -->
+            @role('super admin')
+                <div class="row">
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{ count($blogs) }}</h3>
+                                <h3>{{ count($users) }}</h3>
 
-                                <p>Blogs</p>
+                                <p>Users</p>
                             </div>
                             <div class="icon">
-                                <i class="fas fa-feather-alt"></i>
+                                <i class="fas fa-users"></i>
                             </div>
-                            <a href="{{ route('admin.blogs.index') }}" class="small-box-footer">More info <i
+                            <a href="{{ route('admin.users.index') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
-                @endif
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ count($roles) }}
+                                    {{-- <sup style="font-size: 20px">%</sup> --}}
+                                </h3>
+
+                                <p>Roles</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-user-tag"></i>
+                            </div>
+                            <a href="{{ route('admin.roles.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{ count($permissions) }}</h3>
+
+                                <p>Permissions</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-low-vision"></i>
+                            </div>
+                            <a href="{{ route('admin.permissions.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    @if (Route::has('admin.blogs.index'))
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>{{ count($blogs) }}</h3>
+
+                                    <p>Blogs</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-feather-alt"></i>
+                                </div>
+                                <a href="{{ route('admin.blogs.index') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    @endif
+                </div>
+            @endrole
+            <div class="row">
+                <div class="card w-100 mx-2">
+                    <div class="card-body">
+                        <canvas id="kpi_chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="card w-100 mx-2">
                     <div class="card-body">
                         <canvas id="usersChart"
                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card w-100 mx-2">
-                    <div class="card-body">
-                        <canvas id="kpi_chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                 </div>
             </div>
