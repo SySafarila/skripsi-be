@@ -17,6 +17,10 @@
             gap: 4px;
         }
 
+        thead th {
+            white-space: nowrap;
+        }
+
         @media (min-width: 768px) {
             #builtin-filter {
                 flex-direction: row;
@@ -100,11 +104,12 @@
                                     <span style="display: none;">Selector</span>
                                 </th>
                                 <th>Pertanyaan</th>
-                                <th>Pesan/Jawaban</th>
+                                <th>Pesan/Respon</th>
                                 <th>Point</th>
                                 <th>Untuk</th>
                                 <th>Mata Kuliah</th>
-                                <th>Pengirim</th>
+                                <th>Nama Pengirim</th>
+                                <th>NIM Pengirim</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -135,7 +140,7 @@
     <script src="{{ asset('js/datatables/bulk-delete.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exportOption = [1, 2, 3, 4, 5, 6];
+            const exportOption = [1, 2, 3, 4, 5, 6, 7];
             const buttons = [{
                 extend: 'copy',
                 className: 'btn btn-sm rounded-0 btn-secondary',
@@ -218,8 +223,12 @@
                     name: 'course_name',
                     searchable: false
                 }, {
-                    data: 'sender.name',
-                    name: 'sender.name',
+                    data: 'sender_name',
+                    name: 'sender_name',
+                    searchable: false
+                }, {
+                    data: 'sender_identifier_number',
+                    name: 'sender_identifier_number',
                     searchable: false
                 }, {
                     data: 'options',
@@ -240,7 +249,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [1, 2, 4, 5, 6]
+                    targets: [1, 2, 4, 5, 6, 7, 8]
                 }],
                 order: [
                     // [1, 'asc']

@@ -63,6 +63,18 @@ class FeedbackController extends Controller
                     }
                     return '-';
                 })
+                ->addColumn('sender_name', function($query) {
+                    if ($query->sender_id) {
+                        return $query->sender->name;
+                    }
+                    return '-';
+                })
+                ->addColumn('sender_identifier_number', function($query) {
+                    if ($query->sender_id) {
+                        return $query->sender->identifier_number;
+                    }
+                    return '-';
+                })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;
