@@ -116,6 +116,7 @@
                         <div class="form-group">
                             <label for="password" class="text-capitalize">password</label>
                             <input type="password" class="form-control" id="password" name="password">
+                            <small>*Abaikan jika tidak ingin mengganti password</small>
                             @error('password')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
@@ -124,6 +125,7 @@
                             <label for="password_confirmation" class="text-capitalize">password confirmation</label>
                             <input type="password" class="form-control" id="password_confirmation"
                                 name="password_confirmation">
+                                <small>*Abaikan jika tidak ingin mengganti password</small>
                             @error('password_confirmation')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
