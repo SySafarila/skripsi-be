@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\SampleCourses;
 use App\Exports\SampleEmployees;
 use App\Exports\SampleStudents;
 use App\Http\Controllers\AccountController;
@@ -93,6 +94,9 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/majors', MajorController::class)->except(['show']);
 
     // courses / mata kuliah
+    Route::get('/courses/sample', function(){
+        return Excel::download(new SampleCourses, 'courses.xlsx');
+    })->name('download-sample-courses');
     Route::resource('/courses', CourseController::class)->except(['show']);
 
     // Feedback questions
