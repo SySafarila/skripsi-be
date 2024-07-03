@@ -82,6 +82,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
 
     // KPI
     Route::get('/leaderboard/kpi/{kpi_id}', [KpiController::class, 'leaderboard'])->name('kpi.leaderboard');
+    Route::get('/leaderboard/kpi/{kpi_id}/detail', [KpiController::class, 'leaderboard_detail'])->name('kpi.leaderboard.detail');
     Route::resource('/kpi', KpiController::class)->except(['show']);
 
     // presence scopes
