@@ -10,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Buat Lingkup Absensi</h1>
+                    <h1 class="m-0">Buat Objektif Absensi</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.presence-scopes.index') }}">Lingkup Absensi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.presence-scopes.index') }}">Objektif Absensi</a></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
