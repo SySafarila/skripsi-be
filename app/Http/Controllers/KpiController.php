@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KpiPeriod;
 use App\Models\Point;
 use App\Models\User;
+use App\Models\UserFeedback;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class KpiController extends Controller
     public function __construct()
     {
         $this->middleware('can:kpi-create')->only(['create', 'store']);
-        $this->middleware('can:kpi-read')->only(['index', 'leaderboard']);
+        $this->middleware('can:kpi-read')->only(['index', 'leaderboard', 'leaderboard_detail']);
         $this->middleware('can:kpi-update')->only(['edit', 'update']);
         $this->middleware('can:kpi-delete')->only(['destroy', 'massDestroy']);
     }
@@ -72,13 +73,13 @@ class KpiController extends Controller
                     $total_feedback = $query->tendik->feedback->where('kpi_period_id', $query->kpi_period_id)->count();
                     return "5/$point ($total_feedback feedback)";
                 })
-                // ->addColumn('options', 'admin.kpi_periods.datatables.options')
+                ->addColumn('options', 'admin.kpi_periods.datatables.leaderboard')
                 // ->setRowAttr([
                 //     'data-model-id' => function ($model) {
                 //         return $model->id;
                 //     }
                 // ])
-                // ->rawColumns(['options'])
+                ->rawColumns(['options'])
                 ->toJson();
         }
         return view('admin.kpi_periods.leaderboard', ['kpi_id' => $kpi_id->id, 'kpi' => $kpi_id]);
@@ -297,5 +298,22 @@ class KpiController extends Controller
         }
 
         return redirect()->route('admin.kpi.index')->with('status', 'Bulk delete success');
+    }
+
+    public function leaderboard_detail (Request $request, $kpi_id)
+    {
+        $kpi = KpiPeriod::where('id', $kpi_id)->first();
+        if (!$kpi) {
+            return response()->json([
+                'message' => 'Invalid KPI id'
+            ], 404);
+        }
+
+        if ($request->user_id) {
+            $feedbacks = UserFeedback::where('user_id', $request->user_id)->where('kpi_period_id', $kpi->id)->get()->groupBy('feedback_question_id');
+            return response()->json($feedbacks);
+        }
+        $feedbacks = UserFeedback::where('tendik_position_id', $request->tendik_id)->where('kpi_period_id', $kpi->id)->get()->groupBy('feedback_question_id');
+        return response()->json($feedbacks);
     }
 }
