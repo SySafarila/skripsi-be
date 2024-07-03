@@ -22,6 +22,7 @@ class AccountController extends Controller
     public function __construct()
     {
         $this->middleware('password.confirm')->only('edit');
+        $this->middleware('can:admin-access')->only(['index', 'edit']);
     }
     /**
      * Display a listing of the resource.
