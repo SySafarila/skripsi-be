@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+    <style>
+        .modal-body p {
+            margin-bottom: 0px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -212,7 +217,7 @@
                 questions[key].forEach(el => {
                     point += el.point
                 });
-                html += `<p>${question}</p><p><b>Rata-rata poin</b>: ${point/questions[key].length}</p><hr>`
+                html += `<p>${question}</p><p><b>Rata-rata poin</b>: ${point/questions[key].length} (dari ${questions[key].length} feedback)</p><hr>`
             }
             if (html == '') {
                 document.querySelector('.modal-body').innerHTML = 'Data tidak tersedia'
