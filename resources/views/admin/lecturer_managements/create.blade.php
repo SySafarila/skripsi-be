@@ -46,7 +46,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="MataKuliah" class="text-capitalize">Subjek Absensi</label>
+                            <label for="MataKuliah" class="text-capitalize">Objektif Absensi</label>
                             <select class="select2 form-control" name="subject_id"
                                 data-placeholder="Select MataKuliah" style="width: 100%;">
                                 <option selected disabled>Pilih</option>

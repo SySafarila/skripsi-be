@@ -54,7 +54,7 @@
                     @endforeach
                 </select>
                 <select name="subject_id" id="subject_id" class="custom-select">
-                    <option value="">Semua Subjek Absensi</option>
+                    <option value="">Semua Objektif Absensi</option>
                     @foreach ($subjects as $subject)
                         <option value="{{ $subject->id }}" {{ request()->subject_id == $subject->id ? 'selected' : '' }}>
                             {{ $subject->name }}</option>
@@ -77,7 +77,7 @@
                                     <span style="display: none;">Selector</span>
                                 </th>
                                 <th>Karyawan/Dosen</th>
-                                <th>Subjek Absensi</th>
+                                <th>Objektif Absensi</th>
                                 <th>Quota Kehadiran</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
