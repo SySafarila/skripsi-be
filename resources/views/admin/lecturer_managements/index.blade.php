@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Quota Absensi',
+    'title' => 'Kuota Absensi',
 ])
 
 @section('head')
@@ -32,7 +32,7 @@
             <x-adminlte.session-notifications />
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Quota Absensi</h1>
+                    <h1 class="m-0">Kuota Absensi</h1>
                     @can('employees-presence-quota-create')
                         <a href="{{ route('admin.employees-presence-quota.create') }}" class="btn btn-sm btn-primary ml-2">Add
                             New</a>
@@ -41,7 +41,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Quota Absensi</li>
+                        <li class="breadcrumb-item active">Kuota Absensi</li>
                     </ol>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     @endforeach
                 </select>
                 <select name="subject_id" id="subject_id" class="custom-select">
-                    <option value="">Semua Subjek Absensi</option>
+                    <option value="">Semua Objektif Absensi</option>
                     @foreach ($subjects as $subject)
                         <option value="{{ $subject->id }}" {{ request()->subject_id == $subject->id ? 'selected' : '' }}>
                             {{ $subject->name }}</option>
@@ -77,8 +77,8 @@
                                     <span style="display: none;">Selector</span>
                                 </th>
                                 <th>Karyawan/Dosen</th>
-                                <th>Subjek Absensi</th>
-                                <th>Quota Kehadiran</th>
+                                <th>Objektif Absensi</th>
+                                <th>Kuota Kehadiran</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>

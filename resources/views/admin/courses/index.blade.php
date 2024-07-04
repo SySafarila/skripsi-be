@@ -35,6 +35,8 @@
                     <h1 class="m-0">Mata Kuliah</h1>
                     @can('presence-scopes-create')
                         <a href="{{ route('admin.courses.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                        <a href="{{ route('admin.courses.create', ['type' => 'import']) }}"
+                            class="btn btn-sm btn-success ml-2">Import Excel</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">

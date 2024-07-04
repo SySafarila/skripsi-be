@@ -76,7 +76,7 @@ class SubjectController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->route('admin.presence-scopes.index')->with('success', 'Lingkup absensi berhasil dibuat !');
+        return redirect()->route('admin.presence-scopes.index')->with('success', 'Objektif Absensi berhasil dibuat !');
     }
 
     /**
@@ -122,7 +122,7 @@ class SubjectController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('admin.presence-scopes.index')->with('success', 'Lingkup absensi diperbarui !');
+        return redirect()->route('admin.presence-scopes.index')->with('success', 'Objektif Absensi diperbarui !');
     }
 
     /**

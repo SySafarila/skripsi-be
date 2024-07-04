@@ -9,6 +9,20 @@
     <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+    <style>
+        #builtin-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            #builtin-filter {
+                flex-direction: row;
+                width: 50%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -29,6 +43,15 @@
                     </ol>
                 </div>
             </div>
+            <form id="builtin-filter">
+                <select name="type" id="type" class="custom-select">
+                    <option value="">Semua Tipe</option>
+                    @foreach ($tendik_positions as $position)
+                        <option value="{{ $position->id }}" {{ request()->type == $position->id ? 'selected' : '' }}>{{ $position->id == 1 ? 'Mahasiswa ke Dosen' : 'Mahasiswa ke ' . $position->division }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-primary" type="submit">Filter</button>
+            </form>
         </div>
     </div>
 
@@ -126,7 +149,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.questions.index') !!}',
+                ajax: '{!! route('admin.questions.index', ['type' => request()->type]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000],
                     [10, 50, 100, 500, 1000]

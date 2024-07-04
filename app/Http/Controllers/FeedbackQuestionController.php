@@ -30,7 +30,13 @@ class FeedbackQuestionController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(FeedbackQuestion::query()->with('to'))
+            $model = FeedbackQuestion::query();
+
+            if (request()->type) {
+                $model->where('tendik_position_id', request()->type);
+            }
+
+            return DataTables::of($model->with('to'))
                 ->addColumn('options', 'admin.feedback_questions.datatables.options')
                 ->editColumn('to', function ($model) {
                     if ($model->to->division == 'Edukatif') {
@@ -46,8 +52,9 @@ class FeedbackQuestionController extends Controller
                 ->rawColumns(['options'])
                 ->toJson();
         }
+        $tendik_positions = TendikPosition::orderBy('division', 'asc')->get();
 
-        return view('admin.feedback_questions.index');
+        return view('admin.feedback_questions.index', compact('tendik_positions'));
     }
 
     /**

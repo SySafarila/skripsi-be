@@ -215,7 +215,5 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
-    'version' => env('APP_VERSION', 'v0.0.32-beta'),
-
-    'licence' => env('APP_LICENCE', 'Unknown')
+    'version' => env('APP_VERSION', 'v0.0.37-rc')
 ];

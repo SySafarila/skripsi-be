@@ -13,12 +13,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Buat Quota Absensi</h1>
+                    <h1 class="m-0">Buat Kuota Absensi</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.employees-presence-quota.index') }}">Quota Absensi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.employees-presence-quota.index') }}">Kuota Absensi</a></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
@@ -46,7 +46,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="MataKuliah" class="text-capitalize">Subjek Absensi</label>
+                            <label for="MataKuliah" class="text-capitalize">Objektif Absensi</label>
                             <select class="select2 form-control" name="subject_id"
                                 data-placeholder="Select MataKuliah" style="width: 100%;">
                                 <option selected disabled>Pilih</option>
@@ -59,7 +59,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="quota" class="text-capitalize">Quota Kehadiran (Hari)</label>
+                            <label for="quota" class="text-capitalize">Kuota Kehadiran (Hari)</label>
                             <input type="number" class="form-control" id="quota" name="quota" required>
                             @error('quota')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>

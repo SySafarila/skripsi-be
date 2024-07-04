@@ -61,7 +61,7 @@
                                 class="nav-link {{ request()->routeIs('admin.presence-scopes.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-bullseye"></i>
                                 <p>
-                                    Lingkup Absensi
+                                    Objektif Absensi
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -73,7 +73,7 @@
                                 class="nav-link {{ request()->routeIs('admin.employees-presence-quota.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-business-time"></i>
                                 <p>
-                                    Quota Absensi Karyawan
+                                    Kuota Absensi Karyawan
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
