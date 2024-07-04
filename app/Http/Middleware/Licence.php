@@ -20,6 +20,9 @@ class Licence
     public function handle(Request $request, Closure $next): Response
     {
         try {
+            if (config('app.env') == 'testing') {
+                return $next($request);
+            }
             $jwks = Cache::remember('jwks', 60 * 60 * 24, function () { // 24h cache
                 return Http::get('https://raw.githubusercontent.com/SySafarila/jwks/main/jwks.json')->json();
             });
