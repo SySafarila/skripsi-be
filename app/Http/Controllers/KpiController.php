@@ -311,13 +311,13 @@ class KpiController extends Controller
         }
 
         if ($request->user_id) {
-            $feedbacks = FeedbackQuestion::with(['responses' => function($q) use ($request) {
-                return $q->where('user_id', $request->user_id)->get();
+            $feedbacks = FeedbackQuestion::with(['responses' => function($responses) use ($request, $kpi_id) {
+                return $responses->where('user_id', $request->user_id)->where('kpi_period_id', $kpi_id)->get();
             }])->where('tendik_position_id', 1)->orderBy('question', 'asc')->get();
             return response()->json($feedbacks);
         }
-        $feedbacks = FeedbackQuestion::with(['responses' => function($q) use ($request) {
-            return $q->where('tendik_position_id', $request->tendik_id)->get();
+        $feedbacks = FeedbackQuestion::with(['responses' => function($responses) use ($request, $kpi_id) {
+            return $responses->where('tendik_position_id', $request->tendik_id)->where('kpi_period_id', $kpi_id)->get();
         }])->where('tendik_position_id', $request->tendik_id)->orderBy('question', 'asc')->get();
         return response()->json($feedbacks);
     }
