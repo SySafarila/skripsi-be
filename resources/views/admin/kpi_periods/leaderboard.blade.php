@@ -67,7 +67,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="detailModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="detailModalLabel">Detail Feedback</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -212,13 +212,16 @@
         const parseQuestion = (questions) => {
             let html = '';
             for (const key in questions) {
-                let point = 0;
-                const question = questions[key][0].question;
-                questions[key].forEach(el => {
-                    point += el.point
-                });
-                html += `<p>${question}</p><p><b>Rata-rata poin</b>: ${point/questions[key].length} (dari ${questions[key].length} feedback)</p><hr>`
+                if (questions[key].responses.length > 0) {
+                    let point = 0;
+                    const question = questions[key].question;
+                    questions[key].responses.forEach(el => {
+                        point += el.point
+                    });
+                    html += `<p>${question}</p><p><b>Rata-rata poin</b>: ${point/questions[key].responses.length} (dari ${questions[key].responses.length} feedback)</p><hr>`
+                }
             }
+
             if (html == '') {
                 document.querySelector('.modal-body').innerHTML = 'Data tidak tersedia'
             } else {
@@ -233,9 +236,6 @@
                     tendik_id
                 }
             }).then(res => {
-                console.log(res);
-                document.querySelector('.modal-title').innerText = `Detail Feedback`
-                // document.querySelector('.modal-body').innerText = `Detail Feedback`
                 parseQuestion(res.data)
                 $('#detailModal').modal('show')
             }).catch(er => {
