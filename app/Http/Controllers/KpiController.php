@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
 use App\Models\Point;
 use App\Models\User;
@@ -310,10 +311,14 @@ class KpiController extends Controller
         }
 
         if ($request->user_id) {
-            $feedbacks = UserFeedback::where('user_id', $request->user_id)->where('kpi_period_id', $kpi->id)->get()->groupBy('feedback_question_id');
+            $feedbacks = FeedbackQuestion::with(['responses' => function($q) use ($request) {
+                return $q->where('user_id', $request->user_id)->get();
+            }])->where('tendik_position_id', 1)->orderBy('question', 'asc')->get();
             return response()->json($feedbacks);
         }
-        $feedbacks = UserFeedback::where('tendik_position_id', $request->tendik_id)->where('kpi_period_id', $kpi->id)->get()->groupBy('feedback_question_id');
+        $feedbacks = FeedbackQuestion::with(['responses' => function($q) use ($request) {
+            return $q->where('tendik_position_id', $request->tendik_id)->get();
+        }])->where('tendik_position_id', $request->tendik_id)->orderBy('question', 'asc')->get();
         return response()->json($feedbacks);
     }
 }
