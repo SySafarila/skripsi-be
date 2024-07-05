@@ -218,7 +218,7 @@
                     questions[key].responses.forEach(el => {
                         point += el.point
                     });
-                    html += `<p>${question}</p><p><b>Rata-rata poin</b>: ${point/questions[key].responses.length} (dari ${questions[key].responses.length} feedback)</p><hr>`
+                    html += `<p>${question}</p><p><b>Rata-rata poin</b>: ${parseFloat(point/questions[key].responses.length).toFixed(2)} (dari ${questions[key].responses.length} feedback)</p><hr>`
                 }
             }
 
