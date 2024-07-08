@@ -16,6 +16,7 @@ use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LecturerManagementController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RedirectorController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
@@ -23,7 +24,6 @@ use App\Http\Controllers\StudentFeedbackController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TendikPositionController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -38,33 +38,8 @@ use Maatwebsite\Excel\Facades\Excel;
 |
 */
 
-Route::get('/', function () {
-    $user = Auth::user();
-    if (!$user) {
-        return redirect()->route('login');
-    }
-    if ($user->hasRole(['dosen', 'tendik'])) {
-        return redirect()->route('employees.welcome');
-    }
-    if ($user->hasRole(['admin', 'super admin'])) {
-        return redirect()->route('admin.index');
-    }
-    return redirect()->route('student.index');
-})->name('landingpage');
-
-Route::get('/dashboard', function () {
-    $user = Auth::user();
-    if (!$user) {
-        return redirect()->route('login');
-    }
-    if ($user->hasRole(['dosen', 'tendik'])) {
-        return redirect()->route('employees.welcome');
-    }
-    if ($user->hasRole(['admin', 'super admin'])) {
-        return redirect()->route('admin.index');
-    }
-    return redirect()->route('student.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', RedirectorController::class)->name('landingpage');
+Route::get('/dashboard', RedirectorController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 // admin pages
 Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->name('admin.')->group(function () {
@@ -77,9 +52,6 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // users
     Route::resource('/users', UserController::class)->except(['show']);
 
-    // blogs | comment this route below to disable Blog features
-    // Route::resource('/blogs', BlogController::class);
-
     // KPI
     Route::get('/leaderboard/kpi/{kpi_id}', [KpiController::class, 'leaderboard'])->name('kpi.leaderboard');
     Route::get('/leaderboard/kpi/{kpi_id}/detail', [KpiController::class, 'leaderboard_detail'])->name('kpi.leaderboard.detail');
@@ -88,14 +60,11 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // presence scopes
     Route::resource('/presence-scopes', SubjectController::class)->except(['show']);
 
-    // semesters
-    // Route::resource('/semesters', SemesterController::class)->except(['show']);
-
     // majors / jurusan
     Route::resource('/majors', MajorController::class)->except(['show']);
 
     // courses / mata kuliah
-    Route::get('/courses/sample', function(){
+    Route::get('/courses/sample', function () {
         return Excel::download(new SampleCourses, 'courses.xlsx');
     })->name('download-sample-courses');
     Route::resource('/courses', CourseController::class)->except(['show']);
@@ -110,13 +79,13 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/employees-presence-quota', LecturerManagementController::class)->except(['show']);
 
     // employee
-    Route::get('/employees/sample', function(){
+    Route::get('/employees/sample', function () {
         return Excel::download(new SampleEmployees, 'employees.xlsx');
     })->name('download-sample-employees');
     Route::resource('/employees', EmployeeController::class)->except(['show']);
 
     // mahasiswa
-    Route::get('/students/sample', function(){
+    Route::get('/students/sample', function () {
         return Excel::download(new SampleStudents, 'students.xlsx');
     })->name('download-sample-students');
     Route::resource('/students', StudentController::class)->except(['show']);
@@ -141,13 +110,11 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/presence-scopes', [SubjectController::class, 'massDestroy'])->name('presence-scopes.massDestroy');
     Route::delete('/bulk-delete/questions', [FeedbackQuestionController::class, 'massDestroy'])->name('questions.massDestroy');
     Route::delete('/bulk-delete/employees-presence-quota', [LecturerManagementController::class, 'massDestroy'])->name('employees-presence-quota.massDestroy');
-    // Route::delete('/bulk-delete/semesters', [SemesterController::class, 'massDestroy'])->name('semesters.massDestroy');
     Route::delete('/bulk-delete/majors', [MajorController::class, 'massDestroy'])->name('majors.massDestroy');
     Route::delete('/bulk-delete/courses', [CourseController::class, 'massDestroy'])->name('courses.massDestroy');
     Route::delete('/bulk-delete/achievements', [AchievementController::class, 'massDestroy'])->name('achievements.massDestroy');
     Route::delete('/bulk-delete/feedbacks', [FeedbackController::class, 'massDestroy'])->name('feedbacks.massDestroy');
     Route::delete('/bulk-delete/tendik-positions', [TendikPositionController::class, 'massDestroy'])->name('tendik-positions.massDestroy');
-    // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
 });
 
 // account re-verification
@@ -179,7 +146,7 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa', 'user_active'])->group(
 });
 
 Route::middleware(['auth', 'verified', 'role:mahasiswa|tendik|staff|dosen'])->group(function () {
-    Route::get('/settings', function() {
+    Route::get('/settings', function () {
         return view('settings.index');
     })->name('settings.index');
     Route::patch('/settings/update', [AccountController::class, 'userUpdate'])->name('settings.update');
