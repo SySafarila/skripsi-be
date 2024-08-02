@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EmployeesImport;
+use App\Models\Achievement;
+use App\Models\KpiPeriod;
 use App\Models\TendikPosition;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -165,9 +167,14 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('roles')->where('id', $id)->firstOrFail();
+        $roles = $user->roles->pluck('name');
+        $points = KpiPeriod::with(['points' => function ($q) use ($user) {
+            return $q->where('user_id', $user->id);
+        }])->orderBy('end_date', 'desc')->limit(5)->get();
+        $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
 
-        return $user;
+        return view('admin.employees.show', compact('user', 'roles', 'points', 'achievements'));
     }
 
     /**
