@@ -82,7 +82,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::get('/employees/sample', function () {
         return Excel::download(new SampleEmployees, 'employees.xlsx');
     })->name('download-sample-employees');
-    Route::resource('/employees', EmployeeController::class)->except(['show']);
+    Route::resource('/employees', EmployeeController::class);
 
     // mahasiswa
     Route::get('/students/sample', function () {
