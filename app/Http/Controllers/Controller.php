@@ -72,9 +72,11 @@ class Controller extends BaseController
                 $calculatedPresencePoints = $multiplyUserPresencePoints / $quotaSum;
             }
 
+            $total_points = ($calculatedPresencePoints + $calculated_fedback_points) * 100;
+
             // update user point
             $userPoint->update([
-                'points' => $calculatedPresencePoints + $calculated_fedback_points,
+                'points' => $total_points == 0 ? 0 : $total_points / 105,
                 'presence_points' => $calculatedPresencePoints,
                 'feedback_points' => $calculated_fedback_points
             ]);
@@ -125,9 +127,11 @@ class Controller extends BaseController
                 $calculated_feedback_points = $feedbackPointSum / $feedbackPointsArr->count();
             }
 
+            $total_points_tendik = $calculated_feedback_points + $calculated_presence_points;
+
             // update tendik point
             $tendikPositionPoint->update([
-                'points' => $calculated_feedback_points + $calculated_presence_points,
+                'points' => $total_points_tendik == 0 ? 0 : $total_points_tendik / 105,
                 'presence_points' => $calculated_presence_points,
                 'feedback_points' => $calculated_feedback_points
             ]);
@@ -139,8 +143,9 @@ class Controller extends BaseController
 
             $user_points = Point::whereIn('user_id', $user_ids)->where('kpi_period_id', $kpi->id)->get();
             foreach ($user_points as $key => $user_point) {
+                $total_point_user = $user_point->presence_points + $user_point->feedback_points;
                 $user_point->update([
-                    'points' => $user_point->presence_points + $user_point->feedback_points
+                    'points' => $total_point_user == 0 ? 0 : $total_point_user / 105
                 ]);
             }
 
