@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
 use App\Models\Point;
+use App\Models\TendikPosition;
 use App\Models\User;
 use App\Models\UserFeedback;
+use App\Models\UserPresence;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,12 +22,32 @@ class KpiController extends Controller
     public function __construct()
     {
         $this->middleware('can:kpi-create')->only(['create', 'store']);
-        $this->middleware('can:kpi-read')->only(['index', 'leaderboard', 'leaderboard_detail']);
+        $this->middleware('can:kpi-read')->only(['index', 'leaderboard', 'leaderboard_detail', 'report']);
         $this->middleware('can:kpi-update')->only(['edit', 'update']);
         $this->middleware('can:kpi-delete')->only(['destroy', 'massDestroy']);
     }
 
-    public function leaderboard(KpiPeriod $kpi_id) {
+    public function report(KpiPeriod $kpi_id)
+    {
+        if (request()->show == 'tendik') {
+            $tendiks = TendikPosition::with(['points' => function($q) use($kpi_id) {
+                return $q->where('kpi_period_id', $kpi_id->id)->get();
+            }])->orderBy('division')->where('id', '!=', 1)->get();
+            // return $tendiks;
+
+            return view('admin.kpi_periods.report', compact('tendiks', 'kpi_id'));
+        }
+        $users = User::role(['dosen', 'tendik'])->orderBy('name')->with(['points' => function($q) use($kpi_id) {
+            return $q->where('kpi_period_id', $kpi_id->id)->get();
+        }, 'position'])->get();
+
+        // return $users;
+
+        return view('admin.kpi_periods.report', compact('users', 'kpi_id'));
+    }
+
+    public function leaderboard(KpiPeriod $kpi_id)
+    {
         if (request()->ajax()) {
             if (request()->show == 'tendik') {
                 $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '!=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik.feedback', 'tendik.users.subjects', 'tendik.users.presences');
@@ -33,7 +55,7 @@ class KpiController extends Controller
                 $model = Point::query()->where('kpi_period_id', $kpi_id->id)->where('tendik_position_id', '=', null)->with('user.subjects', 'user.presences', 'user.feedback', 'tendik.feedback', 'tendik.users.subjects', 'tendik.users.presences');
             }
             return DataTables::of($model)
-                ->addColumn('name', function($query) {
+                ->addColumn('name', function ($query) {
                     if ($query->user) {
                         return $query->user->name;
                     }
@@ -42,10 +64,10 @@ class KpiController extends Controller
                     }
                     return '-';
                 })
-                ->editColumn('points', function($query) {
+                ->editColumn('points', function ($query) {
                     return number_format($query->points, 2);
                 })
-                ->editColumn('presence_points', function($query) {
+                ->editColumn('presence_points', function ($query) {
                     $percentage = number_format($query->presence_points, 2) . '%';
                     if ($query->tendik_position_id == null) {
                         $total_quota = $query->user->subjects->pluck('quota')->toArray();
@@ -65,7 +87,7 @@ class KpiController extends Controller
 
                     return "($quota_sum/$presences_sum) " . $percentage;
                 })
-                ->editColumn('feedback_points', function($query) {
+                ->editColumn('feedback_points', function ($query) {
                     $point = $query->feedback_points == 5 ? $query->feedback_points : number_format($query->feedback_points, 2);
                     if ($query->tendik_position_id == null) {
                         $total_feedback = $query->user->feedback->where('kpi_period_id', $query->kpi_period_id)->count();
@@ -301,7 +323,7 @@ class KpiController extends Controller
         return redirect()->route('admin.kpi.index')->with('status', 'Bulk delete success');
     }
 
-    public function leaderboard_detail (Request $request, $kpi_id)
+    public function leaderboard_detail(Request $request, $kpi_id)
     {
         $kpi = KpiPeriod::where('id', $kpi_id)->first();
         if (!$kpi) {
@@ -311,12 +333,12 @@ class KpiController extends Controller
         }
 
         if ($request->user_id) {
-            $feedbacks = FeedbackQuestion::with(['responses' => function($responses) use ($request, $kpi_id) {
+            $feedbacks = FeedbackQuestion::with(['responses' => function ($responses) use ($request, $kpi_id) {
                 return $responses->where('user_id', $request->user_id)->where('kpi_period_id', $kpi_id)->get();
             }])->where('tendik_position_id', 1)->orderBy('question', 'asc')->get();
             return response()->json($feedbacks);
         }
-        $feedbacks = FeedbackQuestion::with(['responses' => function($responses) use ($request, $kpi_id) {
+        $feedbacks = FeedbackQuestion::with(['responses' => function ($responses) use ($request, $kpi_id) {
             return $responses->where('tendik_position_id', $request->tendik_id)->where('kpi_period_id', $kpi_id)->get();
         }])->where('tendik_position_id', $request->tendik_id)->orderBy('question', 'asc')->get();
         return response()->json($feedbacks);

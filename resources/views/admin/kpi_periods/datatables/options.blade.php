@@ -9,6 +9,9 @@
     @can('kpi-read')
         <a href="{{ route('admin.kpi.leaderboard', $model->id) }}" class="btn btn-sm btn-secondary">Leaderboard</a>
     @endcan
+    @can('kpi-read')
+        <a href="{{ route('admin.kpi.report', $model->id) }}" class="btn btn-sm btn-secondary">Report</a>
+    @endcan
     @can('kpi-update')
         <a href="{{ route('admin.kpi.edit', $model->id) }}" class="btn btn-sm btn-secondary">Edit</a>
     @endcan
