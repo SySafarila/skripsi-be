@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 // use App\Models\Major;
+
+use App\Models\KpiPeriod;
 use App\Models\TendikPosition;
 // use App\Models\Semester;
 // use App\Models\Subject;
@@ -17,7 +19,7 @@ class TendikPositionController extends Controller
     public function __construct()
     {
         $this->middleware('can:tendik-positions-create')->only(['create', 'store']);
-        $this->middleware('can:tendik-positions-read')->only('index');
+        $this->middleware('can:tendik-positions-read')->only(['index', 'show']);
         $this->middleware('can:tendik-positions-update')->only(['edit', 'update']);
         $this->middleware('can:tendik-positions-delete')->only(['destroy', 'massDestroy']);
     }
@@ -82,7 +84,16 @@ class TendikPositionController extends Controller
      */
     public function show($id)
     {
-        //
+        $position = TendikPosition::findOrFail($id);
+
+        // $user = User::with('roles')->where('id', $id)->firstOrFail();
+        // $roles = $user->roles->pluck('name');
+        $points = KpiPeriod::with(['points' => function ($q) use ($position) {
+            return $q->where('tendik_position_id', $position->id);
+        }])->orderBy('end_date', 'desc')->limit(5)->get();
+        // $achievements = Achievement::where('user_id', $user->id)->where('position', '<=', 5)->latest()->get();
+
+        return view('admin.tendik_positions.show', compact('position', 'points'));
     }
 
     /**

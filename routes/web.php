@@ -99,7 +99,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/settings', SettingController::class)->only(['index', 'update']);
 
     // tendik positions
-    Route::resource('/tendik-positions', TendikPositionController::class)->except(['show']);
+    Route::resource('/tendik-positions', TendikPositionController::class);
 
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
