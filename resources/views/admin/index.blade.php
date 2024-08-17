@@ -185,7 +185,7 @@
         const ctx = document.getElementById('kpi_chart');
         const labels = [];
         const presencePoints = [];
-        const feedbackPoints = [];
+        const avgFeedbacks = [];
         const feedbackCount = [];
         const rawData = {{ Js::from($kpis) }}
 
@@ -196,21 +196,34 @@
             const year = new Date(endDate).getFullYear()
             labels.push(`${date}/${month}/${year}`)
 
-            let presenceSum = 0;
-            let feedbackSum = 0;
-            kpi.points.forEach(point => {
-                presenceSum = presenceSum + point.presence_points;
-                feedbackSum = feedbackSum + point.feedback_points;
-            });
+            // let presenceSum = 0;
+            // let feedbackSum = 0;
+            let avgFeedback = 0;
+            // kpi.points.forEach(point => {
+                // presenceSum = presenceSum + point.presence_points;
+                // feedbackSum = feedbackSum + point.feedback_points;
+            // });
+            kpi.feedbacks.forEach(feedback => {
+                avgFeedback = avgFeedback + feedback.point ?? 0
+            })
 
-            presencePoints.push(presenceSum)
-            feedbackPoints.push(feedbackSum)
-            feedbackCount.push(kpi.feedbacks_count ?? undefined)
+            // console.log(`total points feedback: ${avgFeedback}`);
+            // console.log(`total points length: ${kpi.feedbacks.length}`);
+
+            if (avgFeedback != 0) {
+                avgFeedback = avgFeedback / kpi.feedbacks.length;
+            }
+
+            presencePoints.push(kpi.presences.length ?? 0)
+            avgFeedbacks.push(avgFeedback)
+            feedbackCount.push(kpi.feedbacks.length ?? 0)
+
+
         });
 
         labels.reverse();
         presencePoints.reverse();
-        feedbackPoints.reverse();
+        avgFeedbacks.reverse();
         feedbackCount.reverse();
 
         while (labels.length < 12) {
@@ -222,17 +235,17 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Poin Kehadiran',
+                    label: 'Total Jumlah Kehadiran',
                     data: presencePoints,
                     borderWidth: 1,
                     pointRadius: 5,
                 }, {
-                    label: 'Poin Feedback',
-                    data: feedbackPoints,
+                    label: 'Rata-Rata Point Feedback',
+                    data: avgFeedbacks,
                     borderWidth: 1,
                     pointRadius: 5,
                 }, {
-                    label: 'Jumlah Feedback',
+                    label: 'Total Jumlah Feedback',
                     data: feedbackCount,
                     borderWidth: 1,
                     pointRadius: 5

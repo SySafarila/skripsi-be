@@ -43,7 +43,7 @@
                             </tr>
                             <tr>
                                 <td>Persentase Kehadiran</td>
-                                <td>{{ @$dosen->points[0]->presence_points ?? '0' }}%</td>
+                                <td>{{ @$dosen->points[0]->presence_points ? number_format(@$dosen->points[0]->presence_points, 2) : '0' }}%</td>
                             </tr>
                             <tr>
                                 <td>Rata-rata poin feedback</td>
@@ -76,7 +76,7 @@
                             </tr>
                             <tr>
                                 <td>Persentase Kehadiran</td>
-                                <td>{{ @$tendik->points[0]->presence_points ?? '0' }}%</td>
+                                <td>{{ @$tendik->points[0]->presence_points ? number_format(@$tendik->points[0]->presence_points) : '0' }}%</td>
                             </tr>
                         </table>
                         <hr>

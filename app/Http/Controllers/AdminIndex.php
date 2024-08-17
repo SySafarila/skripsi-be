@@ -20,7 +20,7 @@ class AdminIndex extends Controller
         $users = User::all();
         $roles = Role::all();
         $permissions = Permission::all();
-        $kpis = KpiPeriod::with(['points'])->withCount(['feedbacks'])->orderBy('end_date', 'desc')->limit(12)->get();
+        $kpis = KpiPeriod::with(['points', 'presences', 'feedbacks'])->orderBy('end_date', 'desc')->limit(12)->get();
         $userResult = $this->monthCount($users);
 
         // return $kpis;
