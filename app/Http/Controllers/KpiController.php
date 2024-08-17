@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FeedbackQuestion;
 use App\Models\KpiPeriod;
 use App\Models\Point;
+use App\Models\Setting;
 use App\Models\TendikPosition;
 use App\Models\User;
 use App\Models\UserFeedback;
@@ -29,21 +30,24 @@ class KpiController extends Controller
 
     public function report(KpiPeriod $kpi_id)
     {
+        if ($kpi_id && now() < $kpi_id->end_date) {
+            abort(404, 'KPI Belum berakhir');
+        }
+        $min_presence_percentage = Setting::where('key', 'min_presence_percentage')->first();
+        $min_average_feedback = Setting::where('key', 'min_average_feedback')->first();
         if (request()->show == 'tendik') {
             $tendiks = TendikPosition::with(['points' => function($q) use($kpi_id) {
                 return $q->where('kpi_period_id', $kpi_id->id)->get();
             }])->orderBy('division')->where('id', '!=', 1)->get();
             // return $tendiks;
 
-            return view('admin.kpi_periods.report', compact('tendiks', 'kpi_id'));
+            return view('admin.kpi_periods.report', compact('tendiks', 'kpi_id', 'min_presence_percentage', 'min_average_feedback'));
         }
         $users = User::role(['dosen', 'tendik'])->orderBy('name')->with(['points' => function($q) use($kpi_id) {
             return $q->where('kpi_period_id', $kpi_id->id)->get();
         }, 'position'])->get();
 
-        // return $users;
-
-        return view('admin.kpi_periods.report', compact('users', 'kpi_id'));
+        return view('admin.kpi_periods.report', compact('users', 'kpi_id', 'min_presence_percentage', 'min_average_feedback'));
     }
 
     public function leaderboard(KpiPeriod $kpi_id)

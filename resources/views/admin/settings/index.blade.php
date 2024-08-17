@@ -57,6 +57,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="">Persentase Minimal Kehadiran (%)</label>
+                            <input class="form-control" type="number" min="1" max="100" name="min_presence_percentage" id="min_presence_percentage" value="{{ $min_presence_percentage->value }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Minimal Rata-Rata Feedback</label>
+                            <input class="form-control" type="number" step=".1" min="1" max="5" name="min_average_feedback" id="min_average_feedback" value="{{ $min_average_feedback->value }}" required>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </form>
                 </div>

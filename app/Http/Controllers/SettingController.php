@@ -17,6 +17,8 @@ class SettingController extends Controller
     {
         $reload = false;
         $image_presence = Setting::where('key', 'image_presence')->first();
+        $min_presence_percentage = Setting::where('key', 'min_presence_percentage')->first();
+        $min_average_feedback = Setting::where('key', 'min_average_feedback')->first();
 
         if (!$image_presence) {
             Setting::create([
@@ -26,24 +28,53 @@ class SettingController extends Controller
             $reload = true;
         }
 
+        if (!$min_presence_percentage) {
+            Setting::create([
+                'key' => 'min_presence_percentage',
+                'value' => '80'
+            ]);
+            $reload = true;
+        }
+
+        if (!$min_average_feedback) {
+            Setting::create([
+                'key' => 'min_average_feedback',
+                'value' => '4.0'
+            ]);
+            $reload = true;
+        }
+
         if ($reload === true) {
             return redirect()->route('admin.settings.index');
         }
-        return view('admin.settings.index', compact('image_presence'));
+        return view('admin.settings.index', compact('image_presence', 'min_average_feedback', 'min_presence_percentage'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'image_presence' => ['required', 'boolean'],
-            'semester_settings' => ['required', 'string', 'in:+,-,n']
+            'semester_settings' => ['required', 'string', 'in:+,-,n'],
+            'min_presence_percentage' => ['required', 'numeric'],
+            'min_average_feedback' => ['required', 'numeric']
         ]);
 
         DB::beginTransaction();
         try {
             $image_presence = Setting::where('key', 'image_presence')->first();
+            $min_presence_percentage = Setting::where('key', 'min_presence_percentage')->first();
+            $min_average_feedback = Setting::where('key', 'min_average_feedback')->first();
+
             $image_presence->update([
                 'value' => $request->image_presence === '1' ? 'true' : 'false'
+            ]);
+
+            $min_average_feedback->update([
+                'value' => $request->min_average_feedback
+            ]);
+
+            $min_presence_percentage->update([
+                'value' => $request->min_presence_percentage
             ]);
 
             switch ($request->semester_settings) {
@@ -59,6 +90,8 @@ class SettingController extends Controller
                     # code...
                     break;
             }
+
+
 
             DB::commit();
         } catch (\Throwable $th) {

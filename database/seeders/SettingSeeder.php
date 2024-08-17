@@ -17,5 +17,15 @@ class SettingSeeder extends Seeder
             'key' => 'image_presence',
             'value' => 'false'
         ]);
+
+        Setting::create([
+            'key' => 'min_presence_percentage',
+            'value' => '80'
+        ]);
+
+        Setting::create([
+            'key' => 'min_average_feedback',
+            'value' => '4.0'
+        ]);
     }
 }

@@ -33,9 +33,24 @@
             <a href="{{ route('admin.kpi.report', ['kpi_id' => $kpi_id, 'show' => 'tendik']) }}" class="btn btn-sm {{ request()->show == 'tendik' ? 'btn-primary' : 'btn-light border' }} mb-2">Kategori Tendik</a>
             <div class="card m-0">
                 @if (request()->show != 'tendik')
+                    @php
+                        $low_presence_dosen = [];
+                        $low_presence_tendik = [];
+                        $low_feedback_dosen = [];
+                    @endphp
                 <div class="card-body table-responsive">
                     <h3>Dosen</h3>
                     @foreach ($users->where('tendik_position_id', 1) as $dosen)
+                        @if (@$dosen->points[0]->presence_points < $min_presence_percentage->value)
+                            @php
+                                array_push($low_presence_dosen, $dosen->name);
+                            @endphp
+                        @endif
+                        @if (@$dosen->points[0]->feedback_points < $min_average_feedback->value)
+                            @php
+                                array_push($low_feedback_dosen, $dosen->name);
+                            @endphp
+                        @endif
                         <table class="table table-striped table-bordered">
                             <tr>
                                 <td class="text-bold">Nama</td>
@@ -65,6 +80,11 @@
 
                     <h3>TenDik</h3>
                     @foreach ($users->where('tendik_position_id', '!=', 1) as $tendik)
+                        @if (@$tendik->points[0]->presence_points < $min_presence_percentage->value)
+                            @php
+                                array_push($low_presence_tendik, $tendik->name);
+                            @endphp
+                        @endif
                         <table class="table table-striped table-bordered">
                             <tr>
                                 <td class="text-bold">Nama</td>
@@ -81,11 +101,39 @@
                         </table>
                         <hr>
                     @endforeach
+
+                    <h3>Kesimpulan</h3>
+                    <p>Daftar dosen yang tidak memenuhi minimal persentase kehadiran (min: {{ $min_presence_percentage->value }}%):</p>
+                    <ul>
+                        @foreach ($low_presence_dosen as $item1)
+                            <li>{{ $item1 }}</li>
+                        @endforeach
+                    </ul>
+                    <p>Daftar dosen yang tidak memenuhi minimal rata-rata poin feedback (min: {{ $min_average_feedback->value }}):</p>
+                    <ul>
+                        @foreach ($low_feedback_dosen as $item2)
+                            <li>{{ $item2 }}</li>
+                        @endforeach
+                    </ul>
+                    <p>Daftar tendik yang tidak memenuhi minimal persentase kehadiran (min: {{ $min_presence_percentage->value }}%):</p>
+                    <ul>
+                        @foreach ($low_presence_tendik as $item3)
+                            <li>{{ $item3 }}</li>
+                        @endforeach
+                    </ul>
                 </div>
                 @else
+                    @php
+                        $low_feedback_tendik = [];
+                    @endphp
                     <div class="card-body table-responsive">
                         <h3>Kategori Tendik</h3>
                         @foreach ($tendiks as $categoryTendik)
+                            @if (@$categoryTendik->points[0]->feedback_points < $min_average_feedback->value)
+                                @php
+                                    array_push($low_feedback_tendik, $categoryTendik->division);
+                                @endphp
+                            @endif
                             <table class="table table-striped table-bordered">
                                 <tr>
                                     <td class="text-bold">Nama</td>
@@ -112,6 +160,14 @@
                             </script>
                             <hr>
                         @endforeach
+
+                        <h3>Kesimpulan</h3>
+                        <p>Daftar kategori tendik yang tidak memenuhi minimal rata-rata poin feedback (min: {{ $min_average_feedback->value }}):</p>
+                        <ul>
+                            @foreach ($low_feedback_tendik as $item44)
+                                <li>{{ $item44 }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
             </div>
