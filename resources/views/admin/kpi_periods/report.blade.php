@@ -61,11 +61,20 @@
                                 <td>{{ @$dosen->points[0]->presence_points ? number_format(@$dosen->points[0]->presence_points, 2) : '0' }}%</td>
                             </tr>
                             <tr>
+                                <td colspan="2" class="text-bold text-center">Detail Kehadiran</td>
+                            </tr>
+                            @foreach ($dosen->subjects as $dosen_has_subject)
+                                <tr>
+                                    <td>{{ $dosen_has_subject->subject->name }}</td>
+                                    <td>{{ $dosen_has_subject->quota }}/{{ $dosen->presences->where('subject_id', $dosen_has_subject->subject_id)->where('kpi_period_id', $kpi_id->id)->count() }}</td>
+                                </tr>
+                            @endforeach
+                            <tr>
                                 <td>Rata-rata poin feedback</td>
                                 <td>5/{{ @$dosen->points[0]->feedback_points ? number_format(@$dosen->points[0]->feedback_points, 2) : '-' }}</td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-center">Detail rata-rata nilai feedback</td>
+                                <td colspan="2" class="text-center text-bold">Detail rata-rata nilai feedback</td>
                             </tr>
                         </table>
                         <div id="{{ 'detail-feedback-user-' . $dosen->id }}">
@@ -98,6 +107,12 @@
                                 <td>Persentase Kehadiran</td>
                                 <td>{{ @$tendik->points[0]->presence_points ? number_format(@$tendik->points[0]->presence_points) : '0' }}%</td>
                             </tr>
+                            @foreach ($tendik->subjects as $tendik_has_subject)
+                                <tr>
+                                    <td>Detail Kehadiran</td>
+                                    <td>{{ $tendik_has_subject->quota }}/{{ $tendik->presences->where('subject_id', $tendik_has_subject->subject_id)->where('kpi_period_id', $kpi_id->id)->count() }}</td>
+                                </tr>
+                            @endforeach
                         </table>
                         <hr>
                     @endforeach
